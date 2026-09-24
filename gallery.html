@@ -869,9 +869,8 @@ section{position:relative;padding-block:var(--sec)}
         <li><a id="footTel" href="#">&nbsp;</a></li>
       </ul></div>
       <div><h5>Elsewhere</h5><ul>
-        <li><a href="#" rel="noopener">Instagram</a></li>
-        <li><a href="#" rel="noopener">Pinterest</a></li>
-        <li><a href="#" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/the.alchemyatelier/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://in.pinterest.com/alchemyatelieradmin/" target="_blank" rel="noopener">Pinterest</a></li>
         <li><a href="index.html#talk">Start a conversation</a></li>
       </ul></div>
     </div>
@@ -931,10 +930,10 @@ section{position:relative;padding-block:var(--sec)}
    CONFIGURE ME · the same studio details the home page carries
    ============================================================ */
 var CONFIG = {
-  whatsappNumber: '+917017501061',
+  whatsappNumber: '+917680981326',
   whatsappMessage: 'Hi, I came across The Alchemy Atelier gallery and would like to discuss a project.',
-  email: 'meghas5634@gmail.com',
-  phone: '+917017501061'
+  email: 'hello@example.com',
+  phone: '+917680981326'
 };
 
 var $  = function(s,c){return (c||document).querySelector(s);};
@@ -1110,7 +1109,7 @@ if (fabCall) fabCall.href = tel;
 if (footMail){ footMail.href = 'mailto:' + CONFIG.email; footMail.textContent = CONFIG.email; }
 if (footTel){
   footTel.href = tel;
-  /* +91 70175 01061, the way a number is read out loud here */
+  /* +91 76809 81326, the way a number is read out loud here */
   var d = CONFIG.phone.replace(/\D/g,'');
   footTel.textContent = d.length === 12 && d.indexOf('91') === 0
     ? '+91 ' + d.slice(2,7) + ' ' + d.slice(7)

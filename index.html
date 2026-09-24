@@ -57,8 +57,6 @@
 
   --emerald-wall:#16332A;   /* the lit face of the plaster wall */
   --emerald-shade:#0A1F1A;  /* where the wall falls away */
-  /* the torn edge, shared by the floor and any band that needs breaking */
-  --tear:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1100' height='24' preserveAspectRatio='none'><path d='M0 24V12L26 5L51 16L79 7L104 18L131 3L157 13L186 6L210 17L238 8L265 19L291 4L318 14L344 7L372 18L399 9L424 2L452 13L478 6L505 17L531 8L559 19L585 10L612 3L638 14L665 7L691 18L718 9L744 20L771 6L797 15L824 4L850 14L877 8L903 19L930 10L956 3L983 13L1009 7L1036 16L1062 9L1088 18L1100 10V24Z' fill='%23000'/></svg>");
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -365,9 +363,8 @@ section{position:relative;padding-block:var(--sec)}
   position:absolute;left:0;right:0;bottom:0;z-index:3;
   height:clamp(52px,8vh,104px);
   background:linear-gradient(178deg,var(--cream-3) 0%,var(--cream-2) 46%,var(--cream) 100%);
-  filter:drop-shadow(0 -8px 16px rgba(0,0,0,.5));
-  -webkit-mask:var(--tear) top/100% 24px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 23px) no-repeat;
-          mask:var(--tear) top/100% 24px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 23px) no-repeat;
+  /* a straight edge where the room meets the page */
+  box-shadow:0 -8px 16px rgba(0,0,0,.35);
 }
 .floor::after{
   content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.5;background:
@@ -637,10 +634,12 @@ section{position:relative;padding-block:var(--sec)}
 
 .welcome.is-open .note__close{transition-delay:.5s}
 .note__close{
-  position:absolute;top:clamp(1.5rem,2.4vw,2.4rem);right:clamp(1.5rem,2.4vw,2.4rem);z-index:6;
-  width:clamp(36px,3.4vw,44px);aspect-ratio:1;border-radius:50%;cursor:pointer;
+  /* always just inside the gold frame, never sitting on its line */
+  --frame:clamp(11px,1.35vw,22px);
+  position:absolute;top:calc(var(--frame) + 12px);right:calc(var(--frame) + 12px);z-index:6;
+  width:clamp(30px,2.8vw,38px);aspect-ratio:1;border-radius:50%;cursor:pointer;
   background:var(--cream);border:1px solid rgba(192,160,98,.55);color:var(--maroon-deep);
-  display:grid;place-items:center;font-size:1.3rem;font-weight:300;line-height:1;
+  display:grid;place-items:center;font-size:1.1rem;font-weight:300;line-height:1;
   box-shadow:0 8px 22px -10px rgba(0,0,0,.75);
   opacity:0;transform:scale(.9);
   transition:opacity .4s var(--ease-in),transform .4s var(--ease-in),background .4s var(--ease),border-color .4s var(--ease);
@@ -687,7 +686,7 @@ section{position:relative;padding-block:var(--sec)}
 @media (max-width:520px){
   .note{border-radius:16px}
   .note__frame{inset:9px}
-  .note__close{top:.8rem;right:.8rem;width:32px}
+  .note__close{--frame:9px;top:calc(var(--frame) + 9px);right:calc(var(--frame) + 9px);width:28px;font-size:1rem}
   .note__bloom{width:72%;right:-24%}
 }
 
@@ -817,8 +816,10 @@ section{position:relative;padding-block:var(--sec)}
 }
 .au>.panel-frame{border-color:rgba(192,139,74,.4)}
 /* the footer's frame follows its squared foot */
+/* the footer runs the full width, so its side lines are set in by the plates'
+   side margin as well, to fall in line with the gold frame of the band above */
 .foot>.panel-frame{
-  inset:clamp(9px,1.15vw,18px) clamp(9px,1.15vw,18px) 0;
+  inset:clamp(9px,1.15vw,18px) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px)) 0;
   border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
 }
 
@@ -2546,9 +2547,8 @@ section{position:relative;padding-block:var(--sec)}
         <li><a id="footTel" href="#">&nbsp;</a></li>
       </ul></div>
       <div><h5>Elsewhere</h5><ul>
-        <li><a href="#" rel="noopener">Instagram</a></li>
-        <li><a href="#" rel="noopener">Pinterest</a></li>
-        <li><a href="#" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/the.alchemyatelier/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://in.pinterest.com/alchemyatelieradmin/" target="_blank" rel="noopener">Pinterest</a></li>
         <li><a href="#talk">Start a conversation</a></li>
       </ul></div>
     </div>
@@ -2676,10 +2676,10 @@ section{position:relative;padding-block:var(--sec)}
    CONFIGURE ME · studio details live here and nowhere else
    ============================================================ */
 var CONFIG = {
-  whatsappNumber: '+917017501061',        /* international format, digits only; replace with the studio number */
+  whatsappNumber: '+917680981326',        /* international format, digits only */
   whatsappMessage: 'Hi, I came across The Alchemy Atelier website and would like to discuss a project.',
-  email: 'meghas5634@gmail.com',
-  phone: '+917017501061',                /* the number the Call now link dials */
+  email: 'hello@example.com',              /* PLACEHOLDER: the studio's own address */
+  phone: '+917680981326',                /* the number the Call now link dials */
 
   /* where the enquiry desk sends. with no key it hands the message to the
      visitor's mail app, which still reaches you but asks more of them.
@@ -3215,7 +3215,7 @@ var footMail = $('#footMail'), footTel = $('#footTel');
 if (footMail){ footMail.href = 'mailto:' + CONFIG.email; footMail.textContent = CONFIG.email; }
 if (footTel){
   footTel.href = 'tel:' + CONFIG.phone.replace(/[^\d+]/g,'');
-  /* +91 70175 01061, the way a number is read out loud here */
+  /* +91 76809 81326, the way a number is read out loud here */
   var d = CONFIG.phone.replace(/\D/g,'');
   footTel.textContent = d.length === 12 && d.indexOf('91') === 0
     ? '+91 ' + d.slice(2,7) + ' ' + d.slice(7)
