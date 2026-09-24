@@ -276,7 +276,7 @@ section{position:relative;padding-block:var(--sec)}
   inset:clamp(9px,1.15vw,18px) clamp(9px,1.15vw,18px) 0;
   border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
 }
-.foot__top{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(auto-fit,minmax(140px,1fr));
+.foot__top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto minmax(0,.9fr);
   gap:clamp(1.6rem,4vw,3rem)}
 @media (max-width:820px){
   .foot__top{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:2rem 1.6rem}
@@ -285,6 +285,8 @@ section{position:relative;padding-block:var(--sec)}
 .foot h5{font-size:.62rem;letter-spacing:var(--tracking);text-transform:uppercase;
   opacity:.5;margin-bottom:1rem;font-weight:400}
 .foot ul{list-style:none;display:grid;gap:.6rem;font-size:.9rem;opacity:.8;overflow-wrap:anywhere}
+/* the address and number are read whole, never broken across lines */
+#footMail,#footTel{white-space:nowrap}
 .foot li a:hover{color:var(--gold)}
 .foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;
   letter-spacing:.2em;line-height:1.3}
@@ -523,6 +525,12 @@ section{position:relative;padding-block:var(--sec)}
 /* the footer's words keep the same distance from its gold frame as on the home page */
 .close .foot>.wrap{padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
 .close .foot__top{gap:clamp(1.2rem,2.4vw,2rem)}
+/* beside the invitation the footer is narrow, so until there is room for all
+   four columns the name takes its own line and the three lists sit under it */
+@media (min-width:821px) and (max-width:1400px){
+  .close .foot__top{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+  .close .foot__top>:first-child{grid-column:1/-1}
+}
 /* the studio's name has a narrower column to sit in, so it is set smaller
    rather than broken across three lines */
 .close .foot__mark{font-size:clamp(1.15rem,1.55vw,1.55rem);letter-spacing:.16em}
@@ -763,7 +771,12 @@ var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySele
 $('#yr').textContent = new Date().getFullYear();
 var m = $('#footMail'), t = $('#footTel');
 if (m){ m.href = 'mailto:' + CONFIG.email; m.textContent = CONFIG.email; }
-if (t){ t.href = 'tel:' + CONFIG.phone;  t.textContent = CONFIG.phone; }
+if (t){
+  t.href = 'tel:' + CONFIG.phone;
+  /* +91 76809 81326, the way a number is read out loud here */
+  var d = CONFIG.phone.replace(/\D/g,'');
+  t.textContent = d.length === 12 && d.indexOf('91') === 0 ? '+91 ' + d.slice(2,7) + ' ' + d.slice(7) : CONFIG.phone;
+}
 
 /* the header hides going down and returns coming back up, as on the home page */
 var hdr = $('#hdr'), last = 0;
