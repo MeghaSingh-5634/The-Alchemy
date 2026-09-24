@@ -1,0 +1,3246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Alchemy Atelier · Architecture. Interiors. Objects. Experiences.</title>
+<meta name="description" content="The Alchemy Atelier is a design studio where ideas become spaces. Architecture, interiors, objects and experiences, shaped around the people who live in them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE ALCHEMY ATELIER · single-file site
+   Palette alternates by section: cream · emerald · maroon · ink
+   ============================================================ */
+:root{
+  --emerald:#123B33;
+  --emerald-deep:#0B2721;
+  --emerald-soft:#1C5347;
+  --maroon:#4A2225;       /* maroon: deep oxblood. the client rejected magenta */
+  --maroon-deep:#2F1416;
+  --maroon-soft:#7B4A4E;  /* the softer maroon in the logo's wing */
+  --gold:#C0A062;
+  --gold-soft:#DFC791;
+  --cream:#F5EFE4;
+  --cream-2:#E9E0CF;
+  --cream-3:#DCD0B9;
+  --ink:#17150F;
+  --ink-soft:#3A362C;
+
+  --fg:var(--ink);
+  --bg:var(--cream);
+  --rule:rgba(23,21,15,.16);
+  --muted:rgba(23,21,15,.62);
+
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --script:'Parisienne','Cormorant Garamond',cursive;
+  --sans:'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+
+  --pad:clamp(1.25rem,5vw,5.5rem);
+  --ease:cubic-bezier(.19,1,.22,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);   /* for the dialogue: fast start, long settle */
+  --ease-in:cubic-bezier(.4,0,.7,.2);    /* and its quicker way out */
+
+  /* rhythm: one section padding, one hairline, one accent, set per theme */
+  --sec:clamp(4.5rem,9vw,7.5rem);
+  --hair:rgba(23,21,15,.14);
+  --accent:#8A6729;       /* gold, darkened so it holds up on cream */
+  --tracking:.22em;       /* small-caps label tracking */
+  --tracking-wide:.3em;   /* eyebrows and marks */
+
+  /* the About bands, sampled from the studio's reference sheet */
+  --band-emerald:#16302A;
+  --band-maroon:#3B2123;
+  --bronze:#C08B4A;       /* eyebrows, rules and line-work */
+  --charcoal:#2B2620;     /* headings on cream: warm, never purple */
+
+  --emerald-wall:#16332A;   /* the lit face of the plaster wall */
+  --emerald-shade:#0A1F1A;  /* where the wall falls away */
+  /* the torn edge, shared by the floor and any band that needs breaking */
+  --tear:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1100' height='24' preserveAspectRatio='none'><path d='M0 24V12L26 5L51 16L79 7L104 18L131 3L157 13L186 6L210 17L238 8L265 19L291 4L318 14L344 7L372 18L399 9L424 2L452 13L478 6L505 17L531 8L559 19L585 10L612 3L638 14L665 7L691 18L718 9L744 20L771 6L797 15L824 4L850 14L877 8L903 19L930 10L956 3L983 13L1009 7L1036 16L1062 9L1088 18L1100 10V24Z' fill='%23000'/></svg>");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+html.is-locked,body.is-locked{overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:clamp(16px,1.1vw,18px);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  transition:background .9s var(--ease),color .9s var(--ease);
+}
+img{display:block;max-width:100%;height:auto;background:linear-gradient(140deg,#e3d9c6,#cdbfa4 60%,#bdae91)}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+::selection{background:var(--gold);color:#17150F}
+
+/* ---------- type ---------- */
+.display{font-family:var(--serif);font-weight:300;line-height:1.02;letter-spacing:-.015em}
+.h1{font-size:clamp(2.4rem,5.6vw,4.6rem)}
+.h2{font-size:clamp(1.9rem,3.6vw,3rem)}
+.h3{font-size:clamp(1.35rem,2vw,1.9rem)}
+.h4{font-size:clamp(1.15rem,1.5vw,1.45rem)}
+.lead{font-size:clamp(1.11rem,1.25vw,1.28rem);line-height:1.75;font-weight:300}
+.eyebrow{
+  font-size:.68rem;letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  font-weight:400;opacity:.72;
+}
+em,.it{font-family:var(--serif);font-style:italic}
+.hand{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.28rem;line-height:1.4;letter-spacing:.01em;color:var(--accent)}
+.gold{color:var(--accent)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--pad)}
+section{position:relative;padding-block:var(--sec)}
+.sec-head{display:flex;gap:1.4rem;align-items:baseline;margin-bottom:clamp(2rem,4.5vw,3.2rem);flex-wrap:wrap}
+.sec-num{
+  font-size:.68rem;letter-spacing:var(--tracking-wide);text-transform:uppercase;
+  padding-bottom:.35rem;border-bottom:1px solid currentColor;opacity:.55;white-space:nowrap;
+}
+.rule{height:1px;background:currentColor;opacity:.14;border:0}
+
+/* section palettes: three surfaces, used with intent:
+   cream = the reading surface · emerald-deep = the studio voice · ink = the work and the footer */
+.t-cream{background:var(--cream);color:var(--ink)}
+.t-cream2{background:var(--cream-2);color:var(--ink)}
+.t-emerald{background:var(--emerald);color:#EFE9DC}
+.t-emerald-deep{background:var(--emerald-deep);color:#E7E1D4}
+.t-maroon{background:var(--maroon);color:#F4E9E0}
+.t-ink{background:var(--ink);color:#E8E2D5}
+/* dark surfaces lighten the hairline and restore the brighter gold */
+.t-emerald,.t-emerald-deep,.t-maroon,.t-ink{--hair:var(--hair);--accent:var(--gold)}
+/* consecutive sections on the same surface are separated by a rule, not a colour change */
+.t-cream + .t-cream,.t-cream + .t-cream2,.t-cream2 + .t-cream{border-top:1px solid var(--hair)}
+.t-emerald .muted,.t-maroon .muted,.t-ink .muted,.t-emerald-deep .muted{opacity:.72}
+.muted{opacity:.68}
+
+/* ---------- reveal ---------- */
+[data-reveal]{opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+[data-reveal].is-in{opacity:1;transform:none}
+[data-reveal][data-delay="1"]{transition-delay:.06s}
+[data-reveal][data-delay="2"]{transition-delay:.12s}
+[data-reveal][data-delay="3"]{transition-delay:.18s}
+[data-reveal][data-delay="4"]{transition-delay:.24s}
+[data-reveal][data-delay="5"]{transition-delay:.3s}
+
+/* ---------- buttons ---------- */
+.btn{
+  --bc:currentColor;
+  display:inline-flex;align-items:center;gap:.8rem;
+  padding:1rem 1.9rem;border:1px solid var(--bc);border-radius:999px;
+  background:transparent;cursor:pointer;
+  font-size:.74rem;letter-spacing:var(--tracking);text-transform:uppercase;font-weight:400;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:color .6s var(--ease),border-color .6s var(--ease);
+}
+.btn::after{
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease);
+}
+.btn:hover{color:#17150F;border-color:var(--gold)}
+.btn:hover::after{transform:scaleX(1)}
+.btn .arw{transition:transform .5s var(--ease)}
+.btn:hover .arw{transform:translateX(5px)}
+.btn--solid{background:var(--gold);border-color:var(--gold);color:#17150F}
+.btn--solid::after{background:#17150F}
+.btn--solid:hover{color:var(--cream);border-color:#17150F}
+.link-u{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.72rem;letter-spacing:var(--tracking);text-transform:uppercase;
+  padding-bottom:.35rem;border-bottom:1px solid currentColor;
+  transition:gap .4s var(--ease),color .4s var(--ease);
+}
+.link-u:hover{gap:.85rem;color:var(--accent)}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:120;isolation:isolate;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:1.15rem var(--pad);
+  color:var(--cream);
+  transition:background .6s var(--ease),color .6s var(--ease),padding .6s var(--ease),border-color .6s;
+  border-bottom:1px solid transparent;
+}
+.hdr::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(11,39,33,.55),transparent);transition:opacity .6s var(--ease)}
+.hdr.solid::before{opacity:0}
+.hdr.solid{background:rgba(11,39,33,.95);backdrop-filter:blur(14px);padding-block:.85rem;border-color:var(--hair)}
+.hdr.hide{transform:translateY(-102%)}
+.hdr{transition:transform .6s var(--ease),background .6s var(--ease),padding .6s var(--ease),border-color .6s}
+.nav{display:flex;align-items:center;gap:clamp(1rem,2.1vw,2.1rem)}
+.nav a{font-size:.7rem;letter-spacing:var(--tracking);text-transform:uppercase;opacity:.85;position:relative;padding:.3rem 0;white-space:nowrap}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--gold);
+  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav a:hover{opacity:1}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.hdr .btn{padding:.72rem 1.3rem;font-size:.66rem;border-color:rgba(255,255,255,.45)}
+.burger{display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;
+  background:none;cursor:pointer;gap:5px;flex-direction:column;
+  align-items:center;justify-content:center}
+.burger span{display:block;width:16px;height:1px;background:currentColor;transition:.4s var(--ease)}
+.burger.open span:nth-child(1){transform:translateY(3px) rotate(45deg)}
+.burger.open span:nth-child(2){transform:translateY(-3px) rotate(-45deg)}
+@media (max-width:960px){
+  .nav{position:fixed;inset:0;background:var(--emerald-deep);flex-direction:column;justify-content:center;
+    gap:1.6rem;transform:translateY(-100%);transition:transform .8s var(--ease);z-index:-1;color:var(--cream)}
+  .nav.open{transform:none}
+  .nav a{font-size:.95rem;letter-spacing:var(--tracking)}
+  .hdr .btn{display:none}
+  .nav .btn{display:inline-flex;margin-top:1rem}
+  .burger{display:flex}
+}
+
+/* ============================================================
+   HERO · the lockup on a plaster wall, over a torn cream floor
+   ============================================================ */
+@keyframes fadeIn{to{opacity:1}}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+.hero{position:relative;overflow:hidden;background:var(--emerald-wall);color:var(--cream);isolation:isolate}
+
+/* the wall: tonal drift, trowel sweeps, then the tooth of the lime */
+.hero__wall{position:absolute;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(78% 62% at 24% 26%,rgba(38,74,62,.85),transparent 66%),
+  radial-gradient(62% 54% at 84% 12%,rgba(6,20,16,.7),transparent 62%),
+  radial-gradient(70% 58% at 66% 92%,rgba(6,20,16,.75),transparent 64%),
+  linear-gradient(168deg,var(--emerald-wall) 0%,var(--emerald) 38%,var(--emerald-shade) 100%);
+}
+.hero__wall::before{
+  content:"";position:absolute;inset:0;mix-blend-mode:soft-light;opacity:.85;background:
+    radial-gradient(54% 44% at 16% 24%,rgba(224,244,232,.5),transparent 64%),
+    radial-gradient(44% 36% at 72% 18%,rgba(0,0,0,.55),transparent 62%),
+    radial-gradient(58% 46% at 58% 82%,rgba(224,244,232,.34),transparent 66%),
+    linear-gradient(97deg,transparent 10%,rgba(230,246,236,.26) 16%,transparent 23%),
+    linear-gradient(93deg,transparent 43%,rgba(0,0,0,.38) 49%,transparent 56%),
+    linear-gradient(101deg,transparent 68%,rgba(230,246,236,.2) 74%,transparent 81%);
+}
+.hero__wall::after{
+  content:"";position:absolute;inset:0;mix-blend-mode:overlay;opacity:.34;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+
+/* ---------- the room, full bleed behind everything ---------- */
+.hero__bg{position:absolute;inset:0;z-index:1;margin:0;overflow:hidden;pointer-events:none}
+.hero__bg img{
+  width:100%;height:100%;object-fit:cover;object-position:center 72%;
+  filter:saturate(.92) contrast(1.04) brightness(.86);
+  transform:scale(1.06);animation:heroSettle 16s var(--ease) forwards;
+}
+@keyframes heroSettle{to{transform:scale(1)}}
+/* the scrim: dark at the left so the lockup always has a wall to sit on */
+.hero__bg::after{
+  content:"";position:absolute;inset:0;background:
+    radial-gradient(68% 40% at 50% 25%,rgba(6,20,16,.84),rgba(6,20,16,.36) 62%,transparent 84%),
+    linear-gradient(180deg,rgba(6,20,16,.8) 0%,rgba(6,20,16,.46) 30%,rgba(8,26,21,.16) 56%,transparent 74%,rgba(6,20,16,.55) 100%);
+}
+/* the same lime tooth over the photograph, so it belongs to the wall */
+.hero__bg::before{
+  content:"";position:absolute;inset:0;z-index:2;mix-blend-mode:overlay;opacity:.2;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t2)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+@media (max-width:960px){
+  .hero__bg img{object-position:62% center}
+  .hero__bg::after{background:
+    linear-gradient(180deg,rgba(6,20,16,.9) 0%,rgba(6,20,16,.78) 42%,rgba(8,26,21,.5) 70%,rgba(6,20,16,.72) 100%)}
+}
+/* botanical line-work at the margins */
+.sprig{position:absolute;z-index:1;pointer-events:none;color:var(--gold-soft);
+  opacity:0;animation:fadeIn 2s var(--ease) 1.1s forwards}
+.sprig .stem{fill:none;stroke:currentColor;stroke-width:1.1;opacity:.45}
+.sprig .leaves use{fill:currentColor;opacity:.3}
+.sprig--l{left:-14px;bottom:3%;height:min(58vh,520px);width:auto}
+.sprig--r{right:-10px;top:6%;height:min(52vh,470px);width:auto;transform:scaleX(-1);
+  animation-delay:1.3s}
+@media (max-width:820px){.sprig--r{display:none}.sprig--l{height:38vh}}
+
+/* the layout: lockup left, arch right */
+.hero__grid{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  align-items:start;
+  min-height:100svh;
+  /* pinned near the top so the lockup lands on bare wall, above the sofa back */
+  padding-block:clamp(4.25rem,7.2vh,5.8rem) clamp(4rem,10vh,7rem);
+}
+/* centred on the wall, sitting in the clear space above the sofa */
+.hero__copy{max-width:min(900px,92%);margin-inline:auto;text-align:center}
+@media (max-width:960px){.hero__copy{max-width:100%}}
+
+/* on a narrow screen the room stays full bleed, exactly as it is on the
+   desktop: a portrait crop keeps the whole height of the photograph, so the
+   lockup stands on the bare wall above the sofa back rather than in a band of
+   flat plaster above the picture */
+@media (max-width:820px){
+  /* the photograph is taller than it is wide here, so it scales to the band's
+     height and the wall grows with it. rather than filling the screen, the band
+     is only as tall as it takes to bring the sofa back up to just under the
+     lockup, the way it sits on the desktop */
+  .hero{height:auto;min-height:0}
+  .hero__grid{
+    min-height:0;align-content:start;
+    padding-block:clamp(3.9rem,9.4vh,5.75rem) calc(14rem + 42vw);
+  }
+  .hero__bg{inset:0;height:auto}
+  .hero__bg img{
+    width:100%;height:100%;object-fit:cover;object-position:50% 30%;
+    transform:none;animation:none;
+    -webkit-mask-image:none;mask-image:none;
+  }
+  /* the scrim sits over the wall, where the lockup lands, and settles the foot */
+  .hero__bg::after{background:
+    radial-gradient(96% 40% at 50% 20%,rgba(6,20,16,.8),rgba(6,20,16,.36) 62%,transparent 84%),
+    linear-gradient(180deg,rgba(6,20,16,.7) 0%,rgba(6,20,16,.4) 30%,rgba(8,26,21,.1) 56%,transparent 74%,rgba(6,20,16,.5) 100%)}
+  .floor{height:clamp(34px,5vh,60px)}
+}
+
+.hero__copy>*{opacity:0;animation:riseIn 1s var(--ease) forwards}
+.hero__eyebrow{
+  display:flex;align-items:center;gap:1rem;
+  font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--gold);animation-delay:.15s;
+}
+.hero__eyebrow s{display:block;width:clamp(24px,3vw,42px);height:1px;background:currentColor;opacity:.7}
+.hero__title{
+  margin-top:clamp(.35rem,.8vh,.7rem);
+  font-family:var(--serif);font-weight:300;text-transform:uppercase;
+  font-size:clamp(2.6rem,7.4vw,6.1rem);line-height:1.02;letter-spacing:.045em;
+  color:var(--cream);animation-delay:.4s;
+}
+.hero__disc{
+  margin-top:clamp(.6rem,1.2vh,.9rem);
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.1rem,2.1vw,1.8rem);letter-spacing:.02em;color:var(--cream);
+  opacity:.94;animation-delay:.52s;
+}
+.hero__disc i{font-style:normal;color:var(--gold);margin:0 .5rem;font-size:.8em;vertical-align:.12em}
+.hero__script{
+  margin-top:0;
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.3rem,2.3vw,1.95rem);letter-spacing:.015em;
+  line-height:1.3;color:var(--gold-soft);animation-delay:.22s;
+}
+.hero__cta{margin-top:clamp(1.8rem,4vh,2.9rem);animation-delay:.64s}
+
+/* the arch: the brand motif, standing on the floor */
+.hero__art{position:relative;z-index:4;align-self:end;
+  margin-bottom:calc(-1 * clamp(26px,5vh,58px));
+  opacity:0;animation:riseIn 1.3s var(--ease) .5s forwards}
+.arch{
+  position:relative;overflow:hidden;width:100%;aspect-ratio:4/5;
+  border-radius:50% 50% 4px 4px / 33% 33% 4px 4px;
+  border:1px solid rgba(192,160,98,.42);
+  box-shadow:0 70px 130px -55px rgba(0,0,0,.95);
+}
+/* the stone is photographed in black and white; sepia warms it to brass and sandstone */
+.arch img{width:100%;height:100%;object-fit:cover;
+  filter:sepia(.62) saturate(1.5) hue-rotate(-8deg) contrast(1.06) brightness(.78)}
+/* pulls the photograph onto the studio palette so it reads as material */
+.arch__tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;
+  background:linear-gradient(158deg,rgba(74,52,39,.5),rgba(107,76,57,.24) 48%,rgba(11,39,33,.6))}
+/* lamplight falling into the niche, so it reads as somewhere lived in */
+.arch__glow{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+  background:
+    radial-gradient(46% 34% at 56% 30%,rgba(223,199,145,.3),transparent 66%),
+    radial-gradient(60% 40% at 40% 88%,rgba(192,160,98,.16),transparent 70%)}
+/* the shadow the arch casts onto the cream floor */
+.hero__art::after{
+  content:"";position:absolute;left:6%;right:6%;bottom:-14px;height:34px;z-index:-1;
+  background:radial-gradient(50% 100% at 50% 0%,rgba(0,0,0,.55),transparent 72%);filter:blur(7px);
+}
+@media (max-width:960px){.hero__art{max-width:min(420px,82%);margin-inline:auto;margin-bottom:0}}
+
+/* the cream floor, torn where it meets the wall */
+.floor{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  height:clamp(52px,8vh,104px);
+  background:linear-gradient(178deg,var(--cream-3) 0%,var(--cream-2) 46%,var(--cream) 100%);
+  filter:drop-shadow(0 -8px 16px rgba(0,0,0,.5));
+  -webkit-mask:var(--tear) top/100% 24px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 23px) no-repeat;
+          mask:var(--tear) top/100% 24px no-repeat,linear-gradient(#000,#000) bottom/100% calc(100% - 23px) no-repeat;
+}
+.floor::after{
+  content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.5;background:
+    radial-gradient(48% 120% at 18% 0%,rgba(120,98,66,.3),transparent 62%),
+    radial-gradient(40% 130% at 72% 0%,rgba(120,98,66,.34),transparent 60%);
+}
+
+/* ---------- header, tuned to the lockup ---------- */
+.brand{display:block;line-height:1;flex:0 0 auto}
+/* the name in full: the studio is never abbreviated */
+.brand__name{
+  display:block;font-family:var(--serif);font-weight:400;
+  font-size:clamp(.95rem,1.5vw,1.22rem);letter-spacing:.3em;text-indent:.3em;
+  text-transform:uppercase;color:var(--gold-soft);white-space:nowrap;
+}
+.brand__rule{
+  display:block;width:100%;height:1px;margin-top:.62rem;background:currentColor;
+  color:var(--gold);opacity:.45;transform:scaleX(.34);transform-origin:left;
+  transition:transform .6s var(--ease),opacity .6s var(--ease);
+}
+.brand:hover .brand__rule{transform:scaleX(1);opacity:.8}
+@media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
+.nav{flex:1;justify-content:center}
+.hdr>.btn{border-radius:0;padding:.9rem 1.5rem;font-size:.68rem;
+  border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
+.hdr>.btn:hover{color:var(--ink);border-color:var(--gold)}
+.burger{border-radius:0;border-color:rgba(223,199,145,.4)}
+/* six links plus a button need more room than the 960 breakpoint allows */
+@media (max-width:1080px){
+  /* the menu is a fixed panel, so the header must not become its containing
+     block: a transform or a backdrop-filter on the header would size the panel
+     to the header strip instead of the screen, and the closed menu would hang
+     over the page. so on these widths the header hides by moving its own top
+     edge and dispenses with the blur, which the .95 ground barely needed */
+  .hdr{transition:background .6s var(--ease),padding .6s var(--ease),
+    border-color .6s,top .6s var(--ease)}
+  .hdr.solid{background:rgba(11,39,33,.97);
+    -webkit-backdrop-filter:none;backdrop-filter:none}
+  .hdr.hide{transform:none;top:-140px}
+
+  .nav{position:fixed;inset:0;background:var(--emerald-shade);flex-direction:column;
+    justify-content:center;gap:1.7rem;transform:translateY(-100%);
+    visibility:hidden;
+    transition:transform .8s var(--ease),visibility 0s linear .8s;
+    z-index:-1;color:var(--cream)}
+  /* closed it is out of the screen and out of the tab order either way */
+  .nav.open{transform:none;visibility:visible;
+    transition:transform .8s var(--ease),visibility 0s}
+  .nav a{font-size:1rem;letter-spacing:var(--tracking-wide)}
+  .hdr>.btn{display:none}
+  .nav__cta{display:inline-flex;margin-top:.6rem;border-color:var(--gold);color:var(--gold-soft)}
+  .burger{display:flex}
+}
+/* above the breakpoint the header shows the button, so the menu's copy stays out */
+@media (min-width:1081px){.nav__cta{display:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero__copy>*,.hero__art,.sprig{opacity:1 !important}
+}
+
+/* ============================================================
+   WELCOME NOTE · a dialogue over the blurred page, shown once on arrival
+   ============================================================ */
+.welcome{
+  position:fixed;inset:0;z-index:200;
+  display:grid;place-items:center;
+  padding:clamp(12px,3vw,34px);
+  /* the page behind is dimmed and thrown out of focus */
+  background:rgba(14,26,22,0);
+  -webkit-backdrop-filter:blur(0) saturate(1);
+          backdrop-filter:blur(0) saturate(1);
+  opacity:0;visibility:hidden;
+  transition:
+    opacity .5s var(--ease-in),
+    background .5s var(--ease-in),
+    -webkit-backdrop-filter .5s var(--ease-in),
+    backdrop-filter .5s var(--ease-in),
+    visibility 0s linear .5s;
+}
+.welcome.is-open{
+  opacity:1;visibility:visible;
+  background:rgba(14,26,22,.5);
+  -webkit-backdrop-filter:blur(13px) saturate(.92);
+          backdrop-filter:blur(13px) saturate(.92);
+  transition:
+    opacity .8s var(--ease-out),
+    background .9s var(--ease-out),
+    -webkit-backdrop-filter 1.1s var(--ease-out),
+    backdrop-filter 1.1s var(--ease-out);
+}
+.welcome[hidden]{display:none}
+.welcome .wrap{position:relative;z-index:1;max-width:none;padding-inline:0;width:100%;display:grid;place-items:center}
+
+/* the panel: the note at the left, the arch and the bloom at the right */
+.note{
+  position:relative;width:min(1160px,100%);
+  max-height:calc(100dvh - clamp(24px,6vw,68px));overflow:auto;
+  display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+  align-items:center;
+  opacity:0;transform:translateY(26px) scale(.972);
+  transition:opacity .5s var(--ease-in),transform .5s var(--ease-in);
+  background:linear-gradient(158deg,var(--maroon) 0%,var(--maroon-deep) 100%);
+  color:#F4E9E0;border-radius:clamp(18px,2vw,26px);overflow:hidden;isolation:isolate;
+  box-shadow:
+    0 2px 6px rgba(47,20,22,.16),
+    0 26px 50px -26px rgba(47,20,22,.4),
+    0 70px 130px -58px rgba(47,20,22,.6),
+    0 2px 0 rgba(255,255,255,.07) inset;
+}
+.welcome.is-open .note{
+  opacity:1;transform:none;
+  transition:opacity .9s var(--ease-out) .12s,transform 1.05s var(--ease-out) .12s;
+}
+
+/* the words arrive one after another once the panel has landed */
+.note__card>*:not(.note__bloom){
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s var(--ease-in),transform .5s var(--ease-in);
+}
+.welcome.is-open .note__card>*:not(.note__bloom){
+  opacity:1;transform:none;
+  transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);
+}
+.welcome.is-open .note__card>*:nth-child(1){transition-delay:.34s}
+.welcome.is-open .note__card>*:nth-child(2){transition-delay:.42s}
+.welcome.is-open .note__card>*:nth-child(3){transition-delay:.50s}
+.welcome.is-open .note__card>*:nth-child(4){transition-delay:.58s}
+.welcome.is-open .note__card>*:nth-child(5){transition-delay:.66s}
+.welcome.is-open .note__card>*:nth-child(6){transition-delay:.74s}
+.welcome.is-open .note__card>*:nth-child(7){transition-delay:.82s}
+.welcome.is-open .note__card>*:nth-child(8){transition-delay:.90s}
+.welcome.is-open .note__card>*:nth-child(9){transition-delay:.98s}
+
+/* the photograph settles out of a slow push in */
+.note__arch img{transform:scale(1.09);transition:transform .6s var(--ease-in)}
+.welcome.is-open .note__arch img{transform:none;transition:transform 2.4s var(--ease-out) .1s}
+/* and the gold bloom breathes in last */
+.note__bloom{opacity:0;transition:opacity .5s var(--ease-in)}
+.welcome.is-open .note__bloom{opacity:.2;transition:opacity 1.4s var(--ease-out) .7s}
+/* light from the upper left, weight into the far corner, one continuous surface */
+.note::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58% 78% at 14% 4%,rgba(158,104,108,.28),transparent 62%),
+    radial-gradient(76% 96% at 92% 100%,rgba(20,6,7,.5),transparent 66%);
+}
+/* the tooth the hero wall carries, so the maroon reads as a material */
+.note::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:overlay;opacity:.17;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t3'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t3)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+/* absolute pseudo-elements never become grid items */
+.note>*{position:relative;z-index:1}
+
+/* the hairline the whole room sits inside, with a diamond pinned at either end */
+.note__frame{
+  position:absolute;inset:clamp(11px,1.35vw,22px);z-index:4;pointer-events:none;
+  border:1px solid rgba(223,199,145,.2);border-radius:clamp(10px,1.2vw,16px);
+}
+.note__frame::before,.note__frame::after{
+  content:"";position:absolute;width:7px;height:7px;background:var(--gold-soft);opacity:.75;
+  transform:rotate(45deg);
+}
+.note__frame::before{left:-4px;top:-4px}
+.note__frame::after{right:-4px;bottom:-4px}
+
+/* ---- the copy side: maroon throughout, no cream card ---- */
+.note__card{
+  background:transparent;color:#F4E9E0;
+  padding:clamp(1.9rem,3.2vw,2.6rem) clamp(1.8rem,3.4vw,3.2rem);
+  display:grid;grid-template-columns:minmax(0,1fr);
+  align-content:center;justify-items:center;text-align:center;
+}
+.note__greet{
+  font-size:clamp(.74rem,.96vw,.88rem);letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold-soft);font-weight:500;
+}
+.note__title{
+  margin-top:clamp(.7rem,1.4vw,1rem);
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(2.15rem,3.9vw,3.4rem);line-height:1.04;letter-spacing:-.005em;
+  color:#F8F0E7;
+}
+/* 500 is the heaviest italic Cormorant loads, so the italic line asks for that
+   rather than inheriting a 600 the browser would have to fake */
+.note__title em{display:block;font-style:normal;font-weight:600;color:var(--gold-soft);opacity:.95}
+/* the gold rule with its diamond */
+.note__div{
+  position:relative;display:block;width:min(260px,70%);height:1px;
+  margin:clamp(.85rem,1.6vw,1.2rem) 0;
+  background:linear-gradient(90deg,transparent,rgba(223,199,145,.65) 22%,rgba(223,199,145,.65) 78%,transparent);
+}
+.note__div::after{
+  content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;
+  transform:translate(-50%,-50%) rotate(45deg);background:var(--gold-soft);
+}
+.note__lead{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(1.18rem,1.65vw,1.5rem);line-height:1.45;color:#F4E9E0;
+  max-width:32ch;
+}
+.note__line{
+  margin-top:clamp(.7rem,1.3vw,1rem);max-width:56ch;
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(1.11rem,1.33vw,1.26rem);line-height:1.72;color:rgba(244,233,224,.94);
+}
+.note__line + .note__line{margin-top:.9rem}
+.note__line b{font-weight:600;color:#F6EDE3}
+.note__sign{
+  margin-top:clamp(.9rem,1.7vw,1.3rem);
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(1.2rem,1.7vw,1.55rem);letter-spacing:.015em;line-height:1.3;
+  color:var(--gold-soft);
+}
+.note__sign small{
+  display:block;margin-top:.35rem;font-family:var(--sans);font-weight:500;
+  font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(244,233,224,.55);
+}
+.note__cta{
+  background:none;border:0;font-family:inherit;cursor:pointer;
+  margin-top:clamp(1rem,1.9vw,1.4rem);
+  display:inline-flex;align-items:center;gap:1.1rem;
+  font-size:.78rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#F4E9E0;
+  padding-bottom:.55rem;border-bottom:1px solid rgba(223,199,145,.45);
+  transition:gap .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease);
+}
+.note__cta:hover{gap:1.6rem;color:var(--gold-soft);border-color:var(--gold-soft)}
+
+/* ---- the picture side ---- */
+.note__art{
+  position:relative;overflow:hidden;align-self:stretch;
+  min-height:clamp(240px,24vw,380px);
+}
+
+/* full bleed, with the arch kept as a shoulder on the corner that meets the copy */
+.note__arch{
+  position:absolute;inset:0;margin:0;overflow:hidden;
+  border-radius:clamp(70px,11vw,190px) 0 0 0;
+}
+/* pale plaster, warmed a little and let down so it sits inside the maroon */
+.note__arch img{width:100%;height:100%;object-fit:cover;object-position:center 58%;
+  filter:sepia(.14) saturate(1.06) contrast(1.04)}
+/* the seam: maroon bleeding into the photograph so the two read as one surface */
+.note__arch::before{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(90deg,var(--maroon-deep) 0%,rgba(47,20,22,.72) 12%,rgba(47,20,22,.22) 34%,transparent 56%),
+    linear-gradient(0deg,rgba(47,20,22,.34),transparent 34%);
+}
+/* just enough maroon in the shadows to seat it in the panel; the photograph keeps its light */
+.note__arch::after{
+  content:"";position:absolute;inset:0;mix-blend-mode:multiply;
+  background:linear-gradient(168deg,rgba(74,34,37,.06),rgba(47,20,22,.2));
+}
+/* the gold bloom, drawn at the edge and running off it */
+.note__bloom{
+  position:absolute;right:-7%;bottom:-16%;width:min(34%,270px);height:auto;z-index:3;
+  color:var(--gold);opacity:.2;pointer-events:none;
+  fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:round;
+}
+
+/* ---- close ---- */
+.note__bloom .stamens path{stroke-width:.7;opacity:.8}
+
+.welcome.is-open .note__close{transition-delay:.5s}
+.note__close{
+  position:absolute;top:clamp(1.5rem,2.4vw,2.4rem);right:clamp(1.5rem,2.4vw,2.4rem);z-index:6;
+  width:clamp(36px,3.4vw,44px);aspect-ratio:1;border-radius:50%;cursor:pointer;
+  background:var(--cream);border:1px solid rgba(192,160,98,.55);color:var(--maroon-deep);
+  display:grid;place-items:center;font-size:1.3rem;font-weight:300;line-height:1;
+  box-shadow:0 8px 22px -10px rgba(0,0,0,.75);
+  opacity:0;transform:scale(.9);
+  transition:opacity .4s var(--ease-in),transform .4s var(--ease-in),background .4s var(--ease),border-color .4s var(--ease);
+}
+.welcome.is-open .note__close{opacity:1;transform:none}
+.welcome.is-open .note__close:hover{background:#fff;border-color:var(--gold);transform:rotate(90deg)}
+.note__close:hover{background:#fff;border-color:var(--gold);transform:rotate(90deg)}
+.note__close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* on the way out the dialogue settles back before it is removed */
+.welcome.is-closing .note{
+  opacity:0;transform:translateY(14px) scale(.984);
+  transition:opacity .4s var(--ease-in),transform .45s var(--ease-in);
+}
+
+/* below the split, the note reads first and the arch follows it. the panel is
+   kept narrow and the words set small enough that the whole photograph, at its
+   own proportion, always fits on the screen beneath them */
+@media (max-width:900px){
+  .note{
+    grid-template-columns:minmax(0,1fr);min-height:auto;
+    width:min(440px,100%);max-height:none;
+  }
+  .note__card{order:1;padding:clamp(2.4rem,9vw,3rem) clamp(1.3rem,6vw,2rem) clamp(1rem,3.4vw,1.4rem)}
+  .note__greet{font-size:.62rem;letter-spacing:.26em;padding-inline:2.2rem}
+  .note__title{margin-top:.55rem;font-size:clamp(1.55rem,6.6vw,2rem)}
+  .note__div{margin:.65rem 0}
+  .note__lead{font-size:1rem}
+  .note__line{margin-top:.45rem;font-size:clamp(.88rem,3.6vw,.98rem);line-height:1.5}
+  .note__sign{margin-top:.6rem;font-size:1rem}
+  .note__sign small{font-size:.58rem;letter-spacing:.22em}
+  /* the photograph at its own shape, so none of it is cut away */
+  .note__art{order:2;min-height:0;aspect-ratio:3/2}
+  .note__arch{border-radius:clamp(40px,12vw,80px) clamp(40px,12vw,80px) 0 0}
+  .note__arch::before{background:linear-gradient(0deg,transparent 62%,rgba(47,20,22,.9) 100%)}
+  .note__bloom{right:-22%;bottom:-3%;width:min(44%,220px);opacity:.13}
+}
+/* short phones: the long line gives way so the photograph still fits whole */
+@media (max-width:900px) and (max-height:700px){
+  .note__lead{display:none}
+  .note__line{font-size:.86rem;line-height:1.45}
+  .note__card{padding-top:2.2rem}
+}
+@media (max-width:520px){
+  .note{border-radius:16px}
+  .note__frame{inset:9px}
+  .note__close{top:.8rem;right:.8rem;width:32px}
+  .note__bloom{width:72%;right:-24%}
+}
+
+/* ============================================================
+   ABOUT US · picture at the left, the studio's words at the right
+   ============================================================ */
+.au{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:var(--cream);color:var(--charcoal);
+  padding-block:clamp(3.2rem,7vw,5.5rem);
+}
+/* a paper grain, so the cream is a surface and not a flat fill */
+.au::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t6'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t6)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+/* the line-work moves to the far right now that the picture holds the left */
+.au__sprig{
+  position:absolute;right:-3%;top:6%;width:min(11%,150px);height:auto;z-index:0;
+  color:var(--bronze);opacity:.2;pointer-events:none;transform:scaleX(-1);
+  fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;
+}
+.au__sprig .lv use{stroke-width:.95}
+@media (max-width:1200px){.au__sprig{display:none}}
+
+.au__grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  gap:clamp(2rem,5vw,5.5rem);align-items:center;
+}
+@media (max-width:900px){.au__grid{grid-template-columns:minmax(0,1fr);gap:2.2rem}}
+
+/* the heading sits above the copy, at the size the section headings use.
+   it must outrank `.au__copy p`, hence the two class selector */
+.au__copy .au__eyebrow{
+  font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.7rem,3.4vw,2.9rem);line-height:1.1;letter-spacing:.14em;
+  color:var(--accent);
+}
+.au__copy .au__eyebrow::after{
+  content:"";display:block;width:clamp(46px,5vw,72px);height:1px;
+  margin-top:clamp(.9rem,1.8vw,1.3rem);
+  background:currentColor;opacity:.55;
+}
+/* the reading copy is set in the sans here; it is a paragraph, not a passage */
+.au__copy p{
+  margin-top:clamp(1rem,1.9vw,1.4rem);max-width:54ch;
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.06rem,1.22vw,1.16rem);line-height:1.68;color:var(--ink-soft);
+}
+.au__copy p:first-child{margin-top:0}
+.au__copy .au__eyebrow + p{margin-top:clamp(1.4rem,2.6vw,2rem)}
+.au__copy p + p{margin-top:.9rem}
+
+.au__btn{
+  display:inline-flex;align-items:center;gap:.9rem;margin-top:clamp(1.6rem,3vw,2.3rem);
+  padding:1rem 1.9rem;border-radius:999px;
+  background:var(--maroon);border:1px solid var(--maroon);color:var(--cream);
+  font-family:var(--sans);font-size:.82rem;font-weight:400;letter-spacing:.01em;
+  transition:gap .45s var(--ease),background .45s var(--ease),border-color .45s var(--ease),transform .45s var(--ease);
+}
+.au__btn:hover{gap:1.5rem;background:var(--maroon-deep);border-color:var(--maroon-deep);transform:translateY(-2px)}
+.au__btn .arw{transition:transform .45s var(--ease)}
+.au__btn:hover .arw{transform:translateX(4px)}
+
+/* the picture: a wide, softly cornered plate */
+.au__fig{
+  position:relative;margin:0;overflow:hidden;aspect-ratio:4/3;
+  border-radius:clamp(20px,2.4vw,32px);
+  box-shadow:
+    0 2px 4px rgba(58,44,34,.1),
+    0 20px 40px -20px rgba(58,44,34,.28),
+    0 54px 96px -46px rgba(58,44,34,.45);
+}
+/* already well lit; only a touch of warmth to seat it in the palette.
+   the crop sits low so the frame holds the arches and the courtyard, not the dark ceiling */
+.au__fig img{width:100%;height:100%;object-fit:cover;object-position:center 42%;
+  filter:sepia(.09) saturate(1.03) contrast(1.02) brightness(1.02)}
+.au__fig::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(168deg,rgba(255,244,224,.05),rgba(43,38,32,.12))}
+@media (max-width:900px){.au__fig{aspect-ratio:16/11}}
+
+/* ============================================================
+   SECTION HEADERS · one treatment, used by every band
+   ============================================================ */
+.shead{
+  text-align:center;color:var(--gold-soft);
+  margin-bottom:clamp(2.2rem,4.5vw,3.4rem);
+}
+/* on the cream plates the pale gold vanishes, so the darker gold is used */
+.au .shead{color:var(--accent)}
+.stitle{
+  font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.7rem,3.4vw,2.9rem);line-height:1.1;letter-spacing:.14em;color:inherit;
+}
+.srule{
+  display:block;width:clamp(46px,5vw,72px);height:1px;background:currentColor;opacity:.55;
+  margin:clamp(.9rem,1.8vw,1.3rem) auto 0;
+}
+
+/* ============================================================
+   PANELS · the dark bands sit on the cream as rounded plates,
+   each with a hairline of gold set just inside its edge
+   ============================================================ */
+.svc,.proc,.ask,.au,.team,.kw,.vt{
+  margin-inline:clamp(10px,1.8vw,30px);
+  border-radius:clamp(20px,2.6vw,40px);
+}
+/* a cream plate needs to lift off the cream page: a shade lighter, on a soft shadow */
+.au{
+  background:#F9F4EB;
+  box-shadow:
+    0 1px 2px rgba(58,44,34,.05),
+    0 20px 44px -34px rgba(58,44,34,.22);
+}
+/* the footer closes the page, so only its top corners are turned */
+.foot{
+  position:relative;isolation:isolate;
+  border-radius:clamp(20px,2.6vw,40px) clamp(20px,2.6vw,40px) 0 0;
+}
+.panel-frame{
+  position:absolute;inset:clamp(9px,1.15vw,18px);z-index:6;pointer-events:none;
+  border:1px solid rgba(223,199,145,.3);
+  border-radius:clamp(13px,1.9vw,28px);
+}
+.au>.panel-frame{border-color:rgba(192,139,74,.4)}
+/* the footer's frame follows its squared foot */
+.foot>.panel-frame{
+  inset:clamp(9px,1.15vw,18px) clamp(9px,1.15vw,18px) 0;
+  border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
+}
+
+/* ============================================================
+   VISION + PHILOSOPHY · two emerald cards, their own band.
+   it carries no plate or hairline of its own: the cards are the shapes
+   ============================================================ */
+.pairs{
+  position:relative;background:var(--cream);
+  padding-block:clamp(2rem,4vw,3.4rem);
+}
+/* the cards run to the same width as the plates above and below them,
+   rather than being held inside the 1440 reading wrap */
+.pairs>.wrap{
+  max-width:none;padding-inline:0;
+  margin-inline:clamp(10px,1.8vw,30px);
+}
+.pair{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2vw,1.7rem);
+}
+/* stacked, the two cards no longer share a row to equalise them, so the rows
+   are told to match instead: the pair reads as a pair at every width */
+@media (max-width:900px){.pair{grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr}}
+
+.pcard{
+  position:relative;overflow:hidden;isolation:isolate;
+  min-height:clamp(300px,26vw,440px);
+  display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);
+  background:linear-gradient(168deg,var(--band-emerald) 0%,var(--emerald-shade) 100%);
+  color:#EFE9DC;border-radius:clamp(14px,1.8vw,24px);
+  box-shadow:
+    0 2px 6px rgba(4,14,11,.24),
+    0 20px 40px -24px rgba(4,14,11,.5),
+    0 50px 80px -44px rgba(3,10,8,.6);
+}
+/* the philosophy card is the mirror of the vision card */
+.pcard--r{grid-template-columns:minmax(0,.6fr) minmax(0,.4fr)}
+.pcard--r .pcard__fig{order:2}
+.pcard--r .pcard__body{order:1}
+
+/* the picture runs to the card's own edge, arched at the head */
+.pcard__fig{
+  position:relative;margin:0;align-self:stretch;overflow:hidden;
+  margin-top:clamp(1.3rem,2.6vw,2.2rem);
+  border-radius:50% 50% 0 0 / 22% 22% 0 0;
+}
+.pcard__fig img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:sepia(.14) saturate(1.02) contrast(1.02);
+  transition:transform 1.2s var(--ease);
+}
+.pcard:hover .pcard__fig img{transform:scale(1.05)}
+
+/* both cards hold line work rather than a photograph, so the figure keeps its
+   own square edge, and the paper is dropped: inverted, the drawing's pale
+   ground goes to black and screens away, leaving the line standing in gold on
+   the card's own emerald */
+.pcard__fig--sketch{border-radius:0;margin:0;align-self:center}
+.pcard__fig--sketch img{
+  position:relative;inset:auto;width:100%;height:100%;
+  object-fit:contain;padding:clamp(.6rem,1.4vw,1.2rem);
+  /* inverted, the paper sits near black but not at it, and screen would lift it
+     to an olive block; the brightness/contrast pair crushes it to true black,
+     which screen drops entirely, and the sepia gilds what is left standing.
+     how hard to push depends on the drawing, so each one sets its own gain */
+  filter:var(--ink-line, invert(1) grayscale(1) brightness(.8) contrast(2.4) sepia(.55) saturate(2.2) brightness(.62));
+  mix-blend-mode:screen;
+}
+/* the philosophy drawing is pencil on cream rather than pen on white, so its
+   paper inverts to a near-black that the door's straight crush cannot clear
+   without taking the softer lines with it. the gain is lifted above 1 first,
+   which pushes the line past the contrast pivot while leaving the paper below
+   it, and the steep crush that follows drops the sheet and the light graphite
+   wash with it, so the drawing stands as line rather than glowing at its edges.
+   the inset moves to the figure and the sheet is filled rather than fitted:
+   any transparent ground left inside a filtered image, a padding band or a
+   letterbox, inverts to white and screens up as a lit border around it */
+.pcard__fig--room{align-self:stretch;margin:clamp(1.1rem,2.2vw,1.7rem)}
+/* and the sheet is laid out of flow, so this drawing being the taller of the
+   two cannot push its card past the one beside it once the pair stacks */
+.pcard__fig--room img{
+  position:absolute;inset:0;padding:0;object-fit:cover;
+  --ink-line:invert(1) grayscale(1) brightness(1.25) contrast(3) sepia(.7) saturate(3) brightness(.72);
+}
+/* the drawing is read, not browsed, so it holds still under the cursor */
+.pcard:hover .pcard__fig--room img{transform:none}
+
+.pcard__body{
+  position:relative;z-index:2;display:grid;align-content:center;
+  padding:clamp(1.5rem,2.6vw,2.4rem) clamp(1.5rem,2.6vw,2.4rem);
+}
+/* the label is the card's heading, at the size About Us uses */
+.pcard__eyebrow{
+  font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.7rem,3.4vw,2.9rem);line-height:1.1;letter-spacing:.08em;
+  color:var(--gold-soft);
+}
+/* which leaves the claim beneath it as the secondary line */
+.pcard__title{
+  margin-top:clamp(.5rem,1vw,.8rem);
+  font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(.98rem,1.25vw,1.15rem);line-height:1.25;letter-spacing:.16em;
+  color:rgba(246,237,227,.82);
+}
+/* the gold rule with its diamond */
+.pcard__div{
+  position:relative;display:block;width:min(150px,70%);height:1px;
+  margin:clamp(.9rem,1.8vw,1.3rem) 0;
+  background:linear-gradient(90deg,rgba(223,199,145,.7),rgba(223,199,145,.2));
+}
+.pcard__div::after{
+  content:"";position:absolute;left:44%;top:50%;width:6px;height:6px;
+  transform:translate(-50%,-50%) rotate(45deg);background:var(--gold-soft);
+}
+.pcard__text{
+  font-family:var(--sans);font-weight:300;max-width:34ch;
+  font-size:clamp(1.02rem,1.15vw,1.12rem);line-height:1.68;color:rgba(239,233,220,.76);
+}
+/* each card used to end on a button, but neither idea has a page of its own to
+   send anyone to. it closes instead on the three marks its own sentence turns
+   on, set the way the hero sets its disciplines */
+.pcard__marks{
+  justify-self:start;display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;
+  margin-top:clamp(1.1rem,2vw,1.6rem);
+  font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;
+  color:var(--gold-soft);opacity:.92;
+}
+.pcard__marks i{font-style:normal;color:var(--gold);font-size:.8em;opacity:.85}
+
+/* a sprig of line work in the empty quarter */
+.pcard__sprig{
+  position:absolute;z-index:1;pointer-events:none;
+  width:min(26%,150px);height:auto;color:var(--gold);opacity:.16;
+  fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;
+}
+.pcard--l .pcard__sprig{right:2%;bottom:-6%}
+/* on the mirrored card the sprig sits at the right of the copy, against the
+   seam with the picture, rather than running down through the text */
+.pcard--r .pcard__sprig{
+  left:auto;right:40%;bottom:-6%;
+  width:min(20%,130px);transform:scaleX(-1);
+}
+@media (max-width:520px){
+  .pcard,.pcard--r{grid-template-columns:minmax(0,1fr)}
+  .pcard__fig{min-height:200px;margin-top:0;border-radius:0}
+  .pcard--r .pcard__fig{order:1}
+  .pcard--r .pcard__body{order:2}
+  .pcard__sprig{display:none}
+}
+
+/* ============================================================
+   SERVICES · a row of framed pictures, numbered, on cream.
+   this band uses cream, gold and charcoal only
+   ============================================================ */
+.svc{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:#F9F4EB;color:var(--charcoal);
+  padding-block:clamp(3rem,6vw,5rem);
+}
+/* the paper grain the other cream plates carry */
+.svc::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t11'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t11)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+.svc>.wrap{position:relative;z-index:1}
+.svc .shead{color:var(--accent)}
+.svc>.panel-frame{border-color:rgba(192,139,74,.4)}
+.ask>.panel-frame{border-color:rgba(192,139,74,.4)}
+
+.svc__over{
+  margin:clamp(-1.4rem,-2.6vw,-1rem) auto clamp(2.4rem,4.6vw,3.6rem);max-width:52ch;
+  text-align:center;font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.03rem,1.18vw,1.12rem);line-height:1.7;color:var(--ink-soft);
+}
+.svc__over b{font-weight:400;color:var(--charcoal)}
+
+.svc__grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(1.2rem,2.4vw,2.2rem);align-items:stretch;
+}
+
+/* the picture sits over a fine outline offset up and to the left */
+.sv__fig{
+  position:relative;margin:0 0 clamp(1rem,1.9vw,1.5rem);
+  padding:clamp(12px,1.5vw,22px) 0 0 clamp(12px,1.5vw,22px);
+  isolation:isolate;
+}
+.sv__fig::before{
+  content:"";position:absolute;left:0;top:0;
+  right:clamp(20px,2.6vw,38px);bottom:clamp(20px,2.6vw,38px);
+  background:linear-gradient(168deg,var(--band-emerald) 0%,var(--emerald-shade) 100%);
+  border:1px solid rgba(223,199,145,.35);
+}
+.sv__fig img{
+  position:relative;display:block;width:100%;height:100%;object-fit:cover;
+  filter:sepia(.16) saturate(1.02) contrast(1.02);
+}
+/* the numeral sits in the picture's own corner, on emerald, so it always reads */
+.sv__no{
+  position:absolute;left:0;top:0;z-index:3;
+  display:grid;place-items:center;
+  width:clamp(44px,4.2vw,62px);aspect-ratio:1;
+  background:linear-gradient(168deg,var(--band-emerald) 0%,var(--emerald-shade) 100%);
+  border:1px solid rgba(223,199,145,.35);
+  font-family:var(--serif);font-weight:400;line-height:1;
+  font-size:clamp(1.05rem,1.5vw,1.4rem);letter-spacing:.04em;
+  color:var(--gold-soft);
+}
+
+.sv{position:relative;overflow:hidden}
+/* each card is one link: the picture, the name and the context all point at
+   the service's own page, where the fuller content lives. nothing is hidden
+   behind an interaction here, so the context reads without asking */
+/* the cards stretch to a shared height and the note takes up the slack, so
+   the three ways in line up along the bottom however long the context runs */
+.sv__link{
+  display:flex;flex-direction:column;height:100%;
+  color:inherit;text-decoration:none;
+}
+.sv__note{flex:1}
+.sv__name{
+  display:flex;align-items:center;gap:.8rem;margin:0;
+  font-family:var(--sans);font-weight:400;
+  font-size:clamp(.84rem,.98vw,.94rem);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--charcoal);transition:color .4s var(--ease);
+}
+.sv__label{flex:none}
+.sv__rule{flex:1;height:1px;background:rgba(192,139,74,.45)}
+.sv__link:hover .sv__name{color:var(--accent)}
+.sv__link:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+
+.sv__fig img{
+  position:relative;display:block;width:100%;aspect-ratio:3/4;object-fit:cover;
+  filter:sepia(.16) saturate(1.02) contrast(1.02);
+  transition:transform 1.2s var(--ease);
+}
+.sv__link:hover .sv__fig img{transform:scale(1.04)}
+
+/* the way in, set the way the studio's other buttons are, and it opens its
+   gap on hover so the card answers the cursor */
+.sv__go{
+  display:inline-flex;align-self:flex-start;align-items:center;gap:.55rem;
+  margin-top:clamp(.9rem,1.6vw,1.2rem);
+  font-family:var(--sans);font-weight:400;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);transition:gap .45s var(--ease);
+}
+.sv__link:hover .sv__go{gap:1.1rem}
+.sv__go i{font-style:normal}
+
+.svc__foot{margin-top:clamp(2.2rem,4.4vw,3.2rem);text-align:center}
+.svc__btn{
+  display:inline-flex;align-items:center;gap:.9rem;
+  padding:1rem 2rem;border-radius:999px;
+  background:var(--accent);border:1px solid var(--accent);color:var(--cream);
+  box-shadow:0 16px 30px -20px rgba(58,44,34,.7);
+  font-size:.72rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;
+  transition:gap .45s var(--ease),background .45s var(--ease),transform .45s var(--ease);
+}
+.svc__btn:hover{gap:1.4rem;background:#6F521F;border-color:#6F521F;transform:translateY(-2px)}
+
+   is wide enough for the list: the card is 3/4 of its width, so a narrow
+   column is a short card and a long wrap at the same time. measured, four
+   needs about 1400px; below that it drops to two, which are far roomier */
+@media (max-width:1120px){.svc__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.8rem,4vw,2.6rem)}}
+@media (max-width:620px){.svc__grid{grid-template-columns:minmax(0,1fr);max-width:400px;margin-inline:auto}}
+
+/* ============================================================
+   PROCESS · five stages on a dashed rail
+   ============================================================ */
+.proc{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:#F9F4EB;color:var(--charcoal);
+  /* the arched panel holds the left of the band and the stages run beside it */
+  display:grid;grid-template-columns:minmax(0,clamp(230px,20vw,330px)) minmax(0,1fr);
+  align-items:stretch;
+  /* the panel reaches the edges of the box, so the band carries no padding
+     of its own: the column beside it carries it instead */
+  padding-block:0;
+}
+.proc__pic{position:relative;margin:0;overflow:hidden}
+.proc__pic img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 50%;
+  /* it thins away towards the stages rather than stopping on a hard edge */
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 62%,rgba(0,0,0,.55) 82%,transparent 100%);
+          mask-image:linear-gradient(90deg,#000 0%,#000 62%,rgba(0,0,0,.55) 82%,transparent 100%);
+}
+.proc>.wrap{padding-block:clamp(3rem,6vw,4.8rem);padding-inline:clamp(1.25rem,3vw,2.8rem)}
+/* the panel is a single tall image, so it goes where the stages wrap */
+@media (max-width:1180px){
+  .proc{display:block;padding-block:0}
+  .proc__pic{display:none}
+  .proc>.wrap{padding-inline:var(--pad)}
+}
+/* the paper grain the other cream plates carry */
+.proc::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t12'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t12)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+.proc>.wrap{position:relative;z-index:1}
+.proc .shead{color:var(--accent)}
+.proc__sub{
+  margin:clamp(-1.4rem,-2.6vw,-1rem) auto clamp(2.2rem,4.4vw,3.4rem);max-width:44ch;
+  text-align:center;font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.03rem,1.18vw,1.12rem);line-height:1.65;color:var(--ink-soft);
+}
+
+.proc__steps{
+  --dot:clamp(38px,3.4vw,50px);
+  --pgap:clamp(.9rem,2.2vw,2rem);
+  list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--pgap);
+}
+.step{position:relative;text-align:center}
+/* the dashed rail runs from one numeral to the next, stopping clear of both */
+.step + .step::before{
+  content:"";position:absolute;top:calc(var(--dot) / 2);
+  left:calc(-50% - (var(--pgap) / 2) + (var(--dot) / 2) + 10px);
+  right:calc(50% + (var(--dot) / 2) + 10px);
+  border-top:1px dashed rgba(192,139,74,.5);
+}
+.step__no{
+  width:var(--dot);height:var(--dot);margin:0 auto;
+  display:grid;place-items:center;border-radius:50%;
+  /* maroon, to sit with the panel beside them */
+  background:var(--maroon);color:var(--gold-soft);
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1rem,1.3vw,1.22rem);line-height:1;
+  box-shadow:0 10px 20px -12px rgba(47,20,22,.7);
+}
+.step__name{
+  margin-top:clamp(.9rem,1.7vw,1.25rem);
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.02rem,1.35vw,1.24rem);line-height:1.25;color:var(--charcoal);
+}
+/* every stage carries a drawing rather than a photograph: the studio's own
+   line work, set in the gold the numerals and the rail are drawn in. the
+   fainter marks, the ground line, hatching and shadow, sit on .f, so the
+   subject reads first and the setting stays a suggestion */
+.step__art{
+  display:block;width:min(100%,176px);height:auto;
+  margin:clamp(.8rem,1.6vw,1.2rem) auto clamp(.2rem,.6vw,.5rem);
+  /* drawn in maroon line, with nothing filled in */
+  color:var(--maroon);opacity:.96;
+  fill:none;stroke:currentColor;stroke-width:1.05;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+/* three tiers behind the subject: .f for the setting it stands in, .ff for
+   fittings and pattern, .fff for the ground, the hatching and the cast shadow.
+   the tiers are what let the drawings carry detail without going muddy at the
+   size the row runs them */
+.step__art .f{stroke-width:.6;opacity:.62}
+.step__art .ff{stroke-width:.45;opacity:.34}
+.step__art .fff{stroke-width:.4;opacity:.2}
+
+.step__note{
+  margin-top:clamp(.45rem,.9vw,.7rem);margin-inline:auto;max-width:26ch;
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(.94rem,1.07vw,1.02rem);line-height:1.6;color:var(--ink-soft);
+}
+
+/* the rail only makes sense along a single row, so it goes as soon as the
+   stages wrap */
+@media (max-width:1180px){
+  .proc__steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.6rem,4vw,2.4rem)}
+  .step + .step::before{display:none}
+}
+@media (max-width:900px){
+  .proc__steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .proc__steps{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ============================================================
+   TEAM · an emerald band, the studio at work, tinted to the theme
+   ============================================================ */
+/* ============================================================
+   ONE PAIR OF HANDS · the studio is one person. her portrait at work
+   on the left, who she is beside it, and a line of her own at the end
+   ============================================================ */
+.team{
+  position:relative;isolation:isolate;color:#EFE9DC;
+  padding-block:clamp(1.6rem,3vw,2.6rem);
+}
+/* the sketches out on the cream at the left; who she is and what the studio
+   stands for in the green box at the right, sized to its words */
+.team__grid{
+  display:grid;grid-template-columns:minmax(0,.4fr) minmax(0,.6fr);
+  grid-template-areas:"arch box";
+  gap:clamp(1.4rem,3.4vw,3.4rem);align-items:stretch;
+}
+/* the box runs out to where the gold hairline sits on the neighbouring plates,
+   and from the top of the sketches to the foot of them */
+.team{margin-inline:0}
+.team>.wrap{max-width:none;padding-inline:var(--pad) clamp(9px,1.15vw,18px)}
+.team__box{
+  grid-area:box;display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"main pillars";gap:clamp(1.4rem,3vw,2.6rem);align-items:center;
+  padding:clamp(1.5rem,2.8vw,2.5rem) clamp(1.4rem,3vw,2.6rem);
+  border-radius:clamp(20px,2.6vw,40px);
+  background:linear-gradient(168deg,var(--band-emerald) 0%,var(--emerald-shade) 100%);
+}
+
+.team__pillars{list-style:none;margin:0;padding:0}
+
+/* the sketches: two in a column a centimetre apart on the right, and a
+   third laid over them from the left, across the gap between them */
+.team__sketches{grid-area:arch;position:relative;align-self:start;justify-self:end;width:86%}
+.team__stack{display:flex;flex-direction:column;gap:1cm;width:60%;margin-left:auto}
+.team__sheet{
+  display:block;width:100%;height:auto;background:#F3ECDF;
+  padding:clamp(3px,.35vw,5px);border-radius:2px;
+  box-shadow:0 1px 2px rgba(0,0,0,.25),0 18px 30px -16px rgba(0,0,0,.6);
+}
+.team__sheet--over{position:absolute;z-index:1;top:16%;left:0;width:56%}
+
+.team__main{grid-area:main;padding-bottom:clamp(.4rem,1vw,.8rem)}
+.team .shead{color:#F6EDE3;margin-bottom:clamp(1rem,2vw,1.6rem)}
+.team .stitle{font-size:clamp(1.4rem,2.2vw,2.2rem);white-space:nowrap}
+.team .srule{color:var(--gold-soft)}
+.team__sub{
+  font-family:var(--sans);font-weight:500;font-size:clamp(.72rem,.9vw,.84rem);
+  letter-spacing:.22em;text-transform:uppercase;color:rgba(246,237,227,.8);
+}
+.team__role{
+  margin-top:clamp(1.3rem,2.4vw,2rem);
+  font-family:var(--sans);font-weight:500;font-size:clamp(.64rem,.78vw,.72rem);
+  letter-spacing:.22em;text-transform:uppercase;color:rgba(246,237,227,.72);
+}
+.team__name{
+  margin-top:.5rem;font-family:var(--serif);font-weight:400;
+  font-size:clamp(2rem,3.2vw,2.8rem);line-height:1.05;color:#F6EDE3;
+}
+.team__text{
+  margin-top:clamp(.8rem,1.4vw,1.1rem);max-width:58ch;
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(.94rem,1.05vw,1.02rem);line-height:1.75;color:rgba(239,233,220,.8);
+}
+/* what she practises, set as a line of small capitals divided by gold points */
+.team__practice{
+  display:flex;flex-wrap:wrap;gap:.3rem 0;margin-top:clamp(1rem,1.8vw,1.4rem);
+  font-family:var(--sans);font-weight:500;font-size:clamp(.66rem,.8vw,.75rem);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);
+}
+.team__practice span+span::before{content:"\00b7";margin-inline:.9em;color:rgba(223,199,145,.6)}
+.team__rule{
+  display:block;width:clamp(30px,3vw,42px);height:1px;
+  margin:clamp(1.1rem,2vw,1.6rem) 0;background:rgba(223,199,145,.5);
+}
+.team__quote p{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.2rem,1.7vw,1.6rem);line-height:1.4;color:#F6EDE3;
+}
+.team__quote cite{
+  display:block;margin-top:clamp(.8rem,1.4vw,1.1rem);font-style:normal;
+  font-family:var(--sans);font-weight:500;font-size:clamp(.66rem,.8vw,.75rem);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);
+}
+.team__quote cite::before{content:"\2014\00a0\00a0"}
+
+/* what the studio stands for, down a gold hairline */
+.team__pillars{
+  grid-area:pillars;align-self:center;
+  display:flex;flex-direction:column;gap:clamp(1.6rem,3vw,2.6rem);
+  padding-left:clamp(1rem,2vw,1.8rem);border-left:1px solid rgba(223,199,145,.45);
+}
+.team__pillars li{
+  display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center;
+  font-family:var(--sans);font-weight:500;font-size:clamp(.62rem,.74vw,.7rem);
+  line-height:1.7;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,237,227,.86);
+}
+.team__pillars svg{
+  width:clamp(32px,2.8vw,42px);height:auto;fill:none;stroke:var(--gold-soft);
+  stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* narrower screens: the sketches take their whole column and the words tighten,
+   so the box still ends where the sketches do */
+@media (max-width:1600px) and (min-width:1081px){
+  .team__sketches{width:100%}
+  .team__text{font-size:.9rem;line-height:1.62}
+  .team__role{margin-top:clamp(1rem,1.8vw,1.4rem)}
+  .team .shead{margin-bottom:clamp(.8rem,1.4vw,1.1rem)}
+}
+@media (max-width:1080px){
+  .team__grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"arch" "box"}
+  .team__sketches{width:min(100%,440px);margin-inline:auto}
+  .team__box{grid-template-columns:minmax(0,1fr);grid-template-areas:"main" "pillars"}
+  .team .stitle{white-space:normal}
+  .team__pillars{flex-direction:row;justify-content:space-around;padding:clamp(1.4rem,3vw,2rem) 0 0;border-left:0;border-top:1px solid rgba(223,199,145,.45)}
+}
+@media (max-width:760px){
+  .team__pillars{gap:1rem}
+}
+
+/* ============================================================
+   WHY CHOOSE US · the claim at the left, six reasons at the right
+   ============================================================ */
+.why{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:#F9F4EB;color:var(--charcoal);
+  padding-block:clamp(3rem,6vw,4.8rem);
+}
+/* the paper grain the other cream plates carry */
+.why::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t14'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t14)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+.why>.panel-frame{border-color:rgba(192,139,74,.4)}
+.why .shead{color:var(--accent)}
+.why>.wrap{position:relative;z-index:2}
+/* line work at the foot of the claim, as in the About band */
+.why__sprig{
+  position:absolute;z-index:1;left:-14px;bottom:3%;height:min(78%,330px);width:auto;
+  color:var(--bronze);opacity:.3;pointer-events:none;
+  fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;
+}
+@media (max-width:1100px){.why__sprig{display:none}}
+
+.why__sub{
+  margin:clamp(-1.4rem,-2.6vw,-1rem) auto clamp(2.2rem,4.4vw,3.4rem);max-width:44ch;
+  text-align:center;font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.03rem,1.18vw,1.12rem);line-height:1.65;color:var(--ink-soft);
+}
+
+/* the rule, with a diamond at either end */
+.why__btn{
+  display:inline-flex;align-items:center;gap:.9rem;
+  margin-top:clamp(1.3rem,2.6vw,2rem);
+  padding:.9rem 1.5rem;border:1px solid rgba(192,139,74,.6);border-radius:4px;
+  font-family:var(--sans);font-size:.7rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  transition:gap .45s var(--ease),background .45s var(--ease),color .45s var(--ease);
+}
+.why__btn:hover{gap:1.4rem;background:var(--accent);border-color:var(--accent);color:var(--cream)}
+
+/* ---- the six reasons ---- */
+.why__cards{
+  list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.7rem,1.4vw,1.2rem);
+}
+@media (max-width:1100px){.why__cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.why__cards{grid-template-columns:minmax(0,1fr)}}
+
+.rz{
+  position:relative;
+  padding:clamp(1rem,1.8vw,1.4rem) clamp(1rem,1.7vw,1.3rem) clamp(1.1rem,2vw,1.5rem);
+  background:rgba(255,253,248,.72);
+  border:1px solid rgba(192,139,74,.2);
+  border-radius:clamp(8px,1vw,14px);
+  box-shadow:0 12px 26px -20px rgba(58,44,34,.35);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+}
+.rz:hover{transform:translateY(-3px);border-color:rgba(192,139,74,.45);
+  box-shadow:0 18px 34px -20px rgba(58,44,34,.45)}
+.rz__top{display:flex;align-items:center;justify-content:space-between;gap:.8rem}
+.rz__ico{width:clamp(24px,2.2vw,30px);height:auto;color:var(--bronze);
+  fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.rz__no{
+  font-family:var(--serif);font-weight:400;line-height:1;
+  font-size:clamp(1rem,1.3vw,1.25rem);color:var(--accent);opacity:.75;
+}
+.rz__name{
+  margin-top:clamp(.7rem,1.3vw,1rem);
+  font-family:var(--sans);font-weight:500;
+  font-size:clamp(.72rem,.82vw,.79rem);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--charcoal);
+}
+.rz__note{
+  margin-top:.45rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.89rem,1vw,.96rem);line-height:1.6;color:var(--ink-soft);
+}
+
+/* ============================================================
+   KIND WORDS · written testimonials on the emerald. three cards in view,
+   the two arrows walk the row along. proportions follow the reference:
+   card ~20% of the page wide, ~1.5% gutters, a 3:2 room under the words
+   ============================================================ */
+.kw{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:linear-gradient(168deg,var(--band-emerald) 0%,var(--emerald-shade) 100%);
+  color:#EFE9DC;
+  padding-block:clamp(1.9rem,3.4vw,3.2rem) clamp(1.6rem,2.8vw,2.6rem);
+}
+.kw .wrap{max-width:none;padding-inline:clamp(1.25rem,5vw,5.2rem) clamp(1.25rem,3.4vw,3.4rem)}
+.kw>.wrap{position:relative;z-index:1}
+.kw__grid{
+  display:grid;grid-template-columns:minmax(0,.27fr) minmax(0,.73fr);
+  gap:clamp(1.4rem,3.4vw,3.2rem);align-items:start;
+}
+@media (max-width:980px){.kw__grid{grid-template-columns:minmax(0,1fr);gap:clamp(1.4rem,3vw,2rem)}}
+/* the eyebrow sits level with the top of the cards */
+.kw__aside{align-self:start;position:relative}
+
+.kw__eyebrow{
+  display:flex;align-items:center;gap:.9rem;
+  font-family:var(--sans);font-weight:500;font-size:clamp(.66rem,.8vw,.76rem);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--gold-soft);
+}
+.kw__eyebrow::after{content:"";flex:1;max-width:56px;height:1px;background:rgba(223,199,145,.5)}
+.kw__ttl{
+  margin-top:clamp(.8rem,1.5vw,1.2rem);
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.8rem,2.9vw,2.7rem);line-height:1.12;letter-spacing:-.005em;color:var(--cream);
+}
+.kw__lead{
+  margin-top:clamp(.9rem,1.5vw,1.25rem);max-width:30ch;
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(.94rem,1.05vw,1.02rem);line-height:1.65;color:rgba(239,233,220,.76);
+}
+.kw__nav{display:flex;gap:clamp(.6rem,1vw,.95rem);margin-top:clamp(1.3rem,2.4vw,2rem)}
+.kw__arrow{
+  width:clamp(42px,3.2vw,48px);aspect-ratio:1;border-radius:50%;flex:none;
+  display:grid;place-items:center;cursor:pointer;
+  border:1px solid rgba(223,199,145,.45);background:transparent;color:var(--gold-soft);
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),opacity .4s var(--ease);
+}
+.kw__arrow:hover{background:var(--gold);border-color:var(--gold);color:var(--emerald-deep)}
+.kw__arrow:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+.kw__arrow[disabled]{opacity:.35;cursor:default;background:transparent;color:var(--gold-soft);border-color:rgba(223,199,145,.45)}
+.kw__arrow svg{width:40%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* the cards: cream on the green, the words above the room */
+.kw__win{overflow:hidden}
+.kw__track{
+  display:flex;gap:clamp(.7rem,1.05vw,1.05rem);
+  transition:transform .8s var(--ease);
+}
+.kw__card{
+  flex:0 0 calc((100% - 2 * clamp(.7rem,1.05vw,1.05rem)) / 3);
+  display:flex;flex-direction:column;
+  background:#F3ECDF;color:var(--charcoal);
+  border-radius:clamp(14px,1.5vw,20px);
+  padding:clamp(.55rem,.85vw,.85rem);
+}
+@media (max-width:980px){.kw__card{flex-basis:calc((100% - clamp(.7rem,1.05vw,1.05rem)) / 2)}}
+@media (max-width:640px){.kw__card{flex-basis:100%}}
+/* the words sit further in than the room does, as in the reference */
+.kw__mark,.kw__quote,.kw__rule,.kw__by,.kw__who{margin-inline:clamp(.6rem,1.5vw,1.5rem)}
+.kw__mark{
+  margin-top:clamp(.5rem,1vw,1rem);
+  font-family:var(--serif);font-weight:600;line-height:.62;
+  font-size:clamp(1.9rem,2.5vw,2.4rem);color:var(--accent);opacity:.75;
+}
+.kw__quote{
+  margin-top:clamp(.55rem,.95vw,.9rem);
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.02rem,1.22vw,1.18rem);line-height:1.42;color:#2E2A22;
+}
+.kw__rule{
+  display:block;width:clamp(22px,1.9vw,28px);height:1px;
+  margin-top:clamp(.8rem,1.5vw,1.25rem);background:rgba(138,103,41,.6);
+}
+.kw__by{
+  margin-top:clamp(.75rem,1.3vw,1.05rem);
+  font-family:var(--sans);font-weight:500;font-size:clamp(.7rem,.79vw,.76rem);
+  letter-spacing:.17em;text-transform:uppercase;color:var(--charcoal);
+}
+.kw__who{
+  margin-top:.35rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.85rem,.94vw,.92rem);color:var(--ink-soft);
+}
+.kw__shot{margin:auto 0 0;padding-top:clamp(.85rem,1.5vw,1.3rem)}
+.kw__shot img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;
+  border-radius:clamp(10px,1.1vw,14px)}
+
+/* the studio's line at the foot of the band, as in the reference */
+.kw__foot{
+  display:flex;align-items:center;gap:clamp(1rem,2vw,1.6rem);
+  margin-top:clamp(1.5rem,2.6vw,2.2rem);
+}
+.kw__foot span{flex:1;height:1px;background:linear-gradient(90deg,rgba(223,199,145,0),rgba(223,199,145,.55))}
+.kw__foot p{
+  flex:none;font-family:var(--sans);font-weight:400;font-size:clamp(.66rem,.76vw,.73rem);
+  letter-spacing:.24em;text-transform:uppercase;color:rgba(223,199,145,.8);
+}
+@media (max-width:640px){.kw__foot span{display:none}.kw__foot{justify-content:center}}
+
+/* the gold branch, hung just under the arrows and bleeding off the left edge */
+.kw__leaf{
+  position:absolute;z-index:-1;top:calc(100% + clamp(.5rem,1vw,.9rem));
+  left:calc(-1 * clamp(1.25rem,5vw,5.2rem) - clamp(12px,1.2vw,22px));
+  width:clamp(130px,11vw,190px);height:auto;opacity:.72;pointer-events:none;user-select:none;
+  background:none;
+}
+@media (max-width:980px){.kw__leaf{display:none}}
+
+/* ============================================================
+   CLIENT STORIES · the films, on the cream, with a photo panel bleeding
+   off the left edge and the invitation beside them. each card is wired
+   but inert until its data-video points at a film
+   ============================================================ */
+.vt{
+  position:relative;overflow:hidden;isolation:isolate;margin-top:clamp(1.2rem,2.6vw,2.4rem);
+  background:#F5EFE3;color:var(--charcoal);
+  padding-block:clamp(1.5rem,2.1vw,2.1rem);
+}
+/* the room that bleeds off the left edge, behind everything */
+.vt__panel{
+  position:absolute;z-index:0;right:0;top:0;bottom:0;width:15%;margin:0;overflow:hidden;
+  pointer-events:none;
+}
+.vt__panel img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform:scaleX(-1)}
+.vt__panel::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(270deg,rgba(245,239,227,0) 62%,#F5EFE3 100%);
+}
+@media (max-width:1100px){.vt__panel{display:none}}
+
+.vt .wrap{max-width:none;padding-inline:clamp(1.25rem,5vw,5.2rem) 18.3%}
+@media (max-width:1100px){.vt .wrap{padding-inline:clamp(1.25rem,5vw,5.2rem) clamp(1.25rem,4.4vw,4.4rem)}}
+.vt>.wrap{position:relative;z-index:1}
+.vt__grid{
+  display:grid;grid-template-columns:minmax(0,.275fr) minmax(0,.725fr);
+  gap:clamp(1.2rem,2vw,2rem);align-items:center;
+}
+@media (max-width:980px){.vt__grid{grid-template-columns:minmax(0,1fr);gap:clamp(1.4rem,3vw,2rem)}}
+
+.vt__eyebrow{
+  display:flex;align-items:center;gap:.9rem;
+  font-family:var(--sans);font-weight:500;font-size:clamp(.66rem,.8vw,.76rem);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--accent);
+}
+.vt__eyebrow::after{content:"";flex:1;max-width:56px;height:1px;background:rgba(138,103,41,.5)}
+.vt__ttl{
+  margin-top:clamp(.8rem,1.5vw,1.2rem);
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.8rem,2.9vw,2.7rem);line-height:1.12;letter-spacing:-.005em;color:var(--charcoal);
+}
+.vt__lead{
+  margin-top:clamp(.9rem,1.5vw,1.25rem);max-width:30ch;
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(.94rem,1.05vw,1.02rem);line-height:1.65;color:var(--ink-soft);
+}
+.vt__stats{display:flex;margin-top:clamp(1.3rem,2.4vw,2.1rem)}
+.vt__stat{flex:1;padding-inline:clamp(.7rem,1.3vw,1.15rem);border-left:1px solid rgba(138,103,41,.35)}
+.vt__stat:first-child{padding-left:0;border-left:0}
+.vt__stat b{
+  display:block;font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.45rem,2.1vw,1.9rem);line-height:1;color:var(--charcoal);
+}
+.vt__stat span{
+  display:block;margin-top:.5rem;font-family:var(--sans);font-weight:400;
+  font-size:clamp(.64rem,.74vw,.71rem);line-height:1.6;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);
+}
+
+/* the film cards */
+.vt__win{position:relative;overflow:hidden;padding-bottom:clamp(1.3rem,2.2vw,2rem)}
+.vt__track{display:flex;gap:clamp(.55rem,.75vw,.8rem);transition:transform .8s var(--ease)}
+.vt__card{
+  flex:0 0 calc((100% - 2 * clamp(.55rem,.75vw,.8rem)) / 3);
+  display:block;padding:0;border:0;background:none;text-align:left;
+  font:inherit;color:inherit;cursor:pointer;
+}
+@media (max-width:980px){.vt__card{flex-basis:calc((100% - clamp(.55rem,.75vw,.8rem)) / 2)}}
+@media (max-width:640px){.vt__card{flex-basis:100%}}
+.vt__card[aria-disabled="true"]{cursor:default}
+.vt__card:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:clamp(12px,1.5vw,18px)}
+.vt__frame{
+  position:relative;display:block;overflow:hidden;aspect-ratio:71/100;
+  border-radius:clamp(12px,1.5vw,18px);background:var(--emerald-shade);
+}
+.vt__frame img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform 1s var(--ease);
+}
+.vt__frame::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,12,8,0) 30%,rgba(14,12,8,.55) 52%,rgba(14,12,8,.93) 100%);
+}
+@media (hover:hover) and (pointer:fine){
+  .vt__card:not([aria-disabled="true"]):hover .vt__frame img{transform:scale(1.05)}
+}
+.vt__play{position:absolute;inset:0 0 28.8% 0;z-index:2;display:grid;place-items:center;pointer-events:none}
+.vt__play span{
+  width:20.5%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(223,199,145,.9);background:rgba(20,16,10,.3);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  transition:background .45s var(--ease),border-color .45s var(--ease),transform .45s var(--ease);
+}
+.vt__play svg{width:34%;height:34%;fill:#F6EDE3;margin-left:9%}
+.vt__card[aria-disabled="true"] .vt__play span{opacity:.6}
+@media (hover:hover) and (pointer:fine){
+  .vt__card:not([aria-disabled="true"]):hover .vt__play span{background:var(--gold);border-color:var(--gold);transform:scale(1.06)}
+}
+.vt__card:not([aria-disabled="true"]) .vt__play svg{fill:#F6EDE3}
+/* the words sit inside the foot of the still, as in the reference */
+.vt__cap{
+  position:absolute;z-index:3;left:0;right:0;bottom:0;
+  padding:clamp(.85rem,1.5vw,1.35rem);
+}
+.vt__quote{
+  position:relative;display:block;padding-left:clamp(.9rem,1.25vw,1.2rem);
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(.96rem,1.12vw,1.06rem);line-height:1.44;color:#F4EDE1;
+}
+.vt__quote i{
+  position:absolute;left:0;top:-.06em;font-style:normal;font-weight:600;
+  font-size:1.25em;line-height:1;color:var(--gold-soft);opacity:.85;
+}
+.vt__rule{
+  display:block;width:clamp(20px,1.7vw,26px);height:1px;
+  margin-top:clamp(.75rem,1.3vw,1.1rem);background:rgba(223,199,145,.65);
+}
+.vt__name{
+  display:block;margin-top:clamp(.7rem,1.2vw,1rem);
+  font-family:var(--sans);font-weight:500;font-size:clamp(.68rem,.78vw,.75rem);
+  letter-spacing:.17em;text-transform:uppercase;color:#F6EDE3;
+}
+.vt__meta{
+  display:block;margin-top:.32rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.82rem,.92vw,.89rem);color:rgba(246,237,227,.8);
+}
+
+/* the dots under the row, and the arrow out on the right margin */
+.vt__dots{
+  position:absolute;right:0;bottom:0;display:flex;align-items:center;gap:.5rem;
+}
+.vt__dots b{
+  display:block;width:18px;height:2px;border-radius:2px;
+  background:rgba(43,38,32,.28);transition:background .4s var(--ease),width .4s var(--ease);
+}
+.vt__dots b.is-on{width:26px;background:var(--charcoal)}
+.vt__next{
+  position:absolute;z-index:2;right:calc(18.3% - clamp(40px,3vw,46px) - clamp(.6rem,1vw,1rem));top:calc(50% - 1.4rem);
+  width:clamp(40px,3vw,46px);aspect-ratio:1;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;
+  border:1px solid rgba(138,103,41,.5);background:transparent;color:var(--accent);
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),opacity .4s var(--ease);
+}
+.vt__next svg{width:42%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.vt__next:hover{background:var(--emerald-deep);border-color:var(--emerald-deep);color:var(--cream)}
+.vt__next:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.vt__next[disabled]{opacity:.3;cursor:default;background:transparent;color:var(--accent);border-color:rgba(138,103,41,.5)}
+@media (max-width:1100px){.vt__next{display:none}}
+
+/* ============================================================
+   THE FLOATING WAYS TO TALK · book, enquire, call, WhatsApp.
+   they ride the bottom right corner and carry whatever was ticked
+   ============================================================ */
+.wa{
+  position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:130;
+  display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;
+  opacity:0;transform:translateY(18px);transition:.8s var(--ease);pointer-events:none;
+}
+.wa.on{opacity:1;transform:none;pointer-events:auto}
+.wa__btn{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--emerald);color:var(--gold-soft);
+  display:grid;place-items:center;flex:0 0 auto;position:relative;
+  border:1px solid rgba(223,199,145,.3);
+  box-shadow:0 10px 24px -12px rgba(23,21,15,.55);
+  transition:background .45s var(--ease),color .45s var(--ease),transform .45s var(--ease);
+}
+.wa__btn:hover{background:var(--gold);color:var(--emerald-deep);border-color:var(--gold);transform:translateY(-2px)}
+.wa__btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wa__btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+/* WhatsApp sits in the same emerald as the rest; only its mark is solid */
+.wa__btn--wa svg{width:25px;height:25px;fill:currentColor;stroke:none}
+
+/* the name of each, told on hover rather than crowding the corner */
+.wa__lbl{
+  position:absolute;right:calc(100% + .6rem);top:50%;transform:translateY(-50%) translateX(6px);
+  white-space:nowrap;pointer-events:none;opacity:0;
+  padding:.5rem .8rem;background:var(--ink);color:var(--cream);
+  font-family:var(--sans);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 10px 22px -14px rgba(23,21,15,.7);
+  transition:opacity .4s var(--ease),transform .4s var(--ease);
+}
+.wa__btn:hover .wa__lbl,.wa__btn:focus-visible .wa__lbl{opacity:1;transform:translateY(-50%)}
+@media (max-width:600px){
+  .wa{gap:.55rem}
+  .wa__btn{width:46px;height:46px}
+  .wa__btn svg{width:19px;height:19px}
+  .wa__btn--wa svg{width:22px;height:22px}
+  .wa__lbl{display:none}
+}
+
+/* ============================================================
+   WHAT ARE YOU LOOKING FOR · the services offered as a choice,
+   and four ways to say it. whatever is ticked travels into the message
+   ============================================================ */
+.ask{
+  position:relative;overflow:hidden;isolation:isolate;
+  background:#F9F4EB;color:var(--charcoal);
+  /* the widest padding on the page: this is the band the whole site walks towards */
+  padding-block:clamp(4.5rem,9.5vw,8.5rem);
+}
+/* a low wash of gold from the head of the band, so the plate is not flat */
+.ask::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(62% 60% at 50% 0%,rgba(74,34,37,.13),transparent 68%),
+    radial-gradient(46% 52% at 96% 96%,rgba(123,74,78,.1),transparent 70%);
+}
+/* the paper grain the other cream plates carry */
+.ask::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='t17'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23t17)'/%3E%3C/svg%3E");
+  background-size:240px 240px;
+}
+.ask>.wrap{position:relative;z-index:1}
+.ask__grid{display:grid;grid-template-columns:minmax(0,1fr)}
+
+/* ---- the question ---- */
+.ask__copy{text-align:center;max-width:64ch;margin-inline:auto}
+.ask__eyebrow{
+  font-family:var(--sans);font-size:.74rem;font-weight:400;
+  letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--maroon);
+}
+/* set as the Team heading is: serif, upright, uppercase, widely tracked */
+.ask__ttl{
+  margin-top:.8rem;font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.1;letter-spacing:.12em;
+  /* the Team heading's gold, in the shade the palette keeps for cream */
+  color:var(--accent);
+}
+.ask__ttl em{font-style:italic;color:inherit}
+.ask__rule{
+  display:block;width:clamp(46px,5vw,72px);height:1px;background:var(--maroon);opacity:.5;
+  margin:clamp(1.1rem,2.2vw,1.7rem) auto;
+}
+.ask__lead{
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.09rem,1.42vw,1.26rem);line-height:1.78;color:var(--muted);
+  max-width:56ch;margin-inline:auto;
+}
+
+/* ---- the work, offered as a choice rather than a list.
+       each says what it actually is, so nobody has to guess at a label ---- */
+.ask__chips{
+  list-style:none;padding:0;
+  margin:clamp(2.2rem,4.5vw,3.4rem) 0 0;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.7rem,1.3vw,1rem);
+}
+.chip{
+  position:relative;width:100%;height:100%;cursor:pointer;
+  display:grid;gap:.5rem;align-content:start;text-align:left;
+  padding:clamp(1.05rem,1.9vw,1.5rem) clamp(1rem,1.7vw,1.35rem);
+  background:#FFFDF8;border:1px solid rgba(23,21,15,.16);border-radius:0;color:var(--charcoal);
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),
+             transform .45s var(--ease),box-shadow .45s var(--ease);
+}
+.chip:hover{border-color:var(--maroon);transform:translateY(-3px);box-shadow:0 22px 34px -26px rgba(47,20,22,.55)}
+.chip:focus-visible{outline:2px solid var(--maroon);outline-offset:3px}
+.chip__n{
+  font-family:var(--sans);font-size:.8rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;padding-right:1.8rem;
+}
+.chip__d{
+  font-family:var(--sans);font-weight:300;font-size:.96rem;line-height:1.64;color:var(--muted);
+}
+/* the tick sits in the corner, empty until the service is chosen */
+.chip__n::after{
+  content:"";position:absolute;top:clamp(1.05rem,1.9vw,1.5rem);right:clamp(1rem,1.7vw,1.35rem);
+  width:15px;height:15px;border:1px solid rgba(23,21,15,.3);
+}
+.chip[aria-pressed="true"]{background:var(--maroon);border-color:var(--maroon);color:#F5EFE4}
+.chip[aria-pressed="true"] .chip__d{color:rgba(245,239,228,.72)}
+.chip[aria-pressed="true"] .chip__n::after{
+  content:"\2713";display:grid;place-items:center;font-size:.66rem;line-height:1;
+  border-color:rgba(244,233,224,.7);color:#F4E9E0;
+}
+@media (max-width:1080px){.ask__chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.ask__chips{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- and what happens once something is ticked ---- */
+.ask__foot{
+  margin-top:clamp(2rem,4vw,3rem);text-align:center;
+  display:grid;justify-items:center;gap:.7rem;
+}
+.ask__got{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.75rem,3.3vw,2.7rem);letter-spacing:.01em;line-height:1.1;color:var(--maroon);
+}
+.ask__next{
+  font-family:var(--sans);font-weight:300;font-size:clamp(1.07rem,1.31vw,1.2rem);
+  line-height:1.7;color:var(--charcoal);max-width:52ch;
+}
+.ask__next b{font-weight:400}
+.ask__picked{
+  font-family:var(--sans);font-size:.78rem;font-weight:300;letter-spacing:.02em;
+  line-height:1.6;color:var(--muted);
+  padding-top:.7rem;border-top:1px solid rgba(23,21,15,.16);
+}
+
+
+
+/* ============================================================
+   THE ENQUIRY DESK · the panel behind two of the floating buttons.
+   book a consultation and send an enquiry are the same desk,
+   asked in two different ways
+   ============================================================ */
+.enq{
+  position:fixed;inset:0;z-index:210;display:grid;place-items:center;
+  padding:clamp(12px,3vw,34px);
+  background:rgba(14,26,22,0);
+  -webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);
+  opacity:0;visibility:hidden;
+  transition:opacity .45s var(--ease-in),background .45s var(--ease-in),
+             backdrop-filter .45s var(--ease-in),visibility 0s linear .45s;
+}
+.enq.is-open{
+  opacity:1;visibility:visible;
+  background:rgba(14,26,22,.62);
+  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+  transition:opacity .5s var(--ease-out),background .5s var(--ease-out),
+             backdrop-filter .5s var(--ease-out),visibility 0s;
+}
+.enq__card{
+  position:relative;width:min(560px,100%);max-height:88vh;overflow:auto;
+  background:var(--cream);color:var(--charcoal);
+  border:1px solid rgba(192,160,98,.4);
+  padding:clamp(1.6rem,3.4vw,2.6rem);
+  box-shadow:0 40px 90px -40px rgba(9,20,16,.85);
+  transform:translateY(16px) scale(.985);
+  transition:transform .55s var(--ease-out);
+}
+.enq.is-open .enq__card{transform:none}
+.enq__close{
+  position:absolute;top:clamp(.8rem,1.6vw,1.2rem);right:clamp(.8rem,1.6vw,1.2rem);
+  width:38px;aspect-ratio:1;border-radius:50%;cursor:pointer;
+  background:transparent;border:1px solid rgba(23,21,15,.25);color:var(--charcoal);
+  display:grid;place-items:center;font-size:1.2rem;line-height:1;
+  transition:transform .4s var(--ease),border-color .4s var(--ease),background .4s var(--ease);
+}
+.enq__close:hover{transform:rotate(90deg);border-color:var(--maroon);background:#fff}
+.enq__close:focus-visible{outline:2px solid var(--maroon);outline-offset:3px}
+.enq__eyebrow{
+  font-family:var(--sans);font-size:.7rem;letter-spacing:var(--tracking-wide);
+  text-transform:uppercase;color:var(--maroon);
+}
+.enq__ttl{
+  margin-top:.6rem;font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1.1;letter-spacing:.12em;color:var(--accent);
+}
+.enq__sub{
+  margin-top:.8rem;font-family:var(--sans);font-weight:300;
+  font-size:.92rem;line-height:1.7;color:var(--muted);
+}
+.enq__form{margin-top:clamp(1.2rem,2.4vw,1.8rem);display:grid;gap:.9rem}
+.enq__row{display:grid;gap:.9rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:520px){.enq__row{grid-template-columns:minmax(0,1fr)}}
+.fld{display:grid;gap:.4rem}
+.fld>span{
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);
+}
+.fld input,.fld textarea{
+  font-family:var(--sans);font-size:.92rem;font-weight:300;color:var(--charcoal);
+  padding:.8rem .9rem;background:#FFFDF8;border:1px solid rgba(23,21,15,.2);border-radius:0;
+  transition:border-color .4s var(--ease),background .4s var(--ease);
+}
+.fld textarea{min-height:110px;resize:vertical;line-height:1.6}
+.fld input:focus,.fld textarea:focus{outline:0;border-color:var(--maroon);background:#fff}
+.fld input::placeholder,.fld textarea::placeholder{color:rgba(23,21,15,.38)}
+/* the honeypot: a field only a robot will fill */
+.enq__pot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.enq__send{
+  justify-self:start;margin-top:.4rem;cursor:pointer;
+  padding:.95rem 2rem;border:1px solid var(--maroon);border-radius:0;
+  background:var(--maroon);color:#F5EFE4;
+  font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  transition:background .45s var(--ease),color .45s var(--ease),transform .45s var(--ease);
+}
+.enq__send:hover{background:var(--maroon-deep);border-color:var(--maroon-deep);transform:translateY(-2px)}
+.enq__send:focus-visible{outline:2px solid var(--maroon);outline-offset:3px}
+.enq__send[disabled]{opacity:.55;cursor:default;transform:none}
+.enq__note{
+  font-family:var(--sans);font-size:.74rem;font-weight:300;line-height:1.6;color:var(--muted);
+}
+.enq__note b{font-weight:400;color:var(--charcoal)}
+.enq__msg{
+  font-family:var(--sans);font-size:.8rem;line-height:1.6;
+  padding:.8rem .9rem;border:1px solid rgba(23,21,15,.2);background:#FFFDF8;
+}
+.enq__msg[hidden]{display:none}
+.enq__msg--ok{border-color:rgba(18,59,51,.4);color:var(--emerald)}
+.enq__msg--no{border-color:rgba(74,34,37,.45);color:var(--maroon)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+/* the maroon deepens towards the foot of the page, as the other bands do */
+.foot{overflow:hidden;padding-block:clamp(3.5rem,8vw,6rem);
+  background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-deep) 100%)}
+.foot__top{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(auto-fit,minmax(140px,1fr));gap:clamp(1.6rem,4vw,3rem)}
+/* on a phone the four columns squeeze into single letters: the mark takes a
+   line of its own and the lists fall to one or two columns below it */
+@media (max-width:820px){
+  .foot__top{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:2rem 1.6rem}
+  .foot__top>:first-child{grid-column:1/-1}
+}
+.foot h5{font-size:.62rem;letter-spacing:var(--tracking);text-transform:uppercase;opacity:.5;margin-bottom:1rem;font-weight:400}
+.foot ul{list-style:none;display:grid;gap:.6rem;font-size:.9rem;opacity:.8;overflow-wrap:anywhere}
+.foot li a:hover{color:var(--gold)}
+.foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;letter-spacing:.2em;text-indent:.2em;line-height:1.3}
+.foot__bar{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.7rem;opacity:.55;letter-spacing:.1em}
+.big-invite{text-align:center}
+.big-invite .h1{max-width:14ch;margin:0 auto}
+
+/* utility */
+.mt1{margin-top:1rem}.mt2{margin-top:2rem}.mt3{margin-top:3rem}
+.center{text-align:center}
+.maxw{max-width:62ch}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.15s !important}
+  .note__card>*,.note__close,.note__bloom{opacity:1 !important;transform:none !important}
+  .note__arch img{transform:none !important}
+  [data-reveal]{opacity:1;transform:none}
+  .hero h1 .ln>span{transform:none}
+  .cursor{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="#top" aria-label="The Alchemy Atelier, home">
+    <span class="brand__name">The Alchemy Atelier</span>
+    <span class="brand__rule" aria-hidden="true"></span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#top" class="is-active">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#trust">Our promise</a>
+    <a href="#talk">Contact</a>
+    <!-- the same call to action as the header's, for the menu it hides behind -->
+    <a href="#talk" class="btn nav__cta">Get in touch</a>
+  </nav>
+  <a href="#talk" class="btn">Get in touch</a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+</header>
+
+<!-- ============================================================ HERO ============================================================ -->
+<main id="top">
+<section class="hero" id="hero">
+
+  <div class="hero__wall" aria-hidden="true"></div>
+
+  <!-- the room itself, full bleed, scrimmed at the left so the lockup holds -->
+  <figure class="hero__bg" aria-hidden="true">
+    <img src="Gallery/Home_image.jpg"
+         alt="" fetchpriority="high" decoding="async">
+  </figure>
+
+  <div class="wrap hero__grid">
+
+    <div class="hero__copy">
+      <p class="hero__script">Built on Trust. Designed for Life.</p>
+      <h1 class="hero__title">The Alchemy<br>Atelier</h1>
+      <p class="hero__disc"><span>Architecture</span><i>&bull;</i><span>Interiors</span><i>&bull;</i><span>Design</span></p>
+    </div>
+
+  </div>
+
+  <div class="floor" aria-hidden="true"></div>
+</section>
+
+<!-- ============================================================ WELCOME NOTE ============================================================ -->
+<!-- ============================================================ ABOUT US ============================================================ -->
+<section class="au" id="about">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <svg class="au__sprig" viewBox="0 0 200 620" aria-hidden="true" focusable="false"><defs><path id="lf3" d="M0 0C6-9 21-11 29 0C21 11 6 9 0 0Z"/></defs><path d="M96 616 Q52 380 104 18"/><path d="M78 463 Q46 435 13 397"/><path d="M76 336 Q103 311 130 276"/><path d="M83 198 Q63 174 43 141"/><g class="lv"><use href="#lf3" transform="translate(91 587) rotate(-52) scale(0.99)"/><use href="#lf3" transform="translate(91 587) rotate(-146) scale(0.99)"/><use href="#lf3" transform="translate(85 543) rotate(-50) scale(0.95)"/><use href="#lf3" transform="translate(85 543) rotate(-144) scale(0.95)"/><use href="#lf3" transform="translate(81 498) rotate(-48) scale(0.91)"/><use href="#lf3" transform="translate(81 498) rotate(-142) scale(0.91)"/><use href="#lf3" transform="translate(78 450) rotate(-46) scale(0.87)"/><use href="#lf3" transform="translate(78 450) rotate(-140) scale(0.87)"/><use href="#lf3" transform="translate(76 400) rotate(-44) scale(0.83)"/><use href="#lf3" transform="translate(76 400) rotate(-138) scale(0.83)"/><use href="#lf3" transform="translate(76 348) rotate(-42) scale(0.80)"/><use href="#lf3" transform="translate(76 348) rotate(-136) scale(0.80)"/><use href="#lf3" transform="translate(77 295) rotate(-41) scale(0.76)"/><use href="#lf3" transform="translate(77 295) rotate(-135) scale(0.76)"/><use href="#lf3" transform="translate(80 239) rotate(-39) scale(0.72)"/><use href="#lf3" transform="translate(80 239) rotate(-133) scale(0.72)"/><use href="#lf3" transform="translate(85 182) rotate(-38) scale(0.68)"/><use href="#lf3" transform="translate(85 182) rotate(-132) scale(0.68)"/><use href="#lf3" transform="translate(91 122) rotate(-37) scale(0.64)"/><use href="#lf3" transform="translate(91 122) rotate(-131) scale(0.64)"/><use href="#lf3" transform="translate(98 61) rotate(-36) scale(0.60)"/><use href="#lf3" transform="translate(98 61) rotate(-130) scale(0.60)"/><use href="#lf3" transform="translate(59 445) rotate(-91) scale(0.77)"/><use href="#lf3" transform="translate(59 445) rotate(-181) scale(0.77)"/><use href="#lf3" transform="translate(45 431) rotate(-89) scale(0.71)"/><use href="#lf3" transform="translate(45 431) rotate(-179) scale(0.71)"/><use href="#lf3" transform="translate(31 416) rotate(-88) scale(0.64)"/><use href="#lf3" transform="translate(31 416) rotate(-178) scale(0.64)"/><use href="#lf3" transform="translate(16 401) rotate(-86) scale(0.57)"/><use href="#lf3" transform="translate(16 401) rotate(-176) scale(0.57)"/><use href="#lf3" transform="translate(92 320) rotate(-1) scale(0.77)"/><use href="#lf3" transform="translate(92 320) rotate(-91) scale(0.77)"/><use href="#lf3" transform="translate(104 308) rotate(-3) scale(0.71)"/><use href="#lf3" transform="translate(104 308) rotate(-93) scale(0.71)"/><use href="#lf3" transform="translate(116 294) rotate(-5) scale(0.64)"/><use href="#lf3" transform="translate(116 294) rotate(-95) scale(0.64)"/><use href="#lf3" transform="translate(128 280) rotate(-7) scale(0.57)"/><use href="#lf3" transform="translate(128 280) rotate(-97) scale(0.57)"/><use href="#lf3" transform="translate(71 183) rotate(-83) scale(0.77)"/><use href="#lf3" transform="translate(71 183) rotate(-173) scale(0.77)"/><use href="#lf3" transform="translate(62 171) rotate(-81) scale(0.71)"/><use href="#lf3" transform="translate(62 171) rotate(-171) scale(0.71)"/><use href="#lf3" transform="translate(53 158) rotate(-79) scale(0.64)"/><use href="#lf3" transform="translate(53 158) rotate(-169) scale(0.64)"/><use href="#lf3" transform="translate(45 144) rotate(-77) scale(0.57)"/><use href="#lf3" transform="translate(45 144) rotate(-167) scale(0.57)"/></g></svg>
+  <div class="wrap">
+
+    <div class="au__grid">
+
+    <figure class="au__fig" data-reveal>
+      <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=85" alt="A living room with a sage green wall, a cane sideboard, a round mirror and large plants" loading="lazy">
+    </figure>
+
+    <div class="au__copy" data-reveal data-delay="1">
+      <p class="au__eyebrow">About Us</p>
+      <p>The Alchemy Atelier is an architecture and interior design studio driven by curiosity, creativity and purpose. Every project is drawn slowly, built carefully and finished with materials chosen to age well.</p>
+      <p>We collaborate closely with our clients to understand their story, their dreams and their lifestyle transforming them into timeless spaces that are beautiful, functional and deeply personal.</p>
+
+    </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ VISION + PHILOSOPHY ============================================================ -->
+<section class="pairs" id="approach">
+  <div class="wrap">
+    <div class="pair">
+
+      <article class="pcard pcard--l" id="vision" data-reveal>
+        <figure class="pcard__fig pcard__fig--sketch">
+          <img src="https://i.pinimg.com/1200x/93/1d/2f/931d2f3be88c3d309c43908f0ba1dc21.jpg" alt="A pen and ink sketch of a classical doorway: fanlight, fluted columns, wall lanterns and clipped bay trees in urns" loading="lazy">
+        </figure>
+        <div class="pcard__body">
+          <p class="pcard__eyebrow">Our Vision</p>
+          <h2 class="pcard__title">Spaces that matter</h2>
+          <span class="pcard__div" aria-hidden="true"></span>
+          <p class="pcard__text">We envision spaces that elevate everyday life, inspire well-being and leave a positive legacy.</p>
+          <p class="pcard__marks"><span>Everyday life</span><i>&bull;</i><span>Well-being</span><i>&bull;</i><span>Legacy</span></p>
+        </div>
+        <svg class="pcard__sprig" viewBox="0 0 120 250" aria-hidden="true" focusable="false"><defs><path id="lfa" d="M0 0C5-9 19-11 27 0C19 11 5 9 0 0Z"/></defs><path d="M62 244Q38 146 68 16"/><use href="#lfa" transform="translate(58 208) rotate(-48) scale(.95)"/><use href="#lfa" transform="translate(58 208) rotate(-142) scale(.95)"/><use href="#lfa" transform="translate(55 166) rotate(-46) scale(.86)"/><use href="#lfa" transform="translate(55 166) rotate(-140) scale(.86)"/><use href="#lfa" transform="translate(56 122) rotate(-43) scale(.78)"/><use href="#lfa" transform="translate(56 122) rotate(-137) scale(.78)"/><use href="#lfa" transform="translate(60 78) rotate(-40) scale(.68)"/><use href="#lfa" transform="translate(60 78) rotate(-134) scale(.68)"/></svg>
+      </article>
+
+      <article class="pcard pcard--r" id="philosophy" data-reveal data-delay="1">
+        <figure class="pcard__fig pcard__fig--sketch pcard__fig--room">
+          <img src="https://i.pinimg.com/1200x/b7/0b/b5/b70bb5c23289d9df6c4fa688bcb4e930.jpg" alt="A pencil sketch of a living room: a linen sofa under four framed botanical prints, a fiddle-leaf fig in a terracotta pot, a round table on a patterned rug and a tall arched window" loading="lazy">
+        </figure>
+        <div class="pcard__body">
+          <p class="pcard__eyebrow">Our Philosophy</p>
+          <h2 class="pcard__title">Beauty in balance</h2>
+          <span class="pcard__div" aria-hidden="true"></span>
+          <p class="pcard__text">We believe that timeless design emerges when form, function and emotion exist in perfect harmony.</p>
+          <p class="pcard__marks"><span>Form</span><i>&bull;</i><span>Function</span><i>&bull;</i><span>Emotion</span></p>
+        </div>
+        <svg class="pcard__sprig" viewBox="0 0 120 250" aria-hidden="true" focusable="false"><defs><path id="lfb" d="M0 0C5-9 19-11 27 0C19 11 5 9 0 0Z"/></defs><path d="M62 244Q38 146 68 16"/><use href="#lfb" transform="translate(58 208) rotate(-48) scale(.95)"/><use href="#lfb" transform="translate(58 208) rotate(-142) scale(.95)"/><use href="#lfb" transform="translate(55 166) rotate(-46) scale(.86)"/><use href="#lfb" transform="translate(55 166) rotate(-140) scale(.86)"/><use href="#lfb" transform="translate(56 122) rotate(-43) scale(.78)"/><use href="#lfb" transform="translate(56 122) rotate(-137) scale(.78)"/><use href="#lfb" transform="translate(60 78) rotate(-40) scale(.68)"/><use href="#lfb" transform="translate(60 78) rotate(-134) scale(.68)"/></svg>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ PROCESS ============================================================ -->
+<section class="proc" id="process">
+  <figure class="proc__pic" aria-hidden="true">
+    <img src="Gallery/process-panel.jpg" alt="" loading="lazy">
+  </figure>
+  <div class="wrap">
+
+    <div class="shead">
+      <h2 class="stitle">Our Process</h2>
+      <span class="srule" aria-hidden="true"></span>
+    </div>
+    <p class="proc__sub">Six stages, from the first conversation to the day you move in.</p>
+
+    <ul class="proc__steps">
+      <li class="step">
+        <p class="step__no">01</p>
+        <h3 class="step__name">Discovery</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><defs><path id="lf1" d="M0 0C4-7 15-9 21 0C15 9 4 7 0 0Z"/></defs><path class="fff" d="M8 168H192 M8 178H192 M8 188H192"/><path class="f" d="M6 162H194"/><path class="ff" d="M6 10H194 M6 15H194"/><path class="ff" d="M6 82H194"/><path class="f" d="M130 26H182V74H130Z"/><path class="ff" d="M135 31H177V69H135Z"/><path class="ff" d="M140 62L152 44L160 54L168 40L172 62Z"/><path d="M14 162L18 132H42L46 162Z"/><path class="f" d="M12 132H48"/><path class="ff" d="M20 138L19 158 M30 138V158 M40 138L41 158"/><path d="M30 132V96"/><use href="#lf1" transform="translate(30 122) rotate(-38) scale(.6)"/><use href="#lf1" transform="translate(30 122) rotate(-142) scale(.6)"/><use href="#lf1" transform="translate(30 110) rotate(-34) scale(.54)"/><use href="#lf1" transform="translate(30 110) rotate(-146) scale(.54)"/><use href="#lf1" transform="translate(30 98) rotate(-90) scale(.48)"/><path class="f" d="M58 124V102Q58 96 64 96H82Q88 96 88 102V124"/><circle cx="76" cy="88" r="8"/><path d="M68 86Q68 76 77 76Q86 77 84 88Q83 81 76 81Q70 82 68 86Z"/><path d="M76 96V100"/><path d="M60 124Q60 108 76 101Q92 106 94 124"/><path class="f" d="M76 104V124"/><path d="M90 110Q102 114 112 121"/><path class="f" d="M112 121L118 120"/><path class="f" d="M184 124V102Q184 96 178 96H160Q154 96 154 102V124"/><circle cx="166" cy="88" r="8"/><path d="M158 88Q158 78 166 78Q175 78 174 88Q173 82 166 82Q160 83 158 88Z"/><path d="M166 96V100"/><path d="M182 124Q182 108 166 101Q150 106 148 124"/><path class="f" d="M166 104V124"/><path d="M152 110Q140 114 130 121"/><path class="f" d="M130 121L124 120"/><path d="M60 124H182"/><path d="M60 124V132H182V124"/><path class="f" d="M68 132V162 M174 132V162"/><path class="ff" d="M60 136H182"/><path d="M92 124L88 114H130L136 124Z"/><path class="ff" d="M96 122L94 116H108L110 122Z M114 122L112 116H126L128 122Z"/><path class="f" d="M138 124L136 116H154L156 124Z"/><path class="ff" d="M140 120H152"/><path d="M160 116H170L169 123Q169 124 167 124H163Q161 124 161 123Z"/><ellipse cx="165" cy="116" rx="5" ry="1.6"/><path class="fff" d="M70 158H178"/></svg>
+        <p class="step__note">We start by listening. How you live, what the space has to hold, and the budget it sits inside.</p>
+      </li>
+      <li class="step">
+        <p class="step__no">02</p>
+        <h3 class="step__name">Concept development</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><defs><path id="l2" d="M0 0C4-7 15-9 21 0C15 9 4 7 0 0Z"/></defs><path class="fff" d="M8 166H192 M8 176H192 M8 186H192"/><path class="f" d="M6 160H194"/><path class="ff" d="M6 10H194 M6 15H194"/><path d="M54 20H186V114H54Z"/><path class="f" d="M58 24H182V110H58Z"/><path d="M68 32H102V62H68Z"/><path d="M110 32H138V54H110Z"/><path d="M146 32H174V74H146Z"/><path d="M68 72H96V100H68Z"/><path d="M104 64H140V100H104Z"/><path d="M148 82H174V100H148Z"/><path class="ff" d="M72 78H90 M72 84H86 M72 90H90 M72 96H84"/><path class="ff" d="M108 70L136 94 M136 70L108 94 M108 82H136 M122 64V100"/><path class="ff" d="M150 40H170 M150 48H170 M150 56H166 M150 64H168"/><path class="fff" d="M72 38L98 58 M78 38L98 52 M86 38L98 46"/><path class="fff" d="M152 86H170 M152 92H166"/><circle cx="85" cy="32" r="1.5"/><circle cx="124" cy="32" r="1.5"/><circle cx="160" cy="32" r="1.5"/><circle cx="82" cy="72" r="1.5"/><circle cx="122" cy="64" r="1.5"/><path d="M12 134H190"/><path d="M12 134V148H190V134"/><path class="ff" d="M20 148V162 M182 148V162"/><path class="fff" d="M12 152H190"/><path d="M58 132L52 116L92 110L100 128Z"/><path d="M100 128L92 110L132 116L126 132Z"/><path d="M92 110L100 128"/><path class="ff" d="M62 124L84 120 M64 128L88 124 M106 122L124 125 M108 126L122 129"/><path class="f" d="M52 116L58 132"/><path d="M24 134V106Q24 97 30 94H42Q48 97 48 106V134Z"/><path class="f" d="M22 94H50"/><path class="ff" d="M28 100V130 M36 100V132 M44 100V130"/><path d="M36 94V52"/><use href="#l2" transform="translate(36 80) rotate(-40) scale(.62)"/><use href="#l2" transform="translate(36 80) rotate(-140) scale(.62)"/><use href="#l2" transform="translate(36 66) rotate(-36) scale(.54)"/><use href="#l2" transform="translate(36 66) rotate(-144) scale(.54)"/><use href="#l2" transform="translate(36 52) rotate(-90) scale(.48)"/><path class="f" d="M140 128L168 124 M140.5 131L168.5 127"/><path class="f" d="M168 124L176 126.5L168.5 127Z"/><path class="ff" d="M144 134L172 130 M144.5 136.5L172.5 132.5"/><path class="ff" d="M172 130L179 132L172.5 132.5Z"/><ellipse cx="164" cy="116" rx="11" ry="4" class="f"/><path class="f" d="M153 116Q164 124 175 116"/><path class="fff" d="M14 156H188"/></svg>
+        <p class="step__note">Mood boards, palettes and first directions, until the scheme reads like you rather than like us.</p>
+      </li>
+      <li class="step">
+        <p class="step__no">03</p>
+        <h3 class="step__name">Space planning</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path class="fff" d="M8 172H192 M8 182H192 M8 192H192"/><path class="f" d="M6 166H194"/><g transform="rotate(1 98 88)"><path class="f" d="M48 28V14H146V20"/></g><g transform="rotate(3 98 88)"><path class="ff" d="M44 30V22H152V26"/></g><g transform="rotate(-4 98 88)"><path d="M36 24H160V152H36Z"/><path class="ff" d="M42 30H154V146H42Z"/><path d="M52 44H144V134H52Z"/><path d="M104 44V86 M104 86H144 M52 100H126 M126 86V134"/><path class="f" d="M70 100A13 13 0 0 1 83 113 M70 100V113"/><path class="f" d="M104 58A11 11 0 0 0 115 69 M104 58H115"/><path class="ff" d="M60 44V38 M72 44V38 M84 44V38 M144 62H150 M144 78H150"/><path class="f" d="M60 108H78V126H60Z M86 110H98V126H86Z"/><path class="ff" d="M64 112H74 M64 116H74 M64 120H74"/><path class="ff" d="M118 50H138V68H118Z M122 54H134V64H122Z"/><path class="ff" d="M132 96H140V118H132Z"/><path class="ff" d="M56 90H70 M56 86H70 M56 82H70 M56 78H70"/><path class="fff" d="M108 106H120V126H108Z"/><path class="ff" d="M52 140H144 M52 137V143 M144 137V143"/><path class="ff" d="M148 44V134 M145 44H151 M145 134H151"/></g><path d="M101.8 163.8L151.8 113.8 M98.2 160.2L148.2 110.2"/><path d="M151.8 113.8L157 105L148.2 110.2"/><path class="f" d="M108.5 153.5L104.9 149.9"/><path d="M101.8 163.8L98.2 160.2"/><path class="fff" d="M40 170H160 M46 173H154"/></svg>
+        <p class="step__note">Layouts drawn and redrawn: circulation, sightlines, and where the light falls through the day.</p>
+      </li>
+      <li class="step">
+        <p class="step__no">04</p>
+        <h3 class="step__name">Material selection</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path class="fff" d="M8 168H192 M8 178H192 M8 188H192"/><path class="f" d="M6 162H194"/><path class="ff" d="M6 10H194 M6 15H194"/><path class="ff" d="M6 86H194"/><path d="M38 134V88H84V134"/><path class="ff" d="M44 94Q52 104 44 114Q52 124 44 132 M54 94Q62 104 54 114Q62 124 54 132 M64 94Q72 104 64 114Q72 124 64 132 M74 94Q82 104 74 114Q82 124 74 132"/><g transform="rotate(-5 78 134)"><path class="f" d="M60 134V98H100V134"/><path class="ff" d="M60 110H100 M60 122H100 M73 98V134 M87 98V134"/></g><g transform="rotate(4 100 134)"><path d="M88 134V106H118V134"/><path class="fff" d="M94 114L98 112 M104 118L108 116 M96 124L100 122 M108 128L112 126 M100 108L104 110"/></g><path d="M12 134H188"/><path d="M12 134V148H188V134"/><path class="ff" d="M12 152H188"/><path d="M44 148V162 M168 148V162"/><path class="f" d="M14 134Q20 144 16 154Q24 158 32 152Q28 142 32 134Z"/><path class="ff" d="M20 137Q24 146 21 152 M26 135Q29 144 27 150"/><path d="M126 134V116H146V134"/><ellipse cx="136" cy="116" rx="10" ry="3"/><path class="f" d="M127 114Q136 108 145 114"/><path class="ff" d="M129 124H143"/><g transform="rotate(-14 158 132)"><path class="f" d="M158 127.5H188V136.5H158Z"/></g><g transform="rotate(-38 158 132)"><path class="f" d="M158 127.5H188V136.5H158Z"/></g><g transform="rotate(-62 158 132)"><path class="f" d="M158 127.5H188V136.5H158Z"/></g><g transform="rotate(-86 158 132)"><path class="f" d="M158 127.5H188V136.5H158Z"/></g><circle cx="158" cy="132" r="2"/><path class="fff" d="M30 156H180"/></svg>
+        <p class="step__note">Finishes chosen in the hand rather than off a screen: stone, timber, fabric and paint, seen together.</p>
+      </li>
+      <li class="step">
+        <p class="step__no">05</p>
+        <h3 class="step__name">Design detailing</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path class="fff" d="M8 170H192 M8 180H192 M8 190H192"/><path class="f" d="M6 164H194"/><path class="ff" d="M6 12H194 M6 18H194"/><path class="ff" d="M6 158H194"/><path d="M16 158V30H88V158"/><path class="f" d="M22 158V36H82V158"/><path d="M22 100H82"/><path class="f" d="M22 70H82"/><path class="ff" d="M30 70V60H36V70Z M42 70V58H48V70Z M54 68A5 5 0 1 1 64 68 M70 70V62H76V70Z"/><path class="ff" d="M30 100V90H38V100Z M44 100V88H50V100Z M58 98A5 5 0 1 1 68 98"/><path class="f" d="M28 108H50V150H28Z M54 108H76V150H54Z"/><path class="ff" d="M32 112H46V146H32Z M58 112H72V146H58Z"/><circle cx="48" cy="129" r="1.6"/><circle cx="56" cy="129" r="1.6"/><path class="f" d="M22 152H82"/><path class="f" d="M100 52V70"/><path d="M92 70Q100 60 108 70Z"/><path class="f" d="M92 70H108"/><circle cx="100" cy="74" r="2.4" class="f"/><path d="M118 34H184V126H118Z"/><path class="ff" d="M123 39H179V121H123Z"/><path d="M134 112V60H140V54H148V60H154V66H162V76H154V112Z"/><path class="ff" d="M134 112H162"/><path class="fff" d="M136 106L160 106 M136 100L160 100 M136 94L160 94 M136 88L160 88 M136 82L160 82"/><path class="ff" d="M170 54V112 M167 54H173 M167 112H173"/><path class="ff" d="M134 122H162 M134 119V125 M162 119V125"/><path class="fff" d="M100 168H180"/></svg>
+        <p class="step__note">Joinery, lighting and fittings drawn to the millimetre, down to the last handle and hinge.</p>
+      </li>
+      <li class="step">
+        <p class="step__no">06</p>
+        <h3 class="step__name">Execution &amp; handover</h3>
+        <svg class="step__art" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><path class="fff" d="M8 164H192 M8 174H192 M8 184H192"/><path class="f" d="M6 158H194"/><path class="ff" d="M10 158V26H190V158 M10 38H190"/><path class="fff" d="M10 158L24 192 M190 158L176 192"/><path d="M18 158V102H58V114H74V158Z"/><path class="f" d="M18 146H74 M18 134H74 M18 122H74 M18 114H74 M18 102H58"/><path class="f" d="M32 146V158 M50 146V158 M64 146V158"/><path class="f" d="M24 134V146 M42 134V146 M60 134V146"/><path class="f" d="M32 122V134 M50 122V134 M64 122V134"/><path class="f" d="M24 114V122 M42 114V122"/><path class="f" d="M32 102V114 M50 102V114"/><path class="fff" d="M20 148H72 M20 136H72 M20 124H72"/><path d="M60 96H76V104H60Z"/><path class="ff" d="M66 96V104"/><circle cx="98" cy="74" r="7.5"/><path d="M90 72Q90 63 98 63Q107 63 106 73"/><path d="M98 81V86"/><path d="M88 122Q86 96 98 86Q110 92 110 122"/><path class="f" d="M88 104H110"/><path d="M92 92Q80 94 72 100"/><path d="M106 92Q116 98 117 108"/><path d="M88 122L84 156Q84 158 86 158H92Q94 158 94 156L96 130"/><path d="M108 122L112 156Q112 158 110 158H104Q102 158 102 156L100 130"/><path class="f" d="M88 122H110"/><path d="M134 46L122 158 M152 46L164 158"/><path d="M134 46H152"/><path d="M130 74H156 M127 102H159 M124 130H162"/><path class="f" d="M150 52L172 158"/><path d="M172 158V132H194L190 158Z"/><ellipse cx="182" cy="132" rx="11" ry="3.6"/><path class="f" d="M173 129Q182 121 191 129"/><path class="ff" d="M118 164Q146 158 174 166 Q146 172 118 164Z"/></svg>
+        <p class="step__note">One team on site and one line of accountability, through the snag list to the day we hand you the keys.</p>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- ============================================================ SERVICES ============================================================ -->
+<section class="svc" id="services">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap">
+
+    <div class="shead" data-reveal>
+      <h2 class="stitle">Our Services</h2>
+      <span class="srule" aria-hidden="true"></span>
+    </div>
+    <p class="svc__over" data-reveal><b>Four ways to work with the studio,</b> from a whole building to a single piece. Whichever you choose, the same hands draw it and see it through to site.</p>
+
+    <div class="svc__grid">
+      <article class="sv" data-reveal data-delay="1">
+        <a class="sv__link" href="service-interior-design.html">
+          <figure class="sv__fig">
+            <span class="sv__no" aria-hidden="true">01</span>
+            <img src="https://images.unsplash.com/photo-1750325276350-a8e23c1fc32c?auto=format&fit=crop&w=800&q=85" alt="A living room in earthy tones with a terracotta plaster wall" loading="lazy">
+          </figure>
+          <h3 class="sv__name">
+            <span class="sv__label">Interior Design</span>
+            <span class="sv__rule" aria-hidden="true"></span>
+          </h3>
+          <p class="sv__note">Whole interiors resolved as one scheme. The plan, the joinery, the materials and the light are considered together, so a room reads as a single idea rather than a series of purchases.</p>
+          <span class="sv__go">View service <i aria-hidden="true">&rarr;</i></span>
+        </a>
+      </article>
+      <article class="sv" data-reveal data-delay="2">
+        <a class="sv__link" href="service-furniture-design.html">
+          <figure class="sv__fig">
+            <span class="sv__no" aria-hidden="true">02</span>
+            <img src="https://images.unsplash.com/photo-1691036562015-56ebf6648f8c?auto=format&fit=crop&w=800&q=85" alt="A quiet room with a tan leather armchair and a paper lamp" loading="lazy">
+          </figure>
+          <h3 class="sv__name">
+            <span class="sv__label">Furniture Design</span>
+            <span class="sv__rule" aria-hidden="true"></span>
+          </h3>
+          <p class="sv__note">Furniture and objects drawn for the room they belong to. Prototyped with the workshops we work with, detailed to the hardware, and made to outlast the scheme around them.</p>
+          <span class="sv__go">View service <i aria-hidden="true">&rarr;</i></span>
+        </a>
+      </article>
+      <article class="sv" data-reveal data-delay="3">
+        <a class="sv__link" href="service-architecture.html">
+          <figure class="sv__fig">
+            <span class="sv__no" aria-hidden="true">03</span>
+            <img src="https://images.unsplash.com/photo-1764322410311-3f7d5d8ffb92?auto=format&fit=crop&w=800&q=85" alt="A brick arcade of arched openings onto a planted courtyard" loading="lazy">
+          </figure>
+          <h3 class="sv__name">
+            <span class="sv__label">Architecture</span>
+            <span class="sv__rule" aria-hidden="true"></span>
+          </h3>
+          <p class="sv__note">Ground up homes, additions and adaptive reuse. Drawn from the first sketch through to the last handle, and seen through the approvals and the site in between.</p>
+          <span class="sv__go">View service <i aria-hidden="true">&rarr;</i></span>
+        </a>
+      </article>
+      <article class="sv" data-reveal data-delay="4">
+        <a class="sv__link" href="service-consultancy.html">
+          <figure class="sv__fig">
+            <span class="sv__no" aria-hidden="true">04</span>
+            <img src="https://images.unsplash.com/photo-1776948484184-c7a3a7826ec2?auto=format&fit=crop&w=800&q=85" alt="A planted courtyard seen through a stone archway" loading="lazy">
+          </figure>
+          <h3 class="sv__name">
+            <span class="sv__label">Consultancy</span>
+            <span class="sv__rule" aria-hidden="true"></span>
+          </h3>
+          <p class="sv__note">A second pair of eyes on a project already moving, from a studio you are not committing the whole job to.</p>
+          <span class="sv__go">View service <i aria-hidden="true">&rarr;</i></span>
+        </a>
+      </article>
+    </div>
+
+    <div class="svc__foot" data-reveal data-delay="5">
+      <a class="svc__btn" id="svcStart" href="#contact" data-opens-enquiry>Start a project</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ TEAM ============================================================ -->
+<section class="team" id="people">
+  <div class="wrap team__grid">
+
+    <!-- sketches turning into rooms: two stacked a centimetre apart on the right, the third laid over them from the left -->
+    <div class="team__sketches" aria-hidden="true" data-reveal>
+      <div class="team__stack">
+        <img class="team__sheet" src="Gallery/sketch-1.jpg" alt="" loading="lazy">
+        <img class="team__sheet" src="Gallery/sketch-3.jpg" alt="" loading="lazy">
+      </div>
+      <img class="team__sheet team__sheet--over" src="Gallery/sketch-2.jpg" alt="" loading="lazy">
+    </div>
+
+    <div class="team__box" data-reveal data-delay="1">
+    <div class="team__main">
+      <div class="shead">
+        <h2 class="stitle">One Pair of Hands</h2>
+        <span class="srule" aria-hidden="true"></span>
+      </div>
+      <p class="team__sub">Same vision. Deeper attention.</p>
+      <p class="team__role">Founder and Principal Designer</p>
+      <p class="team__name">Jemima</p>
+      <p class="team__text">An architect, interior designer and curator based in Dehradun, Jemima leads The Alchemy Atelier on the belief that thoughtful design can change the way we live, feel and belong.</p>
+      <p class="team__text">From architecture and interiors through to curation, every project is personally drawn and personally seen through, so the journey from concept to completion stays in one pair of hands. No hand-offs, no juniors learning on your home: the person you meet at the first conversation is the person on site at the last.</p>
+      <p class="team__practice"><span>Architecture</span><span>Interiors</span><span>Curation</span></p>
+      <span class="team__rule" aria-hidden="true"></span>
+      <blockquote class="team__quote">
+        <p>&ldquo;Design, for me, is a dialogue between people, places and possibilities.&rdquo;</p>
+        <cite>Jemima</cite>
+      </blockquote>
+    </div>
+
+    <ul class="team__pillars">
+      <li><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M10 37V17a10 10 0 0 1 20 0v20M14 37V17a6 6 0 0 1 12 0v20"/></svg>Thoughtful<br>design</li>
+      <li><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 37V9M20 30c-4-1-7-4-8-8 4 1 7 4 8 8zM20 30c4-1 7-4 8-8-4 1-7 4-8 8zM20 21c-4-1-6-4-7-8 4 1 6 4 7 8zM20 21c4-1 6-4 7-8-4 1-6 4-7 8zM20 12c-2-1-3-4-3-7 2 1 3 4 3 7zM20 12c2-1 3-4 3-7-2 1-3 4-3 7z"/></svg>Meaningful<br>spaces</li>
+      <li><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M5 19L20 6l15 13M9 16v21h22V16M17 37V27h6v10"/></svg>A better<br>everyday</li>
+    </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================ WHY CHOOSE US ============================================================ -->
+<section class="why" id="why">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <svg class="why__sprig" viewBox="0 0 200 620" aria-hidden="true" focusable="false"><defs><path id="lfw" d="M0 0C6-9 21-11 29 0C21 11 6 9 0 0Z"/></defs><path d="M96 616 Q52 380 104 18"/><path d="M78 463 Q46 435 13 397"/><path d="M76 336 Q103 311 130 276"/><path d="M83 198 Q63 174 43 141"/><g class="lv"><use href="#lfw" transform="translate(91 587) rotate(-52) scale(0.99)"/><use href="#lfw" transform="translate(91 587) rotate(-146) scale(0.99)"/><use href="#lfw" transform="translate(85 543) rotate(-50) scale(0.95)"/><use href="#lfw" transform="translate(85 543) rotate(-144) scale(0.95)"/><use href="#lfw" transform="translate(81 498) rotate(-48) scale(0.91)"/><use href="#lfw" transform="translate(81 498) rotate(-142) scale(0.91)"/><use href="#lfw" transform="translate(78 450) rotate(-46) scale(0.87)"/><use href="#lfw" transform="translate(78 450) rotate(-140) scale(0.87)"/><use href="#lfw" transform="translate(76 400) rotate(-44) scale(0.83)"/><use href="#lfw" transform="translate(76 400) rotate(-138) scale(0.83)"/><use href="#lfw" transform="translate(76 348) rotate(-42) scale(0.80)"/><use href="#lfw" transform="translate(76 348) rotate(-136) scale(0.80)"/><use href="#lfw" transform="translate(77 295) rotate(-41) scale(0.76)"/><use href="#lfw" transform="translate(77 295) rotate(-135) scale(0.76)"/><use href="#lfw" transform="translate(80 239) rotate(-39) scale(0.72)"/><use href="#lfw" transform="translate(80 239) rotate(-133) scale(0.72)"/><use href="#lfw" transform="translate(85 182) rotate(-38) scale(0.68)"/><use href="#lfw" transform="translate(85 182) rotate(-132) scale(0.68)"/><use href="#lfw" transform="translate(91 122) rotate(-37) scale(0.64)"/><use href="#lfw" transform="translate(91 122) rotate(-131) scale(0.64)"/><use href="#lfw" transform="translate(98 61) rotate(-36) scale(0.60)"/><use href="#lfw" transform="translate(98 61) rotate(-130) scale(0.60)"/><use href="#lfw" transform="translate(59 445) rotate(-91) scale(0.77)"/><use href="#lfw" transform="translate(59 445) rotate(-181) scale(0.77)"/><use href="#lfw" transform="translate(45 431) rotate(-89) scale(0.71)"/><use href="#lfw" transform="translate(45 431) rotate(-179) scale(0.71)"/><use href="#lfw" transform="translate(31 416) rotate(-88) scale(0.64)"/><use href="#lfw" transform="translate(31 416) rotate(-178) scale(0.64)"/><use href="#lfw" transform="translate(16 401) rotate(-86) scale(0.57)"/><use href="#lfw" transform="translate(16 401) rotate(-176) scale(0.57)"/><use href="#lfw" transform="translate(92 320) rotate(-1) scale(0.77)"/><use href="#lfw" transform="translate(92 320) rotate(-91) scale(0.77)"/><use href="#lfw" transform="translate(104 308) rotate(-3) scale(0.71)"/><use href="#lfw" transform="translate(104 308) rotate(-93) scale(0.71)"/><use href="#lfw" transform="translate(116 294) rotate(-5) scale(0.64)"/><use href="#lfw" transform="translate(116 294) rotate(-95) scale(0.64)"/><use href="#lfw" transform="translate(128 280) rotate(-7) scale(0.57)"/><use href="#lfw" transform="translate(128 280) rotate(-97) scale(0.57)"/><use href="#lfw" transform="translate(71 183) rotate(-83) scale(0.77)"/><use href="#lfw" transform="translate(71 183) rotate(-173) scale(0.77)"/><use href="#lfw" transform="translate(62 171) rotate(-81) scale(0.71)"/><use href="#lfw" transform="translate(62 171) rotate(-171) scale(0.71)"/><use href="#lfw" transform="translate(53 158) rotate(-79) scale(0.64)"/><use href="#lfw" transform="translate(53 158) rotate(-169) scale(0.64)"/><use href="#lfw" transform="translate(45 144) rotate(-77) scale(0.57)"/><use href="#lfw" transform="translate(45 144) rotate(-167) scale(0.57)"/></g></svg>
+  <div class="wrap">
+
+    <div class="shead" data-reveal>
+      <h2 class="stitle">Why choose us</h2>
+      <span class="srule" aria-hidden="true"></span>
+    </div>
+    <p class="why__sub" data-reveal>We believe that a great design is a collaboration of ideas, vision and trust. Here is what sets the studio apart.</p>
+
+    <ul class="why__cards">
+      <li class="rz" data-reveal data-delay="1">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="2.8" width="15" height="18.4" rx="2"/><path d="M8.2 8h7.6M8.2 12h7.6M8.2 16h4.6"/></svg>
+          <span class="rz__no">01</span>
+        </div>
+        <h3 class="rz__name">Transparent pricing</h3>
+        <p class="rz__note">Detailed quotations, clear material specifications and honest budgeting at every stage. No hidden costs.</p>
+      </li>
+      <li class="rz" data-reveal data-delay="2">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8.6" r="3"/><path d="M3.6 19.4a5.4 5.4 0 0 1 10.8 0"/><circle cx="17" cy="9.6" r="2.3"/><path d="M15.2 14.6a4.4 4.4 0 0 1 5.2 4.8"/></svg>
+          <span class="rz__no">02</span>
+        </div>
+        <h3 class="rz__name">In-house design team</h3>
+        <p class="rz__note">Your drawings are developed under one roof by our own architects and interior designers.</p>
+      </li>
+      <li class="rz" data-reveal data-delay="3">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3.2A1.2 1.2 0 0 1 10.2 2h3.6A1.2 1.2 0 0 1 15 3.2V4"/><path d="M8.6 13.4l2.2 2.2 4.6-4.6"/></svg>
+          <span class="rz__no">03</span>
+        </div>
+        <h3 class="rz__name">The same person throughout</h3>
+        <p class="rz__note">Whoever you speak to first is the one who draws the work, prices it and meets you on site. Nothing is handed on.</p>
+      </li>
+      <li class="rz" data-reveal data-delay="4">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.2 12.6A7.6 7.6 0 0 1 12 20.1a8 8 0 0 1-3.4-.75L4 20.4l1.1-4.3A7.5 7.5 0 0 1 4.4 12.6 7.6 7.6 0 0 1 12.3 5a7.6 7.6 0 0 1 7.9 7.6Z"/><path d="M9.2 11.4h6M9.2 14.4h3.6"/></svg>
+          <span class="rz__no">04</span>
+        </div>
+        <h3 class="rz__name">Regular progress updates</h3>
+        <p class="rz__note">Structured updates from site, so you always know what is happening and what comes next.</p>
+      </li>
+      <li class="rz" data-reveal data-delay="5">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="9.8" r="5.6"/><path d="M9.4 9.9l1.9 1.9 3.4-3.4"/><path d="M8.6 14.8L7.2 21.4l4.8-2.3 4.8 2.3-1.4-6.6"/></svg>
+          <span class="rz__no">05</span>
+        </div>
+        <h3 class="rz__name">Quality vendor network</h3>
+        <p class="rz__note">Skilled craftsmen and suppliers chosen for workmanship, because a good design still needs skilled hands.</p>
+      </li>
+      <li class="rz" data-reveal data-delay="6">
+        <div class="rz__top">
+          <svg class="rz__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.6 10.6L12 3.6l8.4 7"/><path d="M5.6 9.4V20h12.8V9.4"/><path d="M10 20v-5.4h4V20"/></svg>
+          <span class="rz__no">06</span>
+        </div>
+        <h3 class="rz__name">End-to-end turnkey service</h3>
+        <p class="rz__note">From the first sketch to the final styling, managed as one project with one line of accountability.</p>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- ============================================================ KIND WORDS · written testimonials ============================================================ -->
+<!-- PLACEHOLDER CLIENTS: the names, quotes and cities below are taken from the
+     design reference so the section can be seen as designed. Replace each
+     .kw__quote / .kw__by / .kw__who with a real client before this goes live. -->
+<section class="kw" id="trust" aria-label="What clients say">
+  <div class="wrap kw__grid">
+
+    <div class="kw__aside" data-reveal>
+      <p class="kw__eyebrow">Kind words</p>
+      <h2 class="kw__ttl">Thoughtful People.<br>Lasting Impressions.</h2>
+      <p class="kw__lead">From first homes to forever spaces &mdash; our clients share what it&rsquo;s like to work with The Alchemy Atelier.</p>
+      <div class="kw__nav">
+        <button class="kw__arrow" type="button" data-step="-1" aria-label="Previous testimonials">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="kw__arrow" type="button" data-step="1" aria-label="More testimonials">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <img class="kw__leaf" src="Gallery/leaf-branch.png" alt="" aria-hidden="true" loading="lazy">
+    </div>
+
+    <div class="kw__win" data-reveal data-delay="1">
+      <div class="kw__track" id="kwTrack">
+          <article class="kw__card">
+            <p class="kw__mark" aria-hidden="true">&ldquo;</p>
+            <p class="kw__quote">The Alchemy Atelier completely understood our style and translated it into a home that feels like us.&rdquo;</p>
+            <span class="kw__rule" aria-hidden="true"></span>
+            <p class="kw__by">Priya Sharma</p>
+            <p class="kw__who">Homeowner, Hyderabad</p>
+            <figure class="kw__shot"><img src="Gallery/testimonial-1.jpg" alt="A bright living room with a boucle armchair and two round rattan mirrors" loading="lazy"></figure>
+          </article>
+          <article class="kw__card">
+            <p class="kw__mark" aria-hidden="true">&ldquo;</p>
+            <p class="kw__quote">Thoughtful design, clear communication and a seamless experience from start to finish.&rdquo;</p>
+            <span class="kw__rule" aria-hidden="true"></span>
+            <p class="kw__by">Sameer Iyer</p>
+            <p class="kw__who">Villa Owner, Pune</p>
+            <figure class="kw__shot"><img src="Gallery/testimonial-2.jpg" alt="A living room with a grey sofa under two woven pendant lights" loading="lazy"></figure>
+          </article>
+          <article class="kw__card">
+            <p class="kw__mark" aria-hidden="true">&ldquo;</p>
+            <p class="kw__quote">They brought warmth, character and a sense of calm to our space. We couldn&rsquo;t be happier.&rdquo;</p>
+            <span class="kw__rule" aria-hidden="true"></span>
+            <p class="kw__by">Ridhi Jain</p>
+            <p class="kw__who">Business Owner, Delhi</p>
+            <figure class="kw__shot"><img src="Gallery/testimonial-3.jpg" alt="A taupe living room with a cream sectional and two dark pedestal tables" loading="lazy"></figure>
+          </article>
+          <article class="kw__card">
+            <p class="kw__mark" aria-hidden="true">&ldquo;</p>
+            <p class="kw__quote">What we said in the first conversation is exactly what got drawn, and exactly what got built.&rdquo;</p>
+            <span class="kw__rule" aria-hidden="true"></span>
+            <p class="kw__by">Aarav Menon</p>
+            <p class="kw__who">Homeowner, Kochi</p>
+            <figure class="kw__shot"><img src="Gallery/testimonial-4.jpg" alt="A calm bedroom with a panelled headboard and a globe lamp" loading="lazy"></figure>
+          </article>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wrap kw__foot" data-reveal>
+    <span aria-hidden="true"></span>
+    <p>Spaces that stay with you</p>
+  </div>
+</section>
+
+<!-- ============================================================ CLIENT STORIES · film testimonials ============================================================ -->
+<!-- film testimonials. none exist yet, so every card is inert and says so, and
+     the three films are stock stand-ins. to make one live: put the film in the
+     Gallery folder, then on its card set data-video="Gallery/your-film.mp4",
+     data-name="The client's name", and delete data-sample.
+     PLACEHOLDER: the quotes, names and the three stat figures below come from
+     the design reference and need replacing with the studio's real ones. -->
+<section class="vt" id="films" aria-label="Client films">
+  <figure class="vt__panel" aria-hidden="true">
+    <img src="Gallery/stories-panel.jpg" alt="" loading="lazy">
+  </figure>
+
+  <div class="wrap vt__grid">
+
+    <div class="vt__aside" data-reveal>
+      <p class="vt__eyebrow">Client stories</p>
+      <h2 class="vt__ttl">Real People.<br>Beautiful Spaces.</h2>
+      <p class="vt__lead">Hear from homeowners and collaborators who trusted The Alchemy Atelier to bring their spaces to life.</p>
+
+      <div class="vt__stats">
+        <p class="vt__stat"><b>50+</b><span>Homes<br>designed</span></p>
+        <p class="vt__stat"><b>100+</b><span>Happy<br>clients</span></p>
+        <p class="vt__stat"><b>10+</b><span>Cities</span></p>
+      </div>
+    </div>
+
+    <div class="vt__win" data-reveal data-delay="1">
+      <div class="vt__track" id="vtTrack">
+        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-1.mp4" data-name="The Marble Wall" data-sample aria-disabled="true" aria-label="Sample film 1">
+          <span class="vt__frame">
+            <img src="Gallery/films/client-film-1.jpg" alt="A woman in a cream shirt, smiling on a sofa at home" loading="lazy">
+            <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vt__cap">
+              <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>They truly understood our lifestyle and turned it into a home that feels like us.&rdquo;</span>
+              <span class="vt__rule" aria-hidden="true"></span>
+              <span class="vt__name">Ananya Mehta</span>
+              <span class="vt__meta">Homeowner, Gurugram</span>
+            </span>
+          </span>
+        </button>
+        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-2.mp4" data-name="The Stair Hall" data-sample aria-disabled="true" aria-label="Sample film 2">
+          <span class="vt__frame">
+            <img src="Gallery/films/client-film-2.jpg" alt="A man in glasses and a black shirt, talking with his hands on a sofa" loading="lazy">
+            <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vt__cap">
+              <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>Professional, creative and so easy to work with. The team made the entire process effortless.&rdquo;</span>
+              <span class="vt__rule" aria-hidden="true"></span>
+              <span class="vt__name">Rohit Desai</span>
+              <span class="vt__meta">Homeowner, Bengaluru</span>
+            </span>
+          </span>
+        </button>
+        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-3.mp4" data-name="The Garden Room" data-sample aria-disabled="true" aria-label="Sample film 3">
+          <span class="vt__frame">
+            <img src="Gallery/films/client-film-3.jpg" alt="A woman in a rust top, smiling on a sofa in a lamplit room" loading="lazy">
+            <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <span class="vt__cap">
+              <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>Every detail was thoughtfully curated. Our space now feels warm, elegant and alive.&rdquo;</span>
+              <span class="vt__rule" aria-hidden="true"></span>
+              <span class="vt__name">Kavya Singh</span>
+              <span class="vt__meta">Business Owner, Noida</span>
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <div class="vt__dots" id="vtDots" aria-hidden="true"></div>
+    </div>
+
+  </div>
+
+  <button class="vt__next" type="button" aria-label="More client films">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+</section>
+
+<div class="vt-modal" id="vtModal" role="dialog" aria-modal="true" aria-label="Client film" hidden>
+  <div class="vt-modal__box">
+    <button class="vt-modal__close" id="vtClose" type="button" aria-label="Close the film">&times;</button>
+    <video id="vtVideo" controls playsinline preload="none"></video>
+    <p class="vt-modal__name" id="vtName"></p>
+  </div>
+</div>
+
+<!-- ============================================================ WHAT ARE YOU LOOKING FOR ============================================================ -->
+<section class="ask" id="talk">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap ask__grid">
+
+    <div class="ask__copy" data-reveal>
+
+      <h2 class="ask__ttl">What are you looking for?</h2>
+      <span class="ask__rule" aria-hidden="true"></span>
+      <p class="ask__lead">Eight ways the studio works, and most projects want more than one. Tick whatever sounds like yours, as many as you like, and it travels into the message with you, so you never have to explain it twice.</p>
+    </div>
+
+    <ul class="ask__chips" id="askChips">
+        <li><button class="chip" type="button" data-svc="Architecture" aria-pressed="false">
+          <span class="chip__n">Architecture</span>
+          <span class="chip__d">Ground up homes, additions and adaptive reuse, drawn from the first sketch through to the last handle.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Construction" aria-pressed="false">
+          <span class="chip__n">Construction</span>
+          <span class="chip__d">The site run by the studio: contractors, sequence and quality all held to the drawing.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Interiors" aria-pressed="false">
+          <span class="chip__n">Interiors</span>
+          <span class="chip__d">Layouts, joinery, materials and lighting resolved as one scheme, not a series of purchases.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Consultancy" aria-pressed="false">
+          <span class="chip__n">Consultancy</span>
+          <span class="chip__d">A second pair of eyes on a project already moving: feasibility, palettes, drawings, approvals.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Design" aria-pressed="false">
+          <span class="chip__n">Design</span>
+          <span class="chip__d">Furniture, objects and the details around them, drawn for the room they belong to.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Modular" aria-pressed="false">
+          <span class="chip__n">Modular</span>
+          <span class="chip__d">Kitchens and wardrobes built off site to the millimetre, then fitted without a mark on the wall.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Turnkey" aria-pressed="false">
+          <span class="chip__n">Turnkey</span>
+          <span class="chip__d">One contract for the whole of it: we take the drawing, the trades and the site, and hand back the keys.</span>
+        </button></li>
+        <li><button class="chip" type="button" data-svc="Execution" aria-pressed="false">
+          <span class="chip__n">Execution</span>
+          <span class="chip__d">Drawings made into built work: procurement, the order of the trades, finishing and snagging.</span>
+        </button></li>
+    </ul>
+
+    <div class="ask__foot" data-reveal data-delay="2">
+      <p class="ask__got">We&rsquo;ve got you.</p>
+      <p class="ask__next">Now pick how you would rather talk. The buttons in the corner will <b>book a consultation, open WhatsApp, start an enquiry or call the studio</b>, and each one carries your choices with it.</p>
+      <p class="ask__picked" id="askPicked">Nothing chosen yet, which is fine too.</p>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer class="t-maroon foot" id="contact">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <p class="foot__mark">THE ALCHEMY<br>ATELIER</p>
+        <p class="hand mt1">Where ideas become spaces.</p>
+      </div>
+      <div><h5>Visit</h5><ul>
+        <li><a href="#atelier">Inside the Atelier</a></li>
+        <li><a href="gallery.html">Our Work</a></li>
+        <li><a href="#vision">How We Design</a></li>
+        <li><a href="#services">How We Can Work Together</a></li>
+      </ul></div>
+      <div><h5>Studio</h5><ul>
+        <!-- PLACEHOLDER address: swap these two lines for the studio's own -->
+        <li>Studio 04, 12 Rajpur Road</li>
+        <li>Dehradun 248001</li>
+        <li><a id="footMail" href="#">&nbsp;</a></li>
+        <li><a id="footTel" href="#">&nbsp;</a></li>
+      </ul></div>
+      <div><h5>Elsewhere</h5><ul>
+        <li><a href="#" rel="noopener">Instagram</a></li>
+        <li><a href="#" rel="noopener">Pinterest</a></li>
+        <li><a href="#" rel="noopener">LinkedIn</a></li>
+        <li><a href="#talk">Start a conversation</a></li>
+      </ul></div>
+    </div>
+    <div class="foot__bar">
+      <span>&copy; <span id="yr"></span> The Alchemy Atelier. All rights reserved.</span>
+      <span>Architecture &nbsp;·&nbsp; Interiors &nbsp;·&nbsp; Objects &nbsp;·&nbsp; Experiences</span>
+    </div>
+  </div>
+</footer>
+</main>
+
+<div class="welcome" id="welcome">
+  <div class="wrap">
+    <aside class="note" id="note" role="dialog" aria-modal="true" aria-labelledby="noteTitle">
+      <span class="note__frame" aria-hidden="true"></span>
+      <button class="note__close" id="noteClose" aria-label="Close the welcome note">&times;</button>
+
+      <div class="note__card">
+        <p class="note__greet" id="noteGreet">Welcome to the atelier</p>
+        <h2 class="note__title" id="noteTitle">Make yourself<em>at home.</em></h2>
+        <span class="note__div" aria-hidden="true"></span>
+        <p class="note__lead">Come in. The kettle is on.</p>
+        <p class="note__line">Every home we draw begins with a conversation, not a plan where the morning light should land, which chair you will always end up in. Tell us how you would like to live and <b>we will take care of the rest.</b></p>
+        <p class="note__sign">with warmth, the Alchemy Atelier<small>Architecture &middot; Interiors &middot; Furniture &middot; Consultancy</small></p>
+
+        <svg class="note__bloom" viewBox="0 0 340 340" aria-hidden="true" focusable="false">
+          <defs>
+            <path id="petal" d="M0 0C22-30 66-46 104-30C118-11 113 16 96 29C61 47 21 31 0 0Z"/>
+            <g id="bloom">
+              <use href="#petal" transform="rotate(-8) scale(1.04)"/>
+              <use href="#petal" transform="rotate(52) scale(.94)"/>
+              <use href="#petal" transform="rotate(114) scale(1.06)"/>
+              <use href="#petal" transform="rotate(178) scale(.97)"/>
+              <use href="#petal" transform="rotate(240) scale(1.02)"/>
+              <use href="#petal" transform="rotate(302) scale(.92)"/>
+              <g class="stamens">
+                <path d="M0-15L0-37" transform="rotate(0)"/>
+                <path d="M0-15L0-37" transform="rotate(20)"/>
+                <path d="M0-15L0-37" transform="rotate(40)"/>
+                <path d="M0-15L0-37" transform="rotate(60)"/>
+                <path d="M0-15L0-37" transform="rotate(80)"/>
+                <path d="M0-15L0-37" transform="rotate(100)"/>
+                <path d="M0-15L0-37" transform="rotate(120)"/>
+                <path d="M0-15L0-37" transform="rotate(140)"/>
+                <path d="M0-15L0-37" transform="rotate(160)"/>
+                <path d="M0-15L0-37" transform="rotate(180)"/>
+                <path d="M0-15L0-37" transform="rotate(200)"/>
+                <path d="M0-15L0-37" transform="rotate(220)"/>
+                <path d="M0-15L0-37" transform="rotate(240)"/>
+                <path d="M0-15L0-37" transform="rotate(260)"/>
+                <path d="M0-15L0-37" transform="rotate(280)"/>
+                <path d="M0-15L0-37" transform="rotate(300)"/>
+                <path d="M0-15L0-37" transform="rotate(320)"/>
+                <path d="M0-15L0-37" transform="rotate(340)"/>
+              </g>
+              <circle r="14"/>
+            </g>
+          </defs>
+          <use href="#bloom" transform="translate(170 170)"/>
+        </svg>
+      </div>
+
+      <div class="note__art">
+        <figure class="note__arch">
+          <img src="https://images.unsplash.com/photo-1750325276350-a8e23c1fc32c?auto=format&fit=crop&w=1200&q=85"
+               alt="A living room in earthy tones: a terracotta plaster wall, a low linen sofa and a stone plinth" loading="lazy">
+        </figure>
+            </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============================================================ THE ENQUIRY DESK ============================================================ -->
+<div class="enq" id="enq" hidden>
+  <div class="enq__card" role="dialog" aria-modal="true" aria-labelledby="enqTtl">
+    <button class="enq__close" id="enqClose" type="button" aria-label="Close">&times;</button>
+
+    <p class="enq__eyebrow" id="enqEyebrow">Tell us what you need</p>
+    <h2 class="enq__ttl" id="enqTtl">Send an enquiry</h2>
+    <p class="enq__sub" id="enqSub">Leave it here and the studio will come back to you, usually the same working day.</p>
+
+    <form class="enq__form" id="enqForm" novalidate>
+      <div class="enq__row">
+        <label class="fld"><span>Your name</span><input type="text" name="name" id="enqName" autocomplete="name" required></label>
+        <label class="fld"><span>Phone</span><input type="tel" name="phone" id="enqPhone" autocomplete="tel" placeholder="+91"></label>
+      </div>
+      <label class="fld"><span>Email</span><input type="email" name="email" id="enqEmail" autocomplete="email"></label>
+      <label class="fld" id="enqWhenWrap" hidden><span>A day and time that would suit you</span><input type="text" name="when" id="enqWhen" placeholder="Weekday mornings, or a date"></label>
+      <label class="fld"><span>About the project</span><textarea name="message" id="enqMsg"></textarea></label>
+
+      <div class="enq__pot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" id="enqPot" tabindex="-1" autocomplete="off"></label></div>
+
+      <button class="enq__send" id="enqSend" type="submit">Send it</button>
+      <p class="enq__msg" id="enqOut" hidden role="status"></p>
+      <p class="enq__note">In a hurry? <b id="enqWaLink">WhatsApp</b> or <b id="enqCallLink">call the studio</b> instead.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================ THE FLOATING WAYS TO TALK ============================================================ -->
+<div class="wa" id="wa">
+  <button class="wa__btn" id="fabBook" type="button" aria-label="Book a consultation with The Alchemy Atelier" aria-haspopup="dialog">
+    <span class="wa__lbl" aria-hidden="true">Book a consultation</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg>
+  </button>
+  <button class="wa__btn" id="fabMail" type="button" aria-label="Send the studio an enquiry" aria-haspopup="dialog">
+    <span class="wa__lbl" aria-hidden="true">Send an enquiry</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg>
+  </button>
+  <a class="wa__btn" id="fabCall" href="#" aria-label="Call the studio">
+    <span class="wa__lbl" aria-hidden="true">Call now</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5L16 12l4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 6.2 2 2 0 0 1 6 4z"/></svg>
+  </a>
+  <a class="wa__btn wa__btn--wa" id="waBtn" href="#" target="_blank" rel="noopener" aria-label="Chat with The Alchemy Atelier on WhatsApp">
+    <span class="wa__lbl" aria-hidden="true">WhatsApp</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48 1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.42-9.4a9.35 9.35 0 0 1 6.65 2.76 9.32 9.32 0 0 1 2.75 6.65c0 5.18-4.22 9.41-9.41 9.41M20.5 3.49A11.75 11.75 0 0 0 12.04 0C5.5 0 .18 5.32.18 11.86c0 2.09.55 4.13 1.59 5.93L.08 24l6.35-1.66a11.83 11.83 0 0 0 5.6 1.43h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.4-8.42"/></svg>
+  </a>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   CONFIGURE ME · studio details live here and nowhere else
+   ============================================================ */
+var CONFIG = {
+  whatsappNumber: '+917017501061',        /* international format, digits only; replace with the studio number */
+  whatsappMessage: 'Hi, I came across The Alchemy Atelier website and would like to discuss a project.',
+  email: 'meghas5634@gmail.com',
+  phone: '+917017501061',                /* the number the Call now link dials */
+
+  /* where the enquiry desk sends. with no key it hands the message to the
+     visitor's mail app, which still reaches you but asks more of them.
+     a free Web3Forms access key (https://web3forms.com) posts it straight
+     to the studio inbox: paste the key here, nothing else to change */
+  formEndpoint: 'https://api.web3forms.com/submit',
+  formKey: '',
+
+  /* live chat. tawk.to · Admin > Channels > Chat Widget > Direct Chat Link
+     gives a src like https://embed.tawk.to/PROPERTY_ID/WIDGET_ID
+     paste it here and the envelope button opens the chat instead of the
+     enquiry panel. left empty, the panel is used and no chat is loaded */
+  tawkSrc: ''
+};
+
+var $  = function(s,c){return (c||document).querySelector(s);};
+var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var store = {
+  get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},
+  set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+};
+
+/* ---------- year ---------- */
+$('#yr').textContent = new Date().getFullYear();
+
+/* ---------- broken images degrade to a tonal block ---------- */
+$$('img').forEach(function(img){
+  img.addEventListener('error',function(){ img.style.opacity = '0'; });
+});
+
+/* ============================================================
+   WELCOME NOTE · greets by time of day, and only on a first visit
+   ============================================================ */
+(function(){
+  var welcome = $('#welcome'), note = $('#note');
+  if (!welcome || !note) return;
+  /* a flag an older build left behind */
+  try{ localStorage.removeItem('taa_note_closed_v1'); }catch(e){}
+
+  /* the note greets an arrival, not a move between rooms: it opens whenever the
+     site is opened afresh, and stays down when the visitor walks back in from
+     the gallery. ?welcome in the address opens it on demand */
+  var SEEN = 'taa.welcome.seen.v1';
+  var forced = /[?&]welcome(=|&|$)/.test(location.search);
+  /* a flag an older build kept for good; this one only remembers the tab's visit */
+  try{ localStorage.removeItem(SEEN); }catch(e){}
+
+  /* the tab's own memory, which a new tab or a new browser does not carry */
+  function seen(){ try{ return sessionStorage.getItem(SEEN) === '1'; }catch(e){ return false; } }
+  function markSeen(){ try{ sessionStorage.setItem(SEEN,'1'); }catch(e){} }
+
+  /* a refresh is an opening too, so it always greets */
+  var entry = (window.performance && performance.getEntriesByType &&
+               performance.getEntriesByType('navigation')[0]) || null;
+  var reloaded = entry ? entry.type === 'reload'
+               : !!(window.performance && performance.navigation && performance.navigation.type === 1);
+
+  /* on a hosted site the referrer names the room the visitor came from; opened
+     from the file system it is always blank, which is what the flag is for */
+  var fromInside = (function(){
+    var r = document.referrer;
+    if (!r) return false;
+    try{
+      var here = new URL(location.href), there = new URL(r);
+      if (there.origin !== here.origin) return false;
+      if (here.protocol === 'file:'){
+        var dir = function(path){ return path.slice(0, path.lastIndexOf('/') + 1); };
+        return dir(there.pathname) === dir(here.pathname);
+      }
+      return true;
+    }catch(e){ return false; }
+  })();
+
+  if (!forced && !reloaded && (fromInside || seen())){
+    if (welcome.parentNode) welcome.parentNode.removeChild(welcome);
+    return;
+  }
+
+  /* the greeting keeps the visitor's hours: a note left out on the table, not a banner */
+  var greet = $('#noteGreet');
+  if (greet){
+    var h = new Date().getHours();
+    var part = h < 5  ? 'Still up' :
+               h < 12 ? 'Good morning' :
+               h < 17 ? 'Good afternoon' :
+               h < 22 ? 'Good evening' : 'Good night';
+    greet.textContent = part + ' \u00b7 welcome to the Alchemy Atelier';
+  }
+
+  /* while the dialogue is up the page beneath must not scroll */
+  function lock(){
+    document.documentElement.classList.add('is-locked');
+    document.body.classList.add('is-locked');
+  }
+  function unlock(){
+    document.documentElement.classList.remove('is-locked');
+    document.body.classList.remove('is-locked');
+  }
+
+  /* closing takes the dialogue out of the document entirely */
+  function remove(){ if (welcome.parentNode) welcome.parentNode.removeChild(welcome); }
+
+  var closing = false;
+  function close(goTo){
+    if (closing) return;
+    closing = true;
+    unlock();
+    var done = function(){
+      remove();
+      if (!goTo) return;
+      var t = document.querySelector(goTo);
+      if (t) t.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'start'});
+    };
+    if (reduced){ done(); return; }
+    welcome.classList.remove('is-open');
+    welcome.classList.add('is-closing');
+    setTimeout(done, 480);
+  }
+
+  $('#noteClose').addEventListener('click', function(){ close(null); });
+  /* Next sends the visitor on into the site */
+  var next = $('#noteNext');
+  if (next) next.addEventListener('click', function(){ close('#about'); });
+  /* the scrim closes it too */
+  welcome.addEventListener('click', function(e){ if (e.target === welcome) close(null); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && welcome.parentNode) close(null);
+  });
+
+  /* it arrives a beat after the hero has settled, not on top of it */
+  var openDelay = reduced ? 0 : 900;
+  setTimeout(function(){
+    if (closing || !welcome.parentNode) return;
+    /* counted as seen the moment it is on the table, not only when dismissed */
+    markSeen();
+    welcome.classList.add('is-open');
+    lock();
+    var c = $('#noteClose');
+    if (c) c.focus({preventScroll:true});
+  }, openDelay);
+})();
+
+
+
+/* ============================================================
+   WHAT ARE YOU LOOKING FOR · the ticked services travel into
+   whichever channel the visitor takes, so nothing is said twice
+   ============================================================ */
+(function(){
+  var list = $('#askChips');
+  if (!list) return;
+  var chips  = $$('.chip', list),
+      picked = $('#askPicked'),
+      wa     = $('#waBtn'),
+      call   = $('#fabCall');
+
+  function chosen(){
+    return chips.filter(function(c){ return c.getAttribute('aria-pressed') === 'true'; })
+                .map(function(c){ return c.getAttribute('data-svc'); });
+  }
+  /* a list a person would say out loud: a, b and c */
+  function phrase(a){
+    if (a.length < 2) return a[0] || '';
+    return a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+  }
+
+  function sync(){
+    var a = chosen(), what = phrase(a);
+    var line = a.length
+      ? 'I am looking for ' + what + '.'
+      : 'I would like to talk about a project.';
+
+    picked.textContent = a.length
+      ? 'Carried into the message: ' + what + '.'
+      : 'Nothing chosen yet, which is fine too.';
+
+    wa.href = 'https://wa.me/' + CONFIG.whatsappNumber.replace(/\D/g,'') + '?text=' +
+      encodeURIComponent('Hi, I came across The Alchemy Atelier website. ' + line);
+
+  }
+
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      sync();
+    });
+  });
+
+  if (call) call.href = 'tel:' + CONFIG.phone;
+  sync();
+})();
+
+
+/* ============================================================
+   LIVE CHAT · tawk.to, loaded only if a src is configured.
+   its own launcher stays hidden: the floating envelope is the way in,
+   so the corner keeps one set of buttons rather than two
+   ============================================================ */
+window.chatReady = false;
+(function(){
+  if (!CONFIG.tawkSrc) return;
+
+  window.Tawk_API = window.Tawk_API || {};
+  window.Tawk_LoadStart = new Date();
+
+  window.Tawk_API.onLoad = function(){
+    chatReady = true;
+    try{ window.Tawk_API.hideWidget(); }catch(e){}
+  };
+  /* closing the chat puts the launcher away again */
+  window.Tawk_API.onChatMinimized = function(){ try{ window.Tawk_API.hideWidget(); }catch(e){} };
+  window.Tawk_API.onChatHidden   = function(){ try{ window.Tawk_API.hideWidget(); }catch(e){} };
+
+  var t = document.createElement('script');
+  t.async = true;
+  t.src = CONFIG.tawkSrc;
+  t.charset = 'UTF-8';
+  t.setAttribute('crossorigin','*');
+  document.head.appendChild(t);
+})();
+
+
+/* ============================================================
+   THE ENQUIRY DESK · book a consultation and send an enquiry are
+   the same panel, asked two ways. it posts if a form key is set,
+   and falls back to the visitor's mail app if one is not
+   ============================================================ */
+(function(){
+  var box = $('#enq');
+  if (!box) return;
+
+  var card = $('.enq__card', box),
+      form = $('#enqForm'),
+      out  = $('#enqOut'),
+      send = $('#enqSend'),
+      ttl  = $('#enqTtl'),
+      sub  = $('#enqSub'),
+      when = $('#enqWhenWrap'),
+      msg  = $('#enqMsg'),
+      last = null,
+      mode = 'enquiry';
+
+  /* whatever was ticked upstairs travels down into the message */
+  function ticked(){
+    return $$('#askChips .chip')
+      .filter(function(c){ return c.getAttribute('aria-pressed') === 'true'; })
+      .map(function(c){ return c.getAttribute('data-svc'); });
+  }
+  function phrase(a){
+    if (a.length < 2) return a[0] || '';
+    return a.slice(0,-1).join(', ') + ' and ' + a[a.length-1];
+  }
+
+  function open(which, opener){
+    mode = which;
+    last = opener || null;
+    var a = ticked(), what = phrase(a);
+
+    ttl.textContent = which === 'book' ? 'Book a consultation' : 'Send an enquiry';
+    sub.textContent = which === 'book'
+      ? 'An hour with the studio, in the atelier or on a call. Tell us when suits and we will confirm.'
+      : 'Leave it here and the studio will come back to you, usually the same working day.';
+    when.hidden = which !== 'book';
+
+    if (a.length && !msg.value) msg.value = 'I am looking for ' + what + '.\n\n';
+
+    out.hidden = true;
+    box.hidden = false;
+    /* a frame between display and the transition, or it arrives without one */
+    requestAnimationFrame(function(){
+      box.classList.add('is-open');
+      document.documentElement.classList.add('is-locked');
+      document.body.classList.add('is-locked');
+      $('#enqName').focus({preventScroll:true});
+    });
+  }
+
+  function close(){
+    box.classList.remove('is-open');
+    document.documentElement.classList.remove('is-locked');
+    document.body.classList.remove('is-locked');
+    setTimeout(function(){ box.hidden = true; }, reduced ? 0 : 460);
+    if (last) last.focus({preventScroll:true});
+  }
+
+  $('#fabBook').addEventListener('click', function(){ open('book', this); });
+  /* the envelope prefers live chat, and falls back to this panel without one */
+  $('#fabMail').addEventListener('click', function(){
+    if (chatReady && window.Tawk_API && window.Tawk_API.maximize){
+      var a = ticked();
+      /* the chat opens knowing what was ticked, as the panel would */
+      try{
+        window.Tawk_API.setAttributes({ looking_for: a.join(', ') }, function(){});
+        if (a.length) window.Tawk_API.addEvent('picked_services', { services: a.join(', ') }, function(){});
+      }catch(e){}
+      window.Tawk_API.maximize();
+      return;
+    }
+    open('enquiry', this);
+  });
+  /* the button under the services opens the panel rather than dropping the
+     reader at the foot of the page. the href stays as a fallback for no JS */
+  var svcStart = $('#svcStart');
+  if (svcStart) svcStart.addEventListener('click', function(e){
+    e.preventDefault();
+    open('enquiry', this);
+  });
+
+  $('#enqClose').addEventListener('click', close);
+  box.addEventListener('click', function(e){ if (e.target === box) close(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !box.hidden) close();
+  });
+  /* the tab key stays inside the panel while it is up */
+  card.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab') return;
+    var f = $$('button,input,textarea,a[href]', card).filter(function(el){ return !el.disabled && el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], lastEl = f[f.length-1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); lastEl.focus(); }
+    else if (!e.shiftKey && document.activeElement === lastEl){ e.preventDefault(); first.focus(); }
+  });
+
+  function say(text, ok){
+    out.textContent = text;
+    out.className = 'enq__msg ' + (ok ? 'enq__msg--ok' : 'enq__msg--no');
+    out.hidden = false;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if ($('#enqPot').value) return;                    /* a robot filled the empty field */
+
+    var name  = $('#enqName').value.trim(),
+        phone = $('#enqPhone').value.trim(),
+        email = $('#enqEmail').value.trim(),
+        whenV = $('#enqWhen').value.trim(),
+        body  = msg.value.trim(),
+        a     = ticked();
+
+    if (!name)  return say('A name first, so we know who we are writing back to.', false);
+    if (!phone && !email) return say('A phone number or an email, so there is a way back to you.', false);
+
+    var subject = (mode === 'book' ? 'Consultation request' : 'Enquiry') +
+                  (a.length ? ' · ' + phrase(a) : '');
+    var lines = [
+      'Name: ' + name,
+      phone ? 'Phone: ' + phone : '',
+      email ? 'Email: ' + email : '',
+      a.length ? 'Looking for: ' + phrase(a) : '',
+      whenV ? 'Suits them: ' + whenV : '',
+      '',
+      body
+    ].filter(Boolean).join('\n');
+
+    /* no key set: hand it to the mail app rather than swallow it */
+    if (!CONFIG.formKey){
+      window.location.href = 'mailto:' + CONFIG.email +
+        '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines);
+      say('Your mail app should be opening with this filled in. Send it and it reaches the studio.', true);
+      return;
+    }
+
+    send.disabled = true;
+    send.textContent = 'Sending';
+    fetch(CONFIG.formEndpoint, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+      body: JSON.stringify({
+        access_key: CONFIG.formKey,
+        subject: subject,
+        from_name: 'The Alchemy Atelier website',
+        name: name, phone: phone, email: email,
+        looking_for: a.join(', '), suits_them: whenV, message: body
+      })
+    }).then(function(r){ return r.json(); }).then(function(d){
+      if (d && d.success){
+        form.reset();
+        say('Thank you. It is with the studio, and someone will come back to you shortly.', true);
+      } else {
+        say('That did not go through. WhatsApp or a call will reach us faster just now.', false);
+      }
+    }).catch(function(){
+      say('That did not go through. WhatsApp or a call will reach us faster just now.', false);
+    }).then(function(){
+      send.disabled = false;
+      send.textContent = 'Send it';
+    });
+  });
+
+  /* the two shortcuts at the foot of the panel */
+  $('#enqWaLink').addEventListener('click', function(){ $('#waBtn').click(); });
+  $('#enqCallLink').addEventListener('click', function(){ window.location.href = 'tel:' + CONFIG.phone; });
+})();
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+var hdr = $('#hdr'), lastY = 0;
+window.addEventListener('scroll', function(){
+  var y = window.scrollY;
+  hdr.classList.toggle('solid', y > 60);
+  hdr.classList.toggle('hide', y > 400 && y > lastY && !$('#nav').classList.contains('open'));
+  lastY = y;
+}, {passive:true});
+
+var burger = $('#burger'), nav = $('#nav');
+burger.addEventListener('click', function(){
+  var open = nav.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+$$('#nav a').forEach(function(a){
+  a.addEventListener('click', function(){
+    nav.classList.remove('open'); burger.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+  });
+});
+
+/* ============================================================
+   REVEALS
+   ============================================================ */
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if (en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); }
+  });
+}, {threshold:0.14, rootMargin:'0px 0px -8% 0px'});
+$$('[data-reveal]').forEach(function(el){ io.observe(el); });
+
+var ioLine = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){ if (en.isIntersecting) en.target.classList.add('is-in'); });
+}, {threshold:0.9});
+$$('[data-line]').forEach(function(el){ ioLine.observe(el); });
+
+/* ============================================================
+/* ============================================================
+   THE TWO TESTIMONIAL ROWS · three cards in view, the arrows walking
+   the row along one card at a time. the film row also lights a dot
+   ============================================================ */
+function testimonialRow(trackSel, arrows, dotsSel){
+  var track = $(trackSel);
+  if (!track) return;
+  var cards = $$(':scope > *', track), at = 0, dots = dotsSel ? $(dotsSel) : null;
+  if (!cards.length) return;
+
+  function gap(){ return parseFloat(getComputedStyle(track).columnGap) || 0; }
+  function step(){ return cards[0].getBoundingClientRect().width + gap(); }
+  function perView(){ return Math.max(1, Math.round(track.parentNode.clientWidth / step())); }
+  function maxAt(){ return Math.max(0, cards.length - perView()); }
+
+  if (dots){
+    dots.innerHTML = '';
+    for (var i = 0; i <= 2; i++) dots.appendChild(document.createElement('b'));
+  }
+
+  function go(n){
+    at = Math.min(Math.max(n, 0), maxAt());
+    track.style.transform = 'translateX(' + (-at * step()) + 'px)';
+    arrows.forEach(function(b){
+      var d = +(b.getAttribute('data-step') || 1);
+      b.disabled = d < 0 ? at <= 0 : at >= maxAt();
+    });
+    if (dots) $$('b', dots).forEach(function(d, i){ d.classList.toggle('is-on', i === Math.min(at, 2)); });
+  }
+  arrows.forEach(function(b){
+    b.addEventListener('click', function(){
+      var d = +(b.getAttribute('data-step') || 1);
+      go(at >= maxAt() && d > 0 ? 0 : at + d);
+    });
+  });
+  window.addEventListener('resize', function(){ go(at); });
+  go(0);
+}
+testimonialRow('#kwTrack', $$('.kw__arrow'), null);
+testimonialRow('#vtTrack', $$('.vt__next'), '#vtDots');
+
+/* ============================================================
+   CLIENT STORIES · a card with a film opens it in the player. a card
+   without one stays as it is, so nothing pretends to play
+   ============================================================ */
+(function(){
+  var cards = $$('.vt__card'), modal = $('#vtModal'), video = $('#vtVideo'), nameEl = $('#vtName');
+  if (!cards.length || !modal) return;
+  var opener = null;
+
+  cards.forEach(function(c, i){
+    var url = (c.getAttribute('data-video') || '').trim(),
+        who = (c.getAttribute('data-name') || '').trim();
+    if (!url) return;
+    /* a film has arrived: the card wakes up and says whose it is */
+    c.removeAttribute('aria-disabled');
+    c.setAttribute('aria-label', 'Play the film' + (who ? ' from ' + who : ''));
+  });
+
+  function open(c){
+    var url = (c.getAttribute('data-video') || '').trim();
+    if (!url) return;
+    opener = c;
+    video.src = url;
+    nameEl.textContent = (c.getAttribute('data-name') || '').trim();
+    modal.hidden = false;
+    requestAnimationFrame(function(){
+      modal.classList.add('is-open');
+      document.documentElement.classList.add('is-locked');
+      document.body.classList.add('is-locked');
+      $('#vtClose').focus({preventScroll:true});
+      var p = video.play(); if (p && p.catch) p.catch(function(){});
+    });
+  }
+  function close(){
+    video.pause(); video.removeAttribute('src'); video.load();
+    modal.classList.remove('is-open');
+    document.documentElement.classList.remove('is-locked');
+    document.body.classList.remove('is-locked');
+    setTimeout(function(){ modal.hidden = true; }, reduced ? 0 : 450);
+    if (opener) opener.focus({preventScroll:true});
+  }
+
+  cards.forEach(function(c){ c.addEventListener('click', function(){ open(c); }); });
+  $('#vtClose').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !modal.hidden) close(); });
+})();
+
+/* ============================================================
+   WHATSAPP
+   ============================================================ */
+var waHref = 'https://wa.me/' + CONFIG.whatsappNumber.replace(/\D/g,'') + '?text=' + encodeURIComponent(CONFIG.whatsappMessage);
+var waBtn = $('#waBtn'), waInline = $('#waInline'), mailLink = $('#mailLink');
+/* the ticked services already write this one, so only seed it if nothing has */
+if (waBtn && waBtn.getAttribute('href') === '#') waBtn.href = waHref;
+/* these two live in sections that are not built yet; guard, or the script stops here */
+if (waInline){ waInline.href = waHref; waInline.target = '_blank'; }
+if (mailLink){
+  mailLink.href = 'mailto:' + CONFIG.email;
+  if (mailLink.firstChild) mailLink.firstChild.textContent = CONFIG.email + ' ';
+}
+
+/* the footer reads its email and number from CONFIG, so the studio's
+   details are written once and never drift between the two */
+var footMail = $('#footMail'), footTel = $('#footTel');
+if (footMail){ footMail.href = 'mailto:' + CONFIG.email; footMail.textContent = CONFIG.email; }
+if (footTel){
+  footTel.href = 'tel:' + CONFIG.phone.replace(/[^\d+]/g,'');
+  /* +91 70175 01061, the way a number is read out loud here */
+  var d = CONFIG.phone.replace(/\D/g,'');
+  footTel.textContent = d.length === 12 && d.indexOf('91') === 0
+    ? '+91 ' + d.slice(2,7) + ' ' + d.slice(7)
+    : CONFIG.phone;
+}
+
+/* the floating ways to talk belong to the closing invitation, not to the front
+   door: they are held back until the visitor has read their way down to the
+   end, and they fold away again if the page is scrolled back up */
+var wa = $('#wa');
+if (wa){
+  var waEnd = $('#talk') || $('#contact');
+  var waToggle = function(){
+    var atEnd = waEnd
+      /* the closing section has risen into the lower quarter of the screen */
+      ? waEnd.getBoundingClientRect().top <= window.innerHeight * 0.75
+      : window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 200;
+    wa.classList.toggle('on', atEnd);
+  };
+  window.addEventListener('scroll', waToggle, {passive:true});
+  window.addEventListener('resize', waToggle);
+  waToggle();
+}
+/* ============================================================
+   SMOOTH ANCHORS
+   ============================================================ */
+/* an anchor that opens a panel is not a jump link, so it is left out here:
+   otherwise both handlers fire and the page scrolls away behind the panel */
+$$('a[href^="#"]:not([data-opens-enquiry])').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var id = a.getAttribute('href');
+    if (id.length < 2) return;
+    var t = document.querySelector(id);
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'start'});
+    history.replaceState(null,'',id);
+  });
+});
+
+
+})();
+</script>
+</body>
+</html>

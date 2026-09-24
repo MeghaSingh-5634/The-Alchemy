@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Interior Design · The Alchemy Atelier</title>
+<meta name="description" content="Whole interiors resolved as one scheme. The plan, the joinery, the materials and the light are considered together, so a room reads as a single idea r">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE ALCHEMY ATELIER · GALLERY
+   the same three surfaces as the home page: maroon at the entrance,
+   cream for the work itself, emerald for the studio's voice
+   ============================================================ */
+:root{
+  --emerald:#123B33;
+  --emerald-deep:#0B2721;
+  --emerald-soft:#1C5347;
+  --emerald-shade:#0A1F1A;
+  --maroon:#4A2225;
+  --maroon-deep:#2F1416;
+  --maroon-soft:#7B4A4E;
+  --gold:#C0A062;
+  --gold-soft:#DFC791;
+  --cream:#F5EFE4;
+  --cream-2:#E9E0CF;
+  --cream-3:#DCD0B9;
+  --ink:#17150F;
+
+  --fg:var(--ink);
+  --bg:var(--cream);
+  --hair:rgba(23,21,15,.14);
+  --accent:#8A6729;        /* gold, darkened so it holds up on cream */
+  --bronze:#C08B4A;
+  --charcoal:#2B2620;
+
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+
+  --pad:clamp(1.25rem,5vw,5.5rem);
+  --sec:clamp(4.5rem,9vw,7.5rem);
+  --ease:cubic-bezier(.19,1,.22,1);
+  --tracking:.22em;
+  --tracking-wide:.3em;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html.is-locked,body.is-locked{overflow:hidden}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(15px,1.02vw,17px);line-height:1.7;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto;background:linear-gradient(140deg,#e3d9c6,#cdbfa4 60%,#bdae91)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--gold);color:#17150F}
+
+.wrap{max-width:1440px;margin-inline:auto;padding-inline:var(--pad)}
+section{position:relative;padding-block:var(--sec)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.t-maroon{background:var(--maroon);color:#F4E9E0}
+.t-cream{background:var(--cream);color:var(--ink)}
+.t-emerald{background:var(--emerald);color:#EFE9DC}
+.t-maroon,.t-emerald{--accent:var(--gold);--hair:rgba(245,239,228,.16)}
+
+.eyebrow{font-size:.68rem;letter-spacing:var(--tracking-wide);text-transform:uppercase;font-weight:400;opacity:.72}
+.panel-frame{
+  position:absolute;inset:clamp(9px,1.15vw,18px);z-index:6;pointer-events:none;
+  border:1px solid rgba(223,199,145,.3);border-radius:clamp(13px,1.9vw,28px);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  --bc:currentColor;
+  display:inline-flex;align-items:center;gap:.8rem;
+  padding:1rem 1.9rem;border:1px solid var(--bc);border-radius:999px;
+  font-size:.74rem;letter-spacing:var(--tracking);text-transform:uppercase;font-weight:400;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:color .6s var(--ease),border-color .6s var(--ease);
+}
+.btn::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.btn:hover{color:#17150F;border-color:var(--gold)}
+.btn:hover::after{transform:scaleX(1)}
+.btn .arw{transition:transform .5s var(--ease)}
+.btn:hover .arw{transform:translateX(5px)}
+
+/* ---------- reveal ---------- */
+[data-reveal]{opacity:0;transform:translateY(12px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+[data-reveal].is-in{opacity:1;transform:none}
+[data-reveal][data-delay="1"]{transition-delay:.06s}
+[data-reveal][data-delay="2"]{transition-delay:.12s}
+[data-reveal][data-delay="3"]{transition-delay:.18s}
+[data-reveal][data-delay="4"]{transition-delay:.24s}
+[data-reveal][data-delay="5"]{transition-delay:.3s}
+[data-reveal][data-delay="6"]{transition-delay:.36s}
+
+/* the cards in a list arrive one after another as the list comes into view.
+   the rise animates `translate`, not `transform`, so a card's hover lift is
+   left free: setting both on one property made the entrance snap instead */
+.svp__index[data-reveal],.svp__fits[data-reveal]{opacity:1;transform:none;transition:none}
+.svp__index > li,.svp__fits > li{opacity:0}
+.svp__index.is-in > li,.svp__fits.is-in > li{animation:svp-rise .62s var(--ease) both}
+.svp__index.is-in > li:nth-child(1),.svp__fits.is-in > li:nth-child(1){animation-delay:.04s}
+.svp__index.is-in > li:nth-child(2),.svp__fits.is-in > li:nth-child(2){animation-delay:.11s}
+.svp__index.is-in > li:nth-child(3),.svp__fits.is-in > li:nth-child(3){animation-delay:.18s}
+.svp__index.is-in > li:nth-child(4){animation-delay:.25s}
+.svp__index.is-in > li:nth-child(5){animation-delay:.32s}
+.svp__index.is-in > li:nth-child(6){animation-delay:.39s}
+@keyframes svp-rise{from{opacity:0;translate:0 16px}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:reduce){
+  .svp__index > li,.svp__fits > li{opacity:1}
+  .svp__index.is-in > li,.svp__fits.is-in > li{animation:none}
+}
+
+/* ============================================================
+   HEADER · the same chrome the home page wears
+   ============================================================ */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:120;isolation:isolate;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  /* the extra top padding keeps the button clear of the panel frame's line */
+  padding:2.1rem var(--pad) 1.15rem;color:var(--cream);
+  border-bottom:1px solid transparent;
+  transition:transform .6s var(--ease),background .6s var(--ease),padding .6s var(--ease),border-color .6s;
+}
+.hdr::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(47,20,22,.55),transparent);transition:opacity .6s var(--ease)}
+.hdr.solid::before{opacity:0}
+.hdr.solid{background:rgba(47,20,22,.95);backdrop-filter:blur(14px);padding-block:.85rem;
+  border-color:rgba(223,199,145,.18)}
+.hdr.hide{transform:translateY(-102%)}
+/* the way back, in the top left corner */
+.back{
+  flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(223,199,145,.45);color:var(--gold-soft);
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease);
+}
+.back svg{width:40%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.back:hover{background:var(--gold);border-color:var(--gold);color:var(--maroon-deep)}
+.back:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+.back + .brand{margin-right:auto;margin-left:clamp(.2rem,1vw,.8rem)}
+.brand{display:block;line-height:1;flex:0 0 auto}
+.brand__name{display:block;font-family:var(--serif);font-weight:400;
+  font-size:clamp(.95rem,1.5vw,1.22rem);letter-spacing:.3em;text-indent:.3em;
+  text-transform:uppercase;color:var(--gold-soft);white-space:nowrap}
+.brand__rule{display:block;width:100%;height:1px;margin-top:.62rem;background:currentColor;
+  color:var(--gold);opacity:.45;transform:scaleX(.34);transform-origin:left;
+  transition:transform .6s var(--ease),opacity .6s var(--ease)}
+.brand:hover .brand__rule{transform:scaleX(1);opacity:.8}
+@media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
+
+.nav{display:flex;flex:1;align-items:center;justify-content:center;gap:clamp(1rem,2.1vw,2.1rem)}
+.nav a{font-size:.7rem;letter-spacing:var(--tracking);text-transform:uppercase;opacity:.85;
+  position:relative;padding:.3rem 0;white-space:nowrap}
+.nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--gold);
+  transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav a:hover{opacity:1}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav a.is-active{opacity:1;color:var(--gold-soft)}
+.nav a.is-active::after{transform:scaleX(1);transform-origin:left;opacity:.7}
+.hdr>.btn{border-radius:0;padding:.9rem 1.5rem;font-size:.68rem;
+  border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
+.hdr>.btn:hover{color:var(--ink);border-color:var(--gold)}
+.burger{display:none;width:44px;height:44px;border:1px solid rgba(223,199,145,.4);
+  gap:5px;flex-direction:column;align-items:center;justify-content:center}
+.burger span{display:block;width:16px;height:1px;background:currentColor;transition:.4s var(--ease)}
+.burger.open span:nth-child(1){transform:translateY(3px) rotate(45deg)}
+.burger.open span:nth-child(2){transform:translateY(-3px) rotate(-45deg)}
+
+@media (max-width:1080px){
+  /* the menu is a fixed panel, so the header must not become its containing
+     block: a transform or a backdrop-filter here would size the panel to the
+     header strip and the closed menu would hang over the page */
+  .hdr{transition:background .6s var(--ease),padding .6s var(--ease),
+    border-color .6s,top .6s var(--ease)}
+  .hdr.solid{background:rgba(47,20,22,.97);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .hdr.hide{transform:none;top:-140px}
+  .nav{position:fixed;inset:0;background:var(--maroon-deep);flex-direction:column;
+    justify-content:center;gap:1.7rem;transform:translateY(-100%);visibility:hidden;
+    transition:transform .8s var(--ease),visibility 0s linear .8s;z-index:-1;color:var(--cream)}
+  .nav.open{transform:none;visibility:visible;transition:transform .8s var(--ease),visibility 0s}
+  .nav a{font-size:1rem;letter-spacing:var(--tracking-wide)}
+  .hdr>.btn{display:none}
+  .nav__cta{display:inline-flex;margin-top:.6rem;border-color:var(--gold);color:var(--gold-soft)}
+  .burger{display:flex}
+}
+@media (min-width:1081px){.nav__cta{display:none}}
+
+/* ============================================================
+   THE ENTRANCE · a maroon band, the way the footer closes the site
+   ============================================================ */
+.top{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(168deg,var(--maroon) 0%,var(--maroon-deep) 100%);
+  color:#F4E9E0;
+  padding-block:clamp(9rem,17vh,12rem) clamp(4rem,8vw,6.5rem);
+  text-align:center;
+}
+/* the mauve in the logo's wing, drifting behind the title */
+.top::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(58% 46% at 24% 22%,rgba(123,74,78,.55),transparent 66%),
+    radial-gradient(52% 44% at 82% 78%,rgba(18,59,51,.5),transparent 64%);
+}
+.top__eyebrow{color:var(--gold-soft);opacity:.85}
+.top__script{font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.2rem,2.3vw,1.8rem);letter-spacing:.015em;
+  line-height:1.3;color:var(--gold-soft);margin-top:.2rem}
+.top__ttl{
+  font-family:var(--serif);font-weight:300;text-transform:uppercase;
+  font-size:clamp(2.5rem,7vw,5.4rem);line-height:1.03;letter-spacing:.045em;
+  color:var(--cream);margin-top:.2rem;
+}
+.top__lead{max-width:56ch;margin:clamp(1.2rem,2.6vw,1.9rem) auto 0;opacity:.82}
+.top__crumb{margin-top:clamp(1.6rem,3vw,2.4rem);font-size:.68rem;
+  letter-spacing:var(--tracking);text-transform:uppercase;opacity:.6}
+.top__crumb a:hover{color:var(--gold-soft)}
+.top__crumb i{font-style:normal;margin:0 .6rem;color:var(--gold)}
+
+/* ============================================================
+   THE CLOSING INVITATION
+   ============================================================ */
+.invite{
+  position:relative;isolation:isolate;overflow:hidden;text-align:center;
+  background:linear-gradient(168deg,var(--emerald) 0%,var(--emerald-shade) 100%);
+  color:#EFE9DC;
+  /* a turned box, like the footer, with a breath of cream between the two */
+  border-radius:clamp(20px,2.6vw,40px);
+  margin-bottom:clamp(1.1rem,2.6vw,2.2rem);
+}
+.invite__script{font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.2rem,2.3vw,1.8rem);letter-spacing:.015em;color:var(--gold-soft)}
+.invite__ttl{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,4.4vw,3.4rem);
+  line-height:1.08;margin-top:.3rem;max-width:18ch;margin-inline:auto}
+.invite__lead{max-width:52ch;margin:.9rem auto 0;opacity:.8}
+.invite .btn{margin-top:clamp(1.3rem,2.4vw,1.9rem);border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
+/* the room drawn in gold line, the way a plan is drawn before it is built:
+   an arched mirror with a chair standing in it on one side, a niche and a
+   vase of branches on the other, and a fleuron over the invitation */
+.invite{padding-block:clamp(3rem,5.5vw,4.6rem)}
+.invite .wrap{position:relative;z-index:2}
+.invite__crest{
+  display:block;width:clamp(72px,7vw,104px);height:auto;
+  margin:0 auto clamp(.3rem,.8vw,.6rem);color:var(--gold);opacity:.85;
+}
+.invite__art{
+  position:absolute;bottom:0;z-index:0;pointer-events:none;
+  height:min(78%,430px);width:auto;color:var(--gold);opacity:.44;
+}
+.invite__art--l{left:clamp(-2.5rem,1vw,3rem)}
+.invite__art--r{right:clamp(-2.5rem,1vw,3rem)}
+.invite__art .ln,.invite__crest .ln{
+  fill:none;stroke:currentColor;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;
+}
+.invite__art .lv use{fill:none;stroke:currentColor;stroke-width:1.05;opacity:.9}
+/* it steps back as the band narrows, and leaves the copy alone on a phone */
+@media (max-width:1180px){.invite__art{opacity:.26;height:min(62%,330px)}}
+@media (max-width:860px){.invite__art{display:none}}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.foot{
+  position:relative;isolation:isolate;overflow:hidden;
+  border-radius:clamp(20px,2.6vw,40px) clamp(20px,2.6vw,40px) 0 0;
+  padding-block:clamp(3.5rem,8vw,6rem);
+  background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-deep) 100%);
+  color:#F4E9E0;
+}
+.foot>.panel-frame{
+  inset:clamp(9px,1.15vw,18px) clamp(9px,1.15vw,18px) 0;
+  border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
+}
+.foot__top{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(auto-fit,minmax(140px,1fr));
+  gap:clamp(1.6rem,4vw,3rem)}
+@media (max-width:820px){
+  .foot__top{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:2rem 1.6rem}
+  .foot__top>:first-child{grid-column:1/-1}
+}
+.foot h5{font-size:.62rem;letter-spacing:var(--tracking);text-transform:uppercase;
+  opacity:.5;margin-bottom:1rem;font-weight:400}
+.foot ul{list-style:none;display:grid;gap:.6rem;font-size:.9rem;opacity:.8;overflow-wrap:anywhere}
+.foot li a:hover{color:var(--gold)}
+.foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;
+  letter-spacing:.2em;text-indent:.2em;line-height:1.3}
+.foot__hand{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.28rem;
+  line-height:1.4;letter-spacing:.01em;color:var(--gold-soft);margin-top:1rem}
+.foot__bar{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid rgba(245,239,228,.16);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  font-size:.7rem;opacity:.55;letter-spacing:.1em}
+
+
+/* ============================================================
+   A SERVICE · the page a card on the home page opens into.
+   the bands alternate on purpose: cream to read on, ink where the
+   work is shown, emerald for the studio's voice at the close. gold
+   marks the head of a section and almost nothing else, so it stays
+   an accent rather than a texture
+   ============================================================ */
+.svp{position:relative;background:var(--cream);color:var(--ink);
+  padding-block:clamp(3rem,6vw,5rem)}
+.svp--paper{background:var(--cream-2)}
+/* the studio's own green, the same gradient the promise band and the closing
+   invitation use. a near-black reads brown beside this palette */
+.svp--deep{
+  background:linear-gradient(168deg,var(--emerald) 0%,var(--emerald-shade) 100%);
+  color:#EFE9DC;
+  /* a turned box, the same inset and corner the home page gives its bands */
+  margin-inline:clamp(10px,1.8vw,30px);
+  border-radius:clamp(20px,2.6vw,40px);
+  overflow:hidden;
+}
+.svp--deep + .svp{border-top:0}
+.svp + .svp{border-top:1px solid var(--hair)}
+.svp--deep + .svp, .svp + .svp--deep{border-top:0}
+
+/* a head is one line and a rule beneath it, centred: the same head the
+   home page gives its sections. it used to carry an eyebrow and a title
+   that said the same thing twice */
+.svp__head{
+  max-width:min(52rem,100%);margin:0 auto clamp(2.2rem,4.4vw,3.4rem);
+  text-align:center;color:var(--accent);
+}
+.svp--deep .svp__head{color:var(--gold-soft)}
+.svp__ttl{
+  font-family:var(--serif);font-weight:400;text-transform:uppercase;
+  font-size:clamp(1.5rem,3vw,2.5rem);line-height:1.1;letter-spacing:.14em;color:inherit;
+}
+.svp__rule{
+  display:block;width:clamp(46px,5vw,72px);height:1px;background:currentColor;
+  opacity:.55;margin:clamp(.9rem,1.8vw,1.3rem) auto 0;
+}
+/* a line under the head saying what the section is for, the same sub-line
+   the home page sets under Our Process and Our Services */
+.svp__sub{
+  margin:clamp(-1.7rem,-3vw,-1.3rem) auto clamp(2.2rem,4.4vw,3.4rem);max-width:48ch;
+  text-align:center;font-family:var(--sans);font-weight:300;
+  font-size:clamp(1.02rem,1.16vw,1.1rem);line-height:1.68;color:var(--ink-soft,#4A443A);
+}
+.svp--deep .svp__sub{color:rgba(239,233,220,.82)}
+
+/* the scope, given a card apiece in the same hand as the home page's
+   reasons: a numeral, the line of work, and a lift on hover */
+.svp__index{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.7rem,1.4vw,1.2rem)}
+@media (max-width:1000px){.svp__index{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.svp__index{grid-template-columns:minmax(0,1fr)}}
+.svp__index li{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.65rem;
+  padding:clamp(1.1rem,2.1vw,1.55rem) clamp(1.05rem,1.9vw,1.4rem);
+  background:rgba(255,253,248,.72);
+  border:1px solid rgba(192,139,74,.2);
+  border-radius:clamp(8px,1vw,14px);
+  box-shadow:0 12px 26px -20px rgba(58,44,34,.35);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease);
+}
+/* a gold hairline that draws itself along the card's head */
+.svp__index li::after{
+  content:"";position:absolute;top:0;left:0;z-index:1;height:2px;width:0;pointer-events:none;
+  background:linear-gradient(90deg,var(--accent),rgba(192,139,74,0));
+  transition:width .75s var(--ease);
+}
+.svp__index li > *{position:relative;z-index:1}
+@media (hover:hover) and (pointer:fine){
+  .svp__index li:hover{transform:translateY(-4px);border-color:rgba(192,139,74,.45);
+    box-shadow:0 20px 38px -20px rgba(58,44,34,.45)}
+  .svp__index li:hover::after{width:100%}
+  .svp__index li:hover .svp__idxno{transform:translateX(4px);opacity:1}
+}
+.svp__idxno{font-family:var(--serif);font-weight:400;line-height:1;
+  font-size:clamp(1rem,1.3vw,1.25rem);color:var(--accent);opacity:.75;
+  transition:transform .5s var(--ease),opacity .5s var(--ease)}
+.svp__idxname{font-family:var(--sans);font-weight:500;
+  font-size:clamp(1rem,1.12vw,1.08rem);line-height:1.45;color:var(--charcoal)}
+/* what the line of work actually means, so the card says more than its title */
+.svp__idxnote{margin-top:-.15rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.89rem,.99vw,.95rem);line-height:1.62;color:var(--ink-soft,#4A443A);opacity:.88}
+
+/* each kind of project now carries its own photograph rather than sitting
+   in a list above a separate strip of them: one card, one room, one line */
+.svp__fits{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.8rem,1.7vw,1.3rem)}
+@media (max-width:760px){.svp__fits{grid-template-columns:minmax(0,1fr)}}
+.svp__fit{
+  position:relative;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(223,199,145,.24);border-radius:clamp(10px,1.2vw,16px);
+  background:linear-gradient(158deg,rgba(28,83,71,.5) 0%,rgba(10,31,26,.74) 100%);
+  box-shadow:0 24px 56px -40px rgba(0,0,0,.8);
+  transition:transform .55s var(--ease),border-color .55s var(--ease),box-shadow .55s var(--ease);
+}
+@media (hover:hover) and (pointer:fine){
+  .svp__fit:hover{transform:translateY(-4px);border-color:rgba(223,199,145,.5);
+    box-shadow:0 34px 68px -40px rgba(0,0,0,.9)}
+}
+.svp__fitpic{margin:0;overflow:hidden}
+.svp__fitpic img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;
+  filter:sepia(.2) saturate(.95) contrast(1.04) brightness(.88);
+  transition:transform .9s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  /* the photograph moves on hover; its colour is left alone */
+  .svp__fit:hover .svp__fitpic img{transform:scale(1.045)}
+}
+/* the numeral sits under the photograph rather than on it: a light room
+   behind it left it unreadable */
+.svp__fitbody{position:relative;
+  padding:clamp(.95rem,1.8vw,1.3rem) clamp(1rem,1.8vw,1.3rem) clamp(1.1rem,2vw,1.45rem)}
+/* the gold runs along the seam between the photograph and its line */
+.svp__fitbody::before{
+  content:"";position:absolute;top:0;left:0;height:1px;width:0;pointer-events:none;
+  background:linear-gradient(90deg,var(--gold-soft),rgba(223,199,145,0));
+  transition:width .8s var(--ease);
+}
+@media (hover:hover) and (pointer:fine){
+  .svp__fit:hover .svp__fitbody::before{width:100%}
+  .svp__fit:hover .svp__fitno{opacity:1;transform:translateX(4px)}
+}
+.svp__fitno{
+  display:block;margin-bottom:.5rem;
+  font-family:var(--serif);font-weight:400;line-height:1;
+  font-size:clamp(.95rem,1.2vw,1.15rem);color:var(--gold-soft);opacity:.8;
+  transition:transform .5s var(--ease),opacity .5s var(--ease);
+}
+.svp__fittxt{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.08rem,1.45vw,1.3rem);line-height:1.36;color:#EFE9DC;
+}
+.svp__fitnote{
+  margin-top:.6rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.87rem,.97vw,.93rem);line-height:1.62;color:rgba(239,233,220,.76);
+}
+
+/* the stages: a hairline apiece and a numeral that does not shout */
+.svp__steps{list-style:none;display:grid;gap:clamp(1.4rem,2.8vw,2.2rem);
+  grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.svp__steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.svp__steps{grid-template-columns:minmax(0,1fr)}}
+.svp__step{position:relative;padding-top:1.15rem;border-top:1px solid var(--hair)}
+/* the gold draws itself across the stage's rule as you come to it */
+.svp__step::before{
+  content:"";position:absolute;top:-1px;left:0;width:0;height:1px;
+  background:var(--accent);transition:width .8s var(--ease);
+}
+.svp__step:hover::before{width:100%}
+.svp__stepno{font-family:var(--serif);font-weight:400;line-height:1;
+  font-size:clamp(1.1rem,1.5vw,1.4rem);color:var(--accent);opacity:.7;
+  transition:transform .5s var(--ease),opacity .5s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .svp__step:hover .svp__stepno{transform:translateX(4px);opacity:1}
+}
+.svp__stepname{margin-top:.55rem;font-family:var(--sans);font-weight:400;
+  font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--charcoal)}
+.svp__stepnote{margin-top:.6rem;font-family:var(--sans);font-weight:300;
+  font-size:clamp(.9rem,1vw,.96rem);line-height:1.62;color:var(--ink-soft,#4A443A)}
+
+/* the other two services, so the page is not a dead end */
+.svp__next{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(1rem,2.4vw,2rem)}
+@media (max-width:900px){.svp__next{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.svp__next{grid-template-columns:minmax(0,1fr)}}
+.svp__nextlink{display:flex;align-items:baseline;gap:1rem;
+  padding:clamp(1rem,2vw,1.4rem) 0;border-top:1px solid var(--hair);
+  color:inherit;text-decoration:none;transition:color .4s var(--ease)}
+.svp__nextlink:hover{color:var(--accent)}
+.svp__nextno{font-family:var(--serif);font-size:1rem;opacity:.45}
+.svp__nextname{font-family:var(--sans);font-weight:400;font-size:.82rem;
+  letter-spacing:.16em;text-transform:uppercase}
+.svp__nextarw{margin-left:auto;transition:transform .45s var(--ease)}
+.svp__nextlink:hover .svp__nextarw{transform:translateX(5px)}
+
+/* copy the studio has still to write. meant to be impossible to miss:
+   this block must not reach a published page */
+.svp__pending{border:1px dashed rgba(138,103,41,.6);background:rgba(138,103,41,.06);
+  padding:clamp(1.2rem,2.6vw,2rem);max-width:78ch;margin-inline:auto}
+.svp__pending p + p{margin-top:.8rem}
+.svp__pending p{font-family:var(--sans);font-weight:300;
+  font-size:clamp(.95rem,1.06vw,1.02rem);line-height:1.7;color:var(--ink-soft,#4A443A)}
+.svp__pending b{font-weight:400;color:var(--charcoal);letter-spacing:.14em;
+  text-transform:uppercase;font-size:.68rem;display:block;margin-bottom:.9rem}
+
+/* the closing band was a bare green slab. it now carries the same lamplight
+   the hero does, so it reads as a room rather than a rectangle */
+.invite::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(52% 40% at 50% 12%,rgba(223,199,145,.16),transparent 68%),
+    radial-gradient(60% 46% at 16% 88%,rgba(28,83,71,.55),transparent 66%);
+}
+.invite__crest{width:clamp(96px,10vw,130px);height:auto;margin:0 auto clamp(.6rem,1.4vw,1rem);
+  display:block;fill:none;stroke:var(--gold-soft);stroke-width:1.1;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.75}
+
+/* the footer carried a deep skirt of empty maroon below its last line, which
+   on the home page holds the floating buttons and here holds nothing */
+.foot{padding-block:clamp(3.2rem,7vw,5rem) clamp(1.8rem,3.4vw,2.6rem)}
+
+/* ============================================================
+   THE CLOSING PAIR · the invitation and the footer stand beside one
+   another. as a full width band the emerald read as a shallow strip;
+   given a column it has the proportions of the panels above it
+   ============================================================ */
+.close{
+  display:grid;grid-template-columns:minmax(0,.38fr) minmax(0,.62fr);
+  gap:clamp(10px,1.4vw,20px);align-items:stretch;
+  margin:0 clamp(10px,1.8vw,30px) clamp(10px,1.8vw,30px);
+}
+@media (max-width:1040px){.close{grid-template-columns:minmax(0,1fr)}}
+.close > .invite,.close > .foot{margin:0;border-radius:clamp(20px,2.6vw,40px)}
+/* the invitation fills a tall panel now, so its words sit in the middle of it */
+.close > .invite{display:grid;align-items:center}
+/* the footer's frame closes on all four sides, following its new corner */
+.close > .foot > .panel-frame{
+  inset:clamp(9px,1.15vw,18px);border-bottom-width:1px;
+  border-radius:clamp(13px,1.9vw,28px);
+}
+/* both panels are narrower than the page, so they carry their own gutter
+   rather than the full page pad */
+.close .wrap{max-width:none;padding-inline:clamp(1.4rem,2.6vw,2.8rem)}
+.close .foot__top{gap:clamp(1.2rem,2.4vw,2rem)}
+/* the studio's name has a narrower column to sit in, so it is set smaller
+   rather than broken across three lines */
+.close .foot__mark{font-size:clamp(1.15rem,1.55vw,1.55rem);letter-spacing:.16em}
+.close > .invite .invite__ttl{font-size:clamp(1.8rem,2.6vw,2.6rem);max-width:16ch}
+.close > .invite .invite__lead{max-width:40ch}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <a class="back" id="back" href="index.html#services" aria-label="Back">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+  </a>
+  <a class="brand" href="index.html#top" aria-label="The Alchemy Atelier, home">
+    <span class="brand__name">The Alchemy Atelier</span>
+    <span class="brand__rule" aria-hidden="true"></span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="index.html#top">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#services" class="is-active" aria-current="page">Services</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="index.html#trust">Our promise</a>
+    <a href="index.html#talk">Contact</a>
+    <a href="index.html#talk" class="btn nav__cta">Get in touch</a>
+  </nav>
+  <a href="index.html#talk" class="btn">Get in touch</a>
+  <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+</header>
+
+<main id="top">
+
+<!-- ============================================================ THE ENTRANCE ============================================================ -->
+<section class="top">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap">
+    <p class="eyebrow top__eyebrow" data-reveal>Service 01</p>
+    <p class="top__script" data-reveal data-delay="1">One scheme, not a set of purchases.</p>
+    <h1 class="top__ttl" data-reveal data-delay="2">Interior Design</h1>
+    <p class="top__lead" data-reveal data-delay="3">Whole interiors resolved as one scheme. The plan, the joinery, the materials and the light are considered together, so a room reads as a single idea rather than a series of things bought separately and asked to get along.</p>
+  </div>
+</section>
+
+<section class="svp">
+  <div class="wrap">
+    <div class="svp__head" data-reveal>
+      <h2 class="svp__ttl">What this covers</h2>
+      <span class="svp__rule" aria-hidden="true"></span>
+    </div>
+    <p class="svp__sub" data-reveal>Everything that goes into resolving a room, from the plan down to the last handle. Most projects want all of it, and some want only a part.</p>
+    <ul class="svp__index" data-reveal>
+        <li><span class="svp__idxno">01</span><span class="svp__idxname">Space planning and circulation</span><span class="svp__idxnote">Where the walls, doors and openings want to be, and how you move between them, settled before anything is chosen.</span></li>
+        <li><span class="svp__idxno">02</span><span class="svp__idxname">Joinery designed and drawn in detail</span><span class="svp__idxnote">Wardrobes, kitchens and built-in storage drawn as part of the room rather than ordered from a catalogue.</span></li>
+        <li><span class="svp__idxno">03</span><span class="svp__idxname">Materials, finishes and colour</span><span class="svp__idxnote">Stone, timber, tile, fabric and paint chosen together and seen side by side, so nothing is decided in isolation.</span></li>
+        <li><span class="svp__idxno">04</span><span class="svp__idxname">Lighting layouts, fittings and controls</span><span class="svp__idxnote">Where the light falls, what casts it, and which switch does what, planned early while the wiring can still move.</span></li>
+        <li><span class="svp__idxno">05</span><span class="svp__idxname">Furniture, fabric and final styling</span><span class="svp__idxnote">Loose furniture, soft furnishings and the last layer of objects, specified so the finished room is not left to chance.</span></li>
+        <li><span class="svp__idxno">06</span><span class="svp__idxname">Site coordination through the fit out</span><span class="svp__idxnote">We hold the drawing on site: answering the trades, checking work as it goes up, and snagging what is not right.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="svp svp--deep">
+  <!-- the gold hairline the home page gives its green box -->
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="svp__head" data-reveal>
+      <h2 class="svp__ttl">Who it suits</h2>
+      <span class="svp__rule" aria-hidden="true"></span>
+    </div>
+    <p class="svp__sub" data-reveal>Interiors work starts from different places. These are the three we are asked for most often.</p>
+    <ul class="svp__fits" data-reveal>
+        <li class="svp__fit">
+          <figure class="svp__fitpic"><img src="https://images.unsplash.com/photo-1750325276350-a8e23c1fc32c?auto=format&fit=crop&w=800&q=85" alt="A living room in earthy tones with a terracotta plaster wall" loading="lazy"></figure>
+          <div class="svp__fitbody">
+            <span class="svp__fitno" aria-hidden="true">01</span>
+            <p class="svp__fittxt">A whole home, or one room done properly</p>
+            <p class="svp__fitnote">There is no minimum. One room resolved properly is better work than a whole house done thinly.</p>
+          </div>
+        </li>
+        <li class="svp__fit">
+          <figure class="svp__fitpic"><img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=85" alt="A living room with a sage green wall, a cane sideboard and large plants" loading="lazy"></figure>
+          <div class="svp__fitbody">
+            <span class="svp__fitno" aria-hidden="true">02</span>
+            <p class="svp__fittxt">A renovation where the layout is being reconsidered</p>
+            <p class="svp__fitnote">Best caught before the walls come down, while moving a door or a window is still an easy decision.</p>
+          </div>
+        </li>
+        <li class="svp__fit">
+          <figure class="svp__fitpic"><img src="https://images.unsplash.com/photo-1691036562015-56ebf6648f8c?auto=format&fit=crop&w=800&q=85" alt="A quiet room with a tan leather armchair and a paper lamp" loading="lazy"></figure>
+          <div class="svp__fitbody">
+            <span class="svp__fitno" aria-hidden="true">03</span>
+            <p class="svp__fittxt">A house that is built but has never been finished</p>
+            <p class="svp__fitnote">The shell is up and the rooms are empty. We pick it up from there and take it through to lived in.</p>
+          </div>
+        </li>
+    </ul>
+  </div>
+</section>
+
+<section class="svp">
+  <div class="wrap">
+    <div class="svp__head" data-reveal>
+      <h2 class="svp__ttl">How it runs</h2>
+      <span class="svp__rule" aria-hidden="true"></span>
+    </div>
+    <p class="svp__sub" data-reveal>Six stages, in order, so you always know what has just been decided and what comes next.</p>
+    <ol class="svp__steps">
+        <li class="svp__step" data-reveal data-delay="1">
+          <p class="svp__stepno">01</p>
+          <h3 class="svp__stepname">Discovery</h3>
+          <p class="svp__stepnote">We start by listening. How you live, what the space has to hold, and the budget it sits inside.</p>
+        </li>
+        <li class="svp__step" data-reveal data-delay="2">
+          <p class="svp__stepno">02</p>
+          <h3 class="svp__stepname">Concept</h3>
+          <p class="svp__stepnote">Mood boards, palettes and first directions, until the scheme reads like you rather than like us.</p>
+        </li>
+        <li class="svp__step" data-reveal data-delay="3">
+          <p class="svp__stepno">03</p>
+          <h3 class="svp__stepname">Space planning</h3>
+          <p class="svp__stepnote">Layouts drawn and redrawn: circulation, sightlines, and where the light falls through the day.</p>
+        </li>
+        <li class="svp__step" data-reveal data-delay="4">
+          <p class="svp__stepno">04</p>
+          <h3 class="svp__stepname">Materials</h3>
+          <p class="svp__stepnote">Finishes chosen in the hand rather than off a screen: stone, timber, fabric and paint, seen together.</p>
+        </li>
+        <li class="svp__step" data-reveal data-delay="5">
+          <p class="svp__stepno">05</p>
+          <h3 class="svp__stepname">Detailing</h3>
+          <p class="svp__stepnote">Joinery, lighting and fittings drawn to the millimetre, down to the last handle and hinge.</p>
+        </li>
+        <li class="svp__step" data-reveal data-delay="6">
+          <p class="svp__stepno">06</p>
+          <h3 class="svp__stepname">Execution</h3>
+          <p class="svp__stepnote">One team on site and one line of accountability, through the snag list to the day we hand you the keys.</p>
+        </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================ THE OTHER SERVICES ============================================================ -->
+<section class="svp svp--paper">
+  <div class="wrap">
+    <div class="svp__head" data-reveal>
+      <h2 class="svp__ttl">Also from the studio</h2>
+      <span class="svp__rule" aria-hidden="true"></span>
+    </div>
+    <p class="svp__sub" data-reveal>The other three ways to work with the studio.</p>
+    <div class="svp__next" data-reveal data-delay="1">
+        <a class="svp__nextlink" href="service-furniture-design.html">
+          <span class="svp__nextno">02</span>
+          <span class="svp__nextname">Furniture Design</span>
+          <span class="svp__nextarw" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="svp__nextlink" href="service-architecture.html">
+          <span class="svp__nextno">03</span>
+          <span class="svp__nextname">Architecture</span>
+          <span class="svp__nextarw" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="svp__nextlink" href="service-consultancy.html">
+          <span class="svp__nextno">04</span>
+          <span class="svp__nextname">Consultancy</span>
+          <span class="svp__nextarw" aria-hidden="true">&rarr;</span>
+        </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ THE CLOSING INVITATION ============================================================ -->
+<div class="close">
+<section class="invite">
+  <div class="wrap">
+    <svg class="invite__crest" viewBox="0 0 140 58" aria-hidden="true" focusable="false" data-reveal>
+      <defs><path id="lfC" d="M0 0C6-9 21-11 29 0C21 11 6 9 0 0Z"/></defs>
+      <g class="ln">
+        <!-- the bud, its two leaves, and a curl running out either side -->
+        <circle cx="70" cy="9" r="2.6"/>
+        <path d="M70 15c-7 7-7 16 0 23 7-7 7-16 0-23z"/>
+        <use href="#lfC" transform="translate(72 36) rotate(-14)"/>
+        <use href="#lfC" transform="translate(68 36) rotate(194)"/>
+        <path d="M70 42c-11 7-23 8-35 3"/>
+        <path d="M70 42c11 7 23 8 35 3"/>
+        <circle cx="32" cy="44" r="2.2"/>
+        <circle cx="108" cy="44" r="2.2"/>
+      </g>
+    </svg>
+
+    <p class="invite__script" data-reveal>Shall we begin?</p>
+    <h2 class="invite__ttl" data-reveal data-delay="1">Tell us what you are hoping for.</h2>
+    <p class="invite__lead" data-reveal data-delay="2">The first conversation costs nothing but an afternoon, and you will leave it knowing whether we are the right studio for the job.</p>
+    <a class="btn" href="index.html#talk" data-reveal data-delay="3">Start a project <span class="arw" aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+
+<footer class="foot" id="contact">
+  <span class="panel-frame" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <p class="foot__mark">THE ALCHEMY<br>ATELIER</p>
+        <p class="foot__hand">Where ideas become spaces.</p>
+      </div>
+      <div><h5>Visit</h5><ul>
+        <li><a href="index.html#about">Inside the Atelier</a></li>
+        <li><a href="gallery.html">Our Work</a></li>
+        <li><a href="index.html#approach">How We Design</a></li>
+        <li><a href="index.html#services">How We Can Work Together</a></li>
+      </ul></div>
+      <div><h5>Studio</h5><ul>
+        <!-- PLACEHOLDER address: swap these two lines for the studio's own -->
+        <li>Studio 04, 12 Rajpur Road</li>
+        <li>Dehradun 248001</li>
+        <li><a id="footMail" href="#">&nbsp;</a></li>
+        <li><a id="footTel" href="#">&nbsp;</a></li>
+      </ul></div>
+      <div><h5>Elsewhere</h5><ul>
+        <li><a href="#" rel="noopener">Instagram</a></li>
+        <li><a href="#" rel="noopener">Pinterest</a></li>
+        <li><a href="#" rel="noopener">LinkedIn</a></li>
+        <li><a href="index.html#talk">Start a conversation</a></li>
+      </ul></div>
+    </div>
+    <div class="foot__bar">
+      <span>&copy; <span id="yr"></span> The Alchemy Atelier. All rights reserved.</span>
+      <span>Architecture &nbsp;&middot;&nbsp; Interiors &nbsp;&middot;&nbsp; Objects &nbsp;&middot;&nbsp; Experiences</span>
+    </div>
+  </div>
+</footer>
+</div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var CONFIG = { email:'meghas5634@gmail.com', phone:'+917017501061' };
+var $  = function(s,c){return (c||document).querySelector(s);};
+var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+
+$('#yr').textContent = new Date().getFullYear();
+var m = $('#footMail'), t = $('#footTel');
+if (m){ m.href = 'mailto:' + CONFIG.email; m.textContent = CONFIG.email; }
+if (t){ t.href = 'tel:' + CONFIG.phone;  t.textContent = CONFIG.phone; }
+
+/* the header hides going down and returns coming back up, as on the home page */
+var hdr = $('#hdr'), last = 0;
+window.addEventListener('scroll', function(){
+  var y = window.pageYOffset;
+  hdr.classList.toggle('solid', y > 10);
+  hdr.classList.toggle('hide', y > 160 && y > last);
+  last = y;
+}, {passive:true});
+
+var burger = $('#burger'), nav = $('#nav');
+burger.addEventListener('click', function(){
+  var open = nav.classList.toggle('is-open');
+  burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+$$('#nav a').forEach(function(a){
+  a.addEventListener('click', function(){
+    nav.classList.remove('is-open');
+    burger.setAttribute('aria-expanded','false');
+  });
+});
+
+/* the same reveal the rest of the site uses */
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
+  $$('[data-reveal]').forEach(function(el){ io.observe(el); });
+} else {
+  $$('[data-reveal]').forEach(function(el){ el.classList.add('is-in'); });
+}
+
+})();
+
+/* the back button returns to wherever the visitor came from on this site;
+   arriving from elsewhere, or directly, it goes to the services on the home page instead */
+(function(){
+  var back = document.getElementById('back');
+  if (!back) return;
+  back.addEventListener('click', function(e){
+    var ref = document.referrer;
+    var sameSite = ref && (ref.indexOf(location.origin) === 0 || (location.protocol === 'file:' && ref.indexOf('file:') === 0));
+    if (sameSite && history.length > 1){ e.preventDefault(); history.back(); }
+  });
+})();
+
+</script>
+</body>
+</html>
