@@ -415,11 +415,9 @@ section{position:relative;padding-block:var(--sec)}
     transition:transform .8s var(--ease),visibility 0s}
   .nav a{font-size:1rem;letter-spacing:var(--tracking-wide)}
   .hdr>.btn{display:none}
-  .nav__cta{display:inline-flex;margin-top:.6rem;border-color:var(--gold);color:var(--gold-soft)}
   .burger{display:flex}
 }
 /* above the breakpoint the header shows the button, so the menu's copy stays out */
-@media (min-width:1081px){.nav__cta{display:none}}
 
 @media (prefers-reduced-motion:reduce){
   .hero__copy>*,.hero__art,.sprig{opacity:1 !important}
@@ -1984,8 +1982,6 @@ section{position:relative;padding-block:var(--sec)}
     <a href="gallery.html">Gallery</a>
     <a href="#trust">Our promise</a>
     <a href="#talk">Contact</a>
-    <!-- the same call to action as the header's, for the menu it hides behind -->
-    <a href="#talk" class="btn nav__cta">Get in touch</a>
   </nav>
   <a href="#talk" class="btn">Get in touch</a>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
