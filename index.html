@@ -803,9 +803,13 @@ section{position:relative;padding-block:var(--sec)}
     0 20px 44px -34px rgba(58,44,34,.22);
 }
 /* the footer closes the page, so only its top corners are turned */
+/* the footer is a plate of its own: its maroon edges stand on the gold line
+   of the band above, with the same gap left beneath it */
 .foot{
   position:relative;isolation:isolate;
-  border-radius:clamp(20px,2.6vw,40px) clamp(20px,2.6vw,40px) 0 0;
+  /* the same gap above it as below, so it never touches the plate above */
+  margin:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px)) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px));
+  border-radius:clamp(20px,2.6vw,40px);
 }
 .panel-frame{
   position:absolute;inset:clamp(9px,1.15vw,18px);z-index:6;pointer-events:none;
@@ -814,13 +818,11 @@ section{position:relative;padding-block:var(--sec)}
 }
 .au>.panel-frame{border-color:rgba(192,139,74,.4)}
 /* the footer's frame follows its squared foot */
-/* the footer runs the full width, so its side lines are set in by the plates'
-   side margin as well, to fall in line with the gold frame of the band above */
 /* the words keep the same distance from the gold side lines at every width */
-.foot>.wrap{max-width:none;padding-inline:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
+.foot>.wrap{max-width:none;padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
 /* closed on all four sides: the foot line sits as far up from the bottom as the top line sits down */
 .foot>.panel-frame{
-  inset:clamp(9px,1.15vw,18px) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px));
+  inset:clamp(9px,1.15vw,18px);
   border-radius:clamp(13px,1.9vw,28px);
 }
 
@@ -1711,7 +1713,7 @@ section{position:relative;padding-block:var(--sec)}
 .wa{
   /* set in from the edge by the footer's gold side line and a little more,
      so the buttons sit inside its frame rather than across it */
-  position:fixed;right:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + 12px);bottom:calc(clamp(9px,1.15vw,18px) + 14px);z-index:130;
+  position:fixed;right:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(9px,1.15vw,18px) + 12px);bottom:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(9px,1.15vw,18px) + 14px);z-index:130;
   display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;
   opacity:0;transform:translateY(18px);transition:.8s var(--ease);pointer-events:none;
 }
@@ -2246,15 +2248,15 @@ section{position:relative;padding-block:var(--sec)}
         <span class="srule" aria-hidden="true"></span>
       </div>
       <p class="team__sub">Same vision. Deeper attention.</p>
-      <p class="team__role">Founder and Principal Designer</p>
-      <p class="team__name">Jemima</p>
-      <p class="team__text">An architect, interior designer and curator based in Dehradun, Jemima leads The Alchemy Atelier on the belief that thoughtful design can change the way we live, feel and belong.</p>
+      <p class="team__role">Principal Architect and Design Futurist</p>
+      <p class="team__name">Jemima Francis</p>
+      <p class="team__text">An architect, interior designer and curator based in Hyderabad, Jemima leads The Alchemy Atelier on the belief that thoughtful design can change the way we live, feel and belong.</p>
       <p class="team__text">From architecture and interiors through to curation, every project is personally drawn and personally seen through, so the journey from concept to completion stays in one pair of hands. No hand-offs, no juniors learning on your home: the person you meet at the first conversation is the person on site at the last.</p>
-      <p class="team__practice"><span>Architecture</span><span>Interiors</span><span>Curation</span></p>
+      <p class="team__practice"><span>Architecture</span><span>Interiors</span><span>Consultancy</span></p>
       <span class="team__rule" aria-hidden="true"></span>
       <blockquote class="team__quote">
         <p>&ldquo;Design, for me, is a dialogue between people, places and possibilities.&rdquo;</p>
-        <cite>Jemima</cite>
+        <cite>Ar. Jemima Francis</cite>
       </blockquote>
     </div>
 
