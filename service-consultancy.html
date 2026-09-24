@@ -287,7 +287,7 @@ section{position:relative;padding-block:var(--sec)}
 .foot ul{list-style:none;display:grid;gap:.6rem;font-size:.9rem;opacity:.8;overflow-wrap:anywhere}
 .foot li a:hover{color:var(--gold)}
 .foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;
-  letter-spacing:.2em;text-indent:.2em;line-height:1.3}
+  letter-spacing:.2em;line-height:1.3}
 .foot__hand{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.28rem;
   line-height:1.4;letter-spacing:.01em;color:var(--gold-soft);margin-top:1rem}
 .foot__bar{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid rgba(245,239,228,.16);
@@ -520,6 +520,8 @@ section{position:relative;padding-block:var(--sec)}
 /* both panels are narrower than the page, so they carry their own gutter
    rather than the full page pad */
 .close .wrap{max-width:none;padding-inline:clamp(1.4rem,2.6vw,2.8rem)}
+/* the footer's words keep the same distance from its gold frame as on the home page */
+.close .foot>.wrap{padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.25rem,2.2vw,2rem))}
 .close .foot__top{gap:clamp(1.2rem,2.4vw,2rem)}
 /* the studio's name has a narrower column to sit in, so it is set smaller
    rather than broken across three lines */

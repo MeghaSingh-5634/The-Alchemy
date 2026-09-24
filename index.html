@@ -816,6 +816,8 @@ section{position:relative;padding-block:var(--sec)}
 /* the footer's frame follows its squared foot */
 /* the footer runs the full width, so its side lines are set in by the plates'
    side margin as well, to fall in line with the gold frame of the band above */
+/* the words keep the same distance from the gold side lines at every width */
+.foot>.wrap{max-width:none;padding-inline:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(1.25rem,2.2vw,2rem))}
 .foot>.panel-frame{
   inset:clamp(9px,1.15vw,18px) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px)) 0;
   border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
@@ -1949,7 +1951,7 @@ section{position:relative;padding-block:var(--sec)}
 .foot h5{font-size:.62rem;letter-spacing:var(--tracking);text-transform:uppercase;opacity:.5;margin-bottom:1rem;font-weight:400}
 .foot ul{list-style:none;display:grid;gap:.6rem;font-size:.9rem;opacity:.8;overflow-wrap:anywhere}
 .foot li a:hover{color:var(--gold)}
-.foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;letter-spacing:.2em;text-indent:.2em;line-height:1.3}
+.foot__mark{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2rem);font-weight:300;letter-spacing:.2em;line-height:1.3}
 .foot__bar{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid var(--hair);
   display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.7rem;opacity:.55;letter-spacing:.1em}
 .big-invite{text-align:center}
