@@ -965,8 +965,9 @@ section{position:relative;padding-block:var(--sec)}
 @media (max-width:520px){
   .pcard,.pcard--r{grid-template-columns:minmax(0,1fr)}
   .pcard__fig{min-height:200px;margin-top:0;border-radius:0}
-  .pcard--r .pcard__fig{order:1}
-  .pcard--r .pcard__body{order:2}
+  /* stacked, the words come first and the drawing follows them */
+  .pcard__body{order:1}
+  .pcard__fig{order:2}
   .pcard__sprig{display:none}
 }
 
