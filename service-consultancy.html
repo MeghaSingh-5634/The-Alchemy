@@ -698,12 +698,13 @@ window.addEventListener('scroll', function(){
 
 var burger = $('#burger'), nav = $('#nav');
 burger.addEventListener('click', function(){
-  var open = nav.classList.toggle('is-open');
+  var open = nav.classList.toggle('open');
+  burger.classList.toggle('open', open);
   burger.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 $$('#nav a').forEach(function(a){
   a.addEventListener('click', function(){
-    nav.classList.remove('is-open');
+    nav.classList.remove('open'); burger.classList.remove('open');
     burger.setAttribute('aria-expanded','false');
   });
 });
