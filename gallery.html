@@ -428,8 +428,9 @@ section{position:relative;padding-block:var(--sec)}
 .foot__bar{margin-top:clamp(2.5rem,6vw,4rem);padding-top:1.4rem;border-top:1px solid rgba(245,239,228,.16);
   display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
   font-size:.7rem;opacity:.55;letter-spacing:.1em}
-/* the three practices read a size up from the copyright line beside them */
-.foot__bar>span:last-child{font-size:.86rem;letter-spacing:.14em}
+/* the copyright and the three practices, set a size up from the rest of the bar */
+.foot__bar>span{font-size:.86rem;letter-spacing:.14em}
+.foot__bar>span span{font-size:inherit}
 
 /* ============================================================
    THE FLOATING WAYS TO TALK · held back until the foot of the page
