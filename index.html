@@ -817,10 +817,11 @@ section{position:relative;padding-block:var(--sec)}
 /* the footer runs the full width, so its side lines are set in by the plates'
    side margin as well, to fall in line with the gold frame of the band above */
 /* the words keep the same distance from the gold side lines at every width */
-.foot>.wrap{max-width:none;padding-inline:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(1.25rem,2.2vw,2rem))}
+.foot>.wrap{max-width:none;padding-inline:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
+/* closed on all four sides: the foot line sits as far up from the bottom as the top line sits down */
 .foot>.panel-frame{
-  inset:clamp(9px,1.15vw,18px) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px)) 0;
-  border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
+  inset:clamp(9px,1.15vw,18px) calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px));
+  border-radius:clamp(13px,1.9vw,28px);
 }
 
 /* ============================================================
@@ -1688,6 +1689,21 @@ section{position:relative;padding-block:var(--sec)}
 .vt-modal__close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media (max-width:1100px){.vt__next{display:none}}
 
+/* on small screens the single arrow gives way to a pair under the stats,
+   the same as the written testimonials, in this band's gold on cream */
+.vt__nav{display:none;gap:clamp(.6rem,1vw,.95rem);margin-top:clamp(1.3rem,2.4vw,2rem)}
+@media (max-width:1100px){.vt__nav{display:flex}}
+.vt__arrow{
+  width:clamp(42px,3.2vw,48px);aspect-ratio:1;border-radius:50%;flex:none;
+  display:grid;place-items:center;cursor:pointer;
+  border:1px solid rgba(138,103,41,.5);background:transparent;color:var(--accent);
+  transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),opacity .4s var(--ease);
+}
+.vt__arrow:hover{background:var(--emerald-deep);border-color:var(--emerald-deep);color:var(--cream)}
+.vt__arrow:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.vt__arrow[disabled]{opacity:.3;cursor:default;background:transparent;color:var(--accent);border-color:rgba(138,103,41,.5)}
+.vt__arrow svg{width:40%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+
 /* ============================================================
    THE FLOATING WAYS TO TALK · book, enquire, call, WhatsApp.
    they ride the bottom right corner and carry whatever was ticked
@@ -1695,7 +1711,7 @@ section{position:relative;padding-block:var(--sec)}
 .wa{
   /* set in from the edge by the footer's gold side line and a little more,
      so the buttons sit inside its frame rather than across it */
-  position:fixed;right:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + 12px);bottom:clamp(1rem,3vw,2rem);z-index:130;
+  position:fixed;right:calc(clamp(10px,1.8vw,30px) + clamp(9px,1.15vw,18px) + 12px);bottom:calc(clamp(9px,1.15vw,18px) + 14px);z-index:130;
   display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;
   opacity:0;transform:translateY(18px);transition:.8s var(--ease);pointer-events:none;
 }
@@ -2408,6 +2424,16 @@ section{position:relative;padding-block:var(--sec)}
         <p class="vt__stat"><b>50+</b><span>Homes<br>designed</span></p>
         <p class="vt__stat"><b>100+</b><span>Happy<br>clients</span></p>
         <p class="vt__stat"><b>10+</b><span>Cities</span></p>
+      </div>
+
+      <!-- small screens: the two arrows, as the written testimonials have -->
+      <div class="vt__nav">
+        <button class="vt__arrow" type="button" data-step="-1" aria-label="Previous client films">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="vt__arrow" type="button" data-step="1" aria-label="More client films">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
     </div>
 
@@ -3152,7 +3178,7 @@ function testimonialRow(trackSel, arrows, dotsSel){
   go(0);
 }
 testimonialRow('#kwTrack', $$('.kw__arrow'), null);
-testimonialRow('#vtTrack', $$('.vt__next'), '#vtDots');
+testimonialRow('#vtTrack', $$('.vt__next, .vt__arrow'), '#vtDots');
 
 /* ============================================================
    CLIENT STORIES · a card with a film opens it in the player. a card

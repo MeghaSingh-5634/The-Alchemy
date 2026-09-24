@@ -514,14 +514,14 @@ section{position:relative;padding-block:var(--sec)}
 .close > .invite{display:grid;align-items:center}
 /* the footer's frame closes on all four sides, following its new corner */
 .close > .foot > .panel-frame{
-  inset:clamp(9px,1.15vw,18px);border-bottom-width:1px;
+  inset:clamp(9px,1.15vw,18px);border-bottom:1px solid rgba(223,199,145,.3);
   border-radius:clamp(13px,1.9vw,28px);
 }
 /* both panels are narrower than the page, so they carry their own gutter
    rather than the full page pad */
 .close .wrap{max-width:none;padding-inline:clamp(1.4rem,2.6vw,2.8rem)}
 /* the footer's words keep the same distance from its gold frame as on the home page */
-.close .foot>.wrap{padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.25rem,2.2vw,2rem))}
+.close .foot>.wrap{padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
 .close .foot__top{gap:clamp(1.2rem,2.4vw,2rem)}
 /* the studio's name has a narrower column to sit in, so it is set smaller
    rather than broken across three lines */
