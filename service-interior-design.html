@@ -276,7 +276,8 @@ section{position:relative;padding-block:var(--sec)}
   inset:clamp(9px,1.15vw,18px) clamp(9px,1.15vw,18px) 0;
   border-bottom:0;border-radius:clamp(13px,1.9vw,28px) clamp(13px,1.9vw,28px) 0 0;
 }
-.foot__top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto minmax(0,.9fr);
+/* every column as wide as its words, with the space shared out evenly between them */
+.foot__top{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;
   gap:clamp(1.6rem,4vw,3rem)}
 @media (max-width:820px){
   .foot__top{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:2rem 1.6rem}
@@ -528,7 +529,7 @@ section{position:relative;padding-block:var(--sec)}
 /* beside the invitation the footer is narrow, so until there is room for all
    four columns the name takes its own line and the three lists sit under it */
 @media (min-width:821px) and (max-width:1400px){
-  .close .foot__top{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+  .close .foot__top{grid-template-columns:repeat(3,auto)}
   .close .foot__top>:first-child{grid-column:1/-1}
 }
 /* the studio's name has a narrower column to sit in, so it is set smaller

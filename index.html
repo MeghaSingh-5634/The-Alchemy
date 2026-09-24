@@ -820,6 +820,8 @@ section{position:relative;padding-block:var(--sec)}
 /* the footer's frame follows its squared foot */
 /* the words keep the same distance from the gold side lines at every width */
 .foot>.wrap{max-width:none;padding-inline:calc(clamp(9px,1.15vw,18px) + clamp(1.75rem,2.8vw,2.6rem))}
+/* the floating buttons ride the right edge, so the words stop short of them */
+@media (min-width:821px){.foot>.wrap{padding-right:calc(clamp(9px,1.15vw,18px) + 52px + 12px + 1.5rem)}}
 /* closed on all four sides: the foot line sits as far up from the bottom as the top line sits down */
 .foot>.panel-frame{
   inset:clamp(9px,1.15vw,18px);
@@ -1959,7 +1961,8 @@ section{position:relative;padding-block:var(--sec)}
 /* the maroon deepens towards the foot of the page, as the other bands do */
 .foot{overflow:hidden;padding-block:clamp(3.5rem,8vw,6rem);
   background:linear-gradient(180deg,var(--maroon) 0%,var(--maroon-deep) 100%)}
-.foot__top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto minmax(0,.9fr);gap:clamp(1.6rem,4vw,3rem)}
+/* every column as wide as its words, with the space shared out evenly between them */
+.foot__top{display:grid;grid-template-columns:repeat(4,auto);justify-content:space-between;gap:clamp(1.6rem,4vw,3rem)}
 /* on a phone the four columns squeeze into single letters: the mark takes a
    line of its own and the lists fall to one or two columns below it */
 @media (max-width:820px){
