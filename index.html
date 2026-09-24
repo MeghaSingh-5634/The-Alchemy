@@ -180,6 +180,8 @@ section{position:relative;padding-block:var(--sec)}
   transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
 .nav a:hover{opacity:1}
 .nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav a.is-active{opacity:1;color:var(--gold-soft)}
+.nav a.is-active::after{transform:scaleX(1);transform-origin:left;opacity:.7}
 .hdr .btn{padding:.72rem 1.3rem;font-size:.66rem;border-color:rgba(255,255,255,.45)}
 .burger{display:none;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;
   background:none;cursor:pointer;gap:5px;flex-direction:column;
@@ -1659,6 +1661,29 @@ section{position:relative;padding-block:var(--sec)}
 .vt__next:hover{background:var(--emerald-deep);border-color:var(--emerald-deep);color:var(--cream)}
 .vt__next:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .vt__next[disabled]{opacity:.3;cursor:default;background:transparent;color:var(--accent);border-color:rgba(138,103,41,.5)}
+
+/* the film player: the page dims behind it and the film sits in the middle */
+.vt-modal{
+  position:fixed;inset:0;z-index:210;display:grid;place-items:center;
+  padding:clamp(12px,4vw,48px);background:rgba(10,20,17,.86);
+  opacity:0;transition:opacity .45s var(--ease);
+}
+.vt-modal[hidden]{display:none}
+.vt-modal.is-open{opacity:1}
+.vt-modal__box{position:relative;width:min(1100px,100%)}
+.vt-modal video{display:block;width:100%;max-height:80vh;border-radius:clamp(10px,1.2vw,16px);background:#000}
+.vt-modal__name{
+  margin-top:.9rem;text-align:center;font-family:var(--sans);font-weight:500;
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);
+}
+.vt-modal__close{
+  position:absolute;top:-.6rem;right:-.6rem;z-index:1;width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;font-size:1.4rem;line-height:1;
+  background:var(--cream);color:var(--emerald-deep);border:1px solid rgba(192,160,98,.55);
+  transition:background .4s var(--ease),transform .4s var(--ease);
+}
+.vt-modal__close:hover{background:#fff;transform:rotate(90deg)}
+.vt-modal__close:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media (max-width:1100px){.vt__next{display:none}}
 
 /* ============================================================
@@ -1951,7 +1976,7 @@ section{position:relative;padding-block:var(--sec)}
     <span class="brand__rule" aria-hidden="true"></span>
   </a>
   <nav class="nav" id="nav" aria-label="Primary">
-    <a href="#top" class="is-active">Home</a>
+    <a href="#top" class="is-active" aria-current="page">Home</a>
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="gallery.html">Gallery</a>
@@ -1972,7 +1997,7 @@ section{position:relative;padding-block:var(--sec)}
 
   <!-- the room itself, full bleed, scrimmed at the left so the lockup holds -->
   <figure class="hero__bg" aria-hidden="true">
-    <img src="Gallery/Home_image.jpg"
+    <img src="Gallery/hero-green-drawing-room.jpg"
          alt="" fetchpriority="high" decoding="async">
   </figure>
 
@@ -2054,7 +2079,7 @@ section{position:relative;padding-block:var(--sec)}
 <!-- ============================================================ PROCESS ============================================================ -->
 <section class="proc" id="process">
   <figure class="proc__pic" aria-hidden="true">
-    <img src="Gallery/process-panel.jpg" alt="" loading="lazy">
+    <img src="Gallery/process-panel-maroon-arch.jpg" alt="" loading="lazy">
   </figure>
   <div class="wrap">
 
@@ -2190,10 +2215,10 @@ section{position:relative;padding-block:var(--sec)}
     <!-- sketches turning into rooms: two stacked a centimetre apart on the right, the third laid over them from the left -->
     <div class="team__sketches" aria-hidden="true" data-reveal>
       <div class="team__stack">
-        <img class="team__sheet" src="Gallery/sketch-1.jpg" alt="" loading="lazy">
-        <img class="team__sheet" src="Gallery/sketch-3.jpg" alt="" loading="lazy">
+        <img class="team__sheet" src="Gallery/pair-of-hands-sketch-living-room.jpg" alt="" loading="lazy">
+        <img class="team__sheet" src="Gallery/pair-of-hands-sketch-bathroom.jpg" alt="" loading="lazy">
       </div>
-      <img class="team__sheet team__sheet--over" src="Gallery/sketch-2.jpg" alt="" loading="lazy">
+      <img class="team__sheet team__sheet--over" src="Gallery/pair-of-hands-sketch-brick-kitchen.jpg" alt="" loading="lazy">
     </div>
 
     <div class="team__box" data-reveal data-delay="1">
@@ -2310,7 +2335,7 @@ section{position:relative;padding-block:var(--sec)}
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
       </div>
-      <img class="kw__leaf" src="Gallery/leaf-branch.png" alt="" aria-hidden="true" loading="lazy">
+      <img class="kw__leaf" src="Gallery/kind-words-gold-leaf.png" alt="" aria-hidden="true" loading="lazy">
     </div>
 
     <div class="kw__win" data-reveal data-delay="1">
@@ -2321,7 +2346,7 @@ section{position:relative;padding-block:var(--sec)}
             <span class="kw__rule" aria-hidden="true"></span>
             <p class="kw__by">Priya Sharma</p>
             <p class="kw__who">Homeowner, Hyderabad</p>
-            <figure class="kw__shot"><img src="Gallery/testimonial-1.jpg" alt="A bright living room with a boucle armchair and two round rattan mirrors" loading="lazy"></figure>
+            <figure class="kw__shot"><img src="Gallery/kind-words-rattan-mirror-living-room.jpg" alt="A bright living room with a boucle armchair and two round rattan mirrors" loading="lazy"></figure>
           </article>
           <article class="kw__card">
             <p class="kw__mark" aria-hidden="true">&ldquo;</p>
@@ -2329,7 +2354,7 @@ section{position:relative;padding-block:var(--sec)}
             <span class="kw__rule" aria-hidden="true"></span>
             <p class="kw__by">Sameer Iyer</p>
             <p class="kw__who">Villa Owner, Pune</p>
-            <figure class="kw__shot"><img src="Gallery/testimonial-2.jpg" alt="A living room with a grey sofa under two woven pendant lights" loading="lazy"></figure>
+            <figure class="kw__shot"><img src="Gallery/kind-words-woven-pendant-living-room.jpg" alt="A living room with a grey sofa under two woven pendant lights" loading="lazy"></figure>
           </article>
           <article class="kw__card">
             <p class="kw__mark" aria-hidden="true">&ldquo;</p>
@@ -2337,7 +2362,7 @@ section{position:relative;padding-block:var(--sec)}
             <span class="kw__rule" aria-hidden="true"></span>
             <p class="kw__by">Ridhi Jain</p>
             <p class="kw__who">Business Owner, Delhi</p>
-            <figure class="kw__shot"><img src="Gallery/testimonial-3.jpg" alt="A taupe living room with a cream sectional and two dark pedestal tables" loading="lazy"></figure>
+            <figure class="kw__shot"><img src="Gallery/kind-words-taupe-sectional-living-room.jpg" alt="A taupe living room with a cream sectional and two dark pedestal tables" loading="lazy"></figure>
           </article>
           <article class="kw__card">
             <p class="kw__mark" aria-hidden="true">&ldquo;</p>
@@ -2345,7 +2370,7 @@ section{position:relative;padding-block:var(--sec)}
             <span class="kw__rule" aria-hidden="true"></span>
             <p class="kw__by">Aarav Menon</p>
             <p class="kw__who">Homeowner, Kochi</p>
-            <figure class="kw__shot"><img src="Gallery/testimonial-4.jpg" alt="A calm bedroom with a panelled headboard and a globe lamp" loading="lazy"></figure>
+            <figure class="kw__shot"><img src="Gallery/kind-words-panelled-bedroom.jpg" alt="A calm bedroom with a panelled headboard and a globe lamp" loading="lazy"></figure>
           </article>
       </div>
     </div>
@@ -2367,7 +2392,7 @@ section{position:relative;padding-block:var(--sec)}
      the design reference and need replacing with the studio's real ones. -->
 <section class="vt" id="films" aria-label="Client films">
   <figure class="vt__panel" aria-hidden="true">
-    <img src="Gallery/stories-panel.jpg" alt="" loading="lazy">
+    <img src="Gallery/client-stories-vase-arch.jpg" alt="" loading="lazy">
   </figure>
 
   <div class="wrap vt__grid">
@@ -2386,9 +2411,9 @@ section{position:relative;padding-block:var(--sec)}
 
     <div class="vt__win" data-reveal data-delay="1">
       <div class="vt__track" id="vtTrack">
-        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-1.mp4" data-name="The Marble Wall" data-sample aria-disabled="true" aria-label="Sample film 1">
+        <button class="vt__card" type="button" data-video="Gallery/films/client-story-1.mp4" data-name="Ananya Mehta" data-sample aria-disabled="true" aria-label="Sample film 1">
           <span class="vt__frame">
-            <img src="Gallery/films/client-film-1.jpg" alt="A woman in a cream shirt, smiling on a sofa at home" loading="lazy">
+            <img src="Gallery/films/client-story-1.jpg" alt="A woman in a cream shirt, smiling on a sofa at home" loading="lazy">
             <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
             <span class="vt__cap">
               <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>They truly understood our lifestyle and turned it into a home that feels like us.&rdquo;</span>
@@ -2398,9 +2423,9 @@ section{position:relative;padding-block:var(--sec)}
             </span>
           </span>
         </button>
-        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-2.mp4" data-name="The Stair Hall" data-sample aria-disabled="true" aria-label="Sample film 2">
+        <button class="vt__card" type="button" data-video="Gallery/films/client-story-2.mp4" data-name="Rohit Desai" data-sample aria-disabled="true" aria-label="Sample film 2">
           <span class="vt__frame">
-            <img src="Gallery/films/client-film-2.jpg" alt="A man in glasses and a black shirt, talking with his hands on a sofa" loading="lazy">
+            <img src="Gallery/films/client-story-2.jpg" alt="A man in glasses and a black shirt, talking with his hands on a sofa" loading="lazy">
             <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
             <span class="vt__cap">
               <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>Professional, creative and so easy to work with. The team made the entire process effortless.&rdquo;</span>
@@ -2410,9 +2435,9 @@ section{position:relative;padding-block:var(--sec)}
             </span>
           </span>
         </button>
-        <button class="vt__card" type="button" data-video="Gallery/films/sample-film-3.mp4" data-name="The Garden Room" data-sample aria-disabled="true" aria-label="Sample film 3">
+        <button class="vt__card" type="button" data-video="Gallery/films/client-story-3.mp4" data-name="Kavya Singh" data-sample aria-disabled="true" aria-label="Sample film 3">
           <span class="vt__frame">
-            <img src="Gallery/films/client-film-3.jpg" alt="A woman in a rust top, smiling on a sofa in a lamplit room" loading="lazy">
+            <img src="Gallery/films/client-story-3.jpg" alt="A woman in a rust top, smiling on a sofa in a lamplit room" loading="lazy">
             <span class="vt__play" aria-hidden="true"><span><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg></span></span>
             <span class="vt__cap">
               <span class="vt__quote"><i aria-hidden="true">&ldquo;</i>Every detail was thoughtfully curated. Our space now feels warm, elegant and alive.&rdquo;</span>
@@ -2493,6 +2518,7 @@ section{position:relative;padding-block:var(--sec)}
       <p class="ask__got">We&rsquo;ve got you.</p>
       <p class="ask__next">Now pick how you would rather talk. The buttons in the corner will <b>book a consultation, open WhatsApp, start an enquiry or call the studio</b>, and each one carries your choices with it.</p>
       <p class="ask__picked" id="askPicked">Nothing chosen yet, which is fine too.</p>
+    </div>
   </div>
 </section>
 
@@ -2506,9 +2532,9 @@ section{position:relative;padding-block:var(--sec)}
         <p class="hand mt1">Where ideas become spaces.</p>
       </div>
       <div><h5>Visit</h5><ul>
-        <li><a href="#atelier">Inside the Atelier</a></li>
+        <li><a href="#about">Inside the Atelier</a></li>
         <li><a href="gallery.html">Our Work</a></li>
-        <li><a href="#vision">How We Design</a></li>
+        <li><a href="#approach">How We Design</a></li>
         <li><a href="#services">How We Can Work Together</a></li>
       </ul></div>
       <div><h5>Studio</h5><ul>
@@ -2774,9 +2800,6 @@ $$('img').forEach(function(img){
   }
 
   $('#noteClose').addEventListener('click', function(){ close(null); });
-  /* Next sends the visitor on into the site */
-  var next = $('#noteNext');
-  if (next) next.addEventListener('click', function(){ close('#about'); });
   /* the scrim closes it too */
   welcome.addEventListener('click', function(e){ if (e.target === welcome) close(null); });
   document.addEventListener('keydown', function(e){
@@ -3142,7 +3165,7 @@ testimonialRow('#vtTrack', $$('.vt__next'), '#vtDots');
   cards.forEach(function(c, i){
     var url = (c.getAttribute('data-video') || '').trim(),
         who = (c.getAttribute('data-name') || '').trim();
-    if (!url) return;
+    if (!url || c.hasAttribute('data-sample')) return;
     /* a film has arrived: the card wakes up and says whose it is */
     c.removeAttribute('aria-disabled');
     c.setAttribute('aria-label', 'Play the film' + (who ? ' from ' + who : ''));
@@ -3150,7 +3173,7 @@ testimonialRow('#vtTrack', $$('.vt__next'), '#vtDots');
 
   function open(c){
     var url = (c.getAttribute('data-video') || '').trim();
-    if (!url) return;
+    if (!url || c.hasAttribute('data-sample')) return;
     opener = c;
     video.src = url;
     nameEl.textContent = (c.getAttribute('data-name') || '').trim();
@@ -3182,16 +3205,9 @@ testimonialRow('#vtTrack', $$('.vt__next'), '#vtDots');
    WHATSAPP
    ============================================================ */
 var waHref = 'https://wa.me/' + CONFIG.whatsappNumber.replace(/\D/g,'') + '?text=' + encodeURIComponent(CONFIG.whatsappMessage);
-var waBtn = $('#waBtn'), waInline = $('#waInline'), mailLink = $('#mailLink');
+var waBtn = $('#waBtn');
 /* the ticked services already write this one, so only seed it if nothing has */
 if (waBtn && waBtn.getAttribute('href') === '#') waBtn.href = waHref;
-/* these two live in sections that are not built yet; guard, or the script stops here */
-if (waInline){ waInline.href = waHref; waInline.target = '_blank'; }
-if (mailLink){
-  mailLink.href = 'mailto:' + CONFIG.email;
-  if (mailLink.firstChild) mailLink.firstChild.textContent = CONFIG.email + ' ';
-}
-
 /* the footer reads its email and number from CONFIG, so the studio's
    details are written once and never drift between the two */
 var footMail = $('#footMail'), footTel = $('#footTel');
