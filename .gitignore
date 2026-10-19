@@ -3,3 +3,6 @@ Gallery/ChatGPT Image*
 Gallery/Screenshot*
 Gallery/_*.jpeg
 Gallery/films/sample-film-1.jpg
+
+helpdesk/config.php
+helpdesk/data/*.tmp

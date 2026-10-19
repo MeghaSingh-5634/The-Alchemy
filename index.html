@@ -386,6 +386,11 @@ section{position:relative;padding-block:var(--sec)}
   transition:transform .6s var(--ease),opacity .6s var(--ease);
 }
 .brand:hover .brand__rule{transform:scaleX(1);opacity:.8}
+/* the sigil leads the name, as a mark does: the name and its rule sit beside it */
+.brand{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:clamp(.7rem,1.1vw,1rem)}
+.brand__mark{grid-row:1/3;display:block;width:auto;height:clamp(52px,4.4vw,66px);background:none}
+.brand__name,.brand__rule{grid-column:2}
+@media (max-width:420px){.brand__mark{height:44px}.brand{column-gap:.55rem}}
 @media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
 .nav{flex:1;justify-content:center}
 .hdr>.btn{border-radius:0;padding:.9rem 1.5rem;font-size:.68rem;
@@ -1930,6 +1935,12 @@ section{position:relative;padding-block:var(--sec)}
 }
 .fld textarea{min-height:110px;resize:vertical;line-height:1.6}
 .fld input:focus,.fld textarea:focus{outline:0;border-color:var(--maroon);background:#fff}
+/* the asterisk on what must be filled, in the maroon the panel's button wears */
+.req{font-weight:400;color:var(--maroon)}
+.fld__hint{
+  margin-top:-.4rem;font-family:var(--sans);font-size:.72rem;font-weight:300;
+  line-height:1.5;color:var(--muted);
+}
 .fld input::placeholder,.fld textarea::placeholder{color:rgba(23,21,15,.38)}
 /* the honeypot: a field only a robot will fill */
 .enq__pot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
@@ -1997,11 +2008,13 @@ section{position:relative;padding-block:var(--sec)}
   .cursor{display:none}
 }
 </style>
+<link rel="stylesheet" href="helpdesk.css">
 </head>
 <body>
 
 <header class="hdr" id="hdr">
   <a class="brand" href="#top" aria-label="The Alchemy Atelier, home">
+    <img class="brand__mark" src="Gallery/brand-sigil.png" alt="" width="148" height="240">
     <span class="brand__name">The Alchemy Atelier</span>
     <span class="brand__rule" aria-hidden="true"></span>
   </a>
@@ -2666,10 +2679,11 @@ section{position:relative;padding-block:var(--sec)}
 
     <form class="enq__form" id="enqForm" novalidate>
       <div class="enq__row">
-        <label class="fld"><span>Your name</span><input type="text" name="name" id="enqName" autocomplete="name" required></label>
-        <label class="fld"><span>Phone</span><input type="tel" name="phone" id="enqPhone" autocomplete="tel" placeholder="+91"></label>
+        <label class="fld"><span>Your name <b class="req" aria-hidden="true">*</b></span><input type="text" name="name" id="enqName" autocomplete="name" required aria-required="true"></label>
+        <label class="fld"><span>Phone <b class="req" aria-hidden="true">*</b></span><input type="tel" name="phone" id="enqPhone" autocomplete="tel" placeholder="+91" aria-describedby="enqEither"></label>
       </div>
-      <label class="fld"><span>Email</span><input type="email" name="email" id="enqEmail" autocomplete="email"></label>
+      <label class="fld"><span>Email <b class="req" aria-hidden="true">*</b></span><input type="email" name="email" id="enqEmail" autocomplete="email" aria-describedby="enqEither"></label>
+      <p class="fld__hint" id="enqEither"><b class="req" aria-hidden="true">*</b> Required. A phone number or an email, either one is enough.</p>
       <label class="fld" id="enqWhenWrap" hidden><span>A day and time that would suit you</span><input type="text" name="when" id="enqWhen" placeholder="Weekday mornings, or a date"></label>
       <label class="fld"><span>About the project</span><textarea name="message" id="enqMsg"></textarea></label>
 
@@ -2688,9 +2702,9 @@ section{position:relative;padding-block:var(--sec)}
     <span class="wa__lbl" aria-hidden="true">Book a consultation</span>
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg>
   </button>
-  <button class="wa__btn" id="fabMail" type="button" aria-label="Send the studio an enquiry" aria-haspopup="dialog">
-    <span class="wa__lbl" aria-hidden="true">Send an enquiry</span>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg>
+  <button class="wa__btn" id="fabMail" type="button" aria-label="Open the studio helpdesk" aria-haspopup="dialog">
+    <span class="wa__lbl" aria-hidden="true">Helpdesk</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5V11a7 7 0 0 1 14 0v1.5"/><rect x="3" y="12.5" width="4" height="6" rx="1.6"/><rect x="17" y="12.5" width="4" height="6" rx="1.6"/><path d="M19 18.5v.4a2.6 2.6 0 0 1-2.6 2.6H14"/></svg>
   </button>
   <a class="wa__btn" id="fabCall" href="#" aria-label="Call the studio">
     <span class="wa__lbl" aria-hidden="true">Call now</span>
@@ -2720,7 +2734,7 @@ var CONFIG = {
      a free Web3Forms access key (https://web3forms.com) posts it straight
      to the studio inbox: paste the key here, nothing else to change */
   formEndpoint: 'https://api.web3forms.com/submit',
-  formKey: '',
+  formKey: 'ef468001-d39e-4af7-beb0-40726e105658',
 
   /* live chat. tawk.to · Admin > Channels > Chat Widget > Direct Chat Link
      gives a src like https://embed.tawk.to/PROPERTY_ID/WIDGET_ID
@@ -2998,7 +3012,8 @@ window.chatReady = false;
   }
 
   $('#fabBook').addEventListener('click', function(){ open('book', this); });
-  /* the envelope prefers live chat, and falls back to this panel without one */
+  /* the headset opens the helpdesk (helpdesk.js catches it first). this is
+     the fallback if that file has not loaded: live chat, then this panel */
   $('#fabMail').addEventListener('click', function(){
     if (chatReady && window.Tawk_API && window.Tawk_API.maximize){
       var a = ticked();
@@ -3105,6 +3120,20 @@ window.chatReady = false;
   /* the two shortcuts at the foot of the panel */
   $('#enqWaLink').addEventListener('click', function(){ $('#waBtn').click(); });
   $('#enqCallLink').addEventListener('click', function(){ window.location.href = 'tel:' + CONFIG.phone; });
+
+  /* the helpdesk hands its conversation over here: what was asked is
+     written into the message, after anything ticked upstairs */
+  window.TAA_openEnquiry = function(text){
+    open('enquiry', $('#fabMail'));
+    if (text && msg.value.indexOf(text) === -1) msg.value += text;
+  };
+  /* and from another page it arrives as #enquire, the words kept for the visit */
+  if (window.location.hash === '#enquire'){
+    var handed = '';
+    try{ handed = JSON.parse(sessionStorage.getItem('taa-handoff')) || ''; sessionStorage.removeItem('taa-handoff'); }catch(e){}
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.TAA_openEnquiry(handed);
+  }
 })();
 
 /* ============================================================
@@ -3293,5 +3322,6 @@ $$('a[href^="#"]:not([data-opens-enquiry])').forEach(function(a){
 
 })();
 </script>
+<script src="helpdesk.js" defer></script>
 </body>
 </html>

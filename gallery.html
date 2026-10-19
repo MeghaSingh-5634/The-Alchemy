@@ -133,6 +133,11 @@ section{position:relative;padding-block:var(--sec)}
   color:var(--gold);opacity:.45;transform:scaleX(.34);transform-origin:left;
   transition:transform .6s var(--ease),opacity .6s var(--ease)}
 .brand:hover .brand__rule{transform:scaleX(1);opacity:.8}
+/* the sigil leads the name, as a mark does: the name and its rule sit beside it */
+.brand{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:clamp(.7rem,1.1vw,1rem)}
+.brand__mark{grid-row:1/3;display:block;width:auto;height:clamp(52px,4.4vw,66px);background:none}
+.brand__name,.brand__rule{grid-column:2}
+@media (max-width:420px){.brand__mark{height:44px}.brand{column-gap:.55rem}}
 @media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
 
 .nav{display:flex;flex:1;align-items:center;justify-content:center;gap:clamp(1rem,2.1vw,2.1rem)}
@@ -517,6 +522,7 @@ section{position:relative;padding-block:var(--sec)}
 .close > .invite .invite__ttl{font-size:clamp(1.8rem,2.6vw,2.6rem);max-width:16ch}
 .close > .invite .invite__lead{max-width:40ch}
 </style>
+<link rel="stylesheet" href="helpdesk.css">
 </head>
 <body>
 
@@ -525,6 +531,7 @@ section{position:relative;padding-block:var(--sec)}
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
   </a>
   <a class="brand" href="index.html#top" aria-label="The Alchemy Atelier, home">
+    <img class="brand__mark" src="Gallery/brand-sigil.png" alt="" width="148" height="240">
     <span class="brand__name">The Alchemy Atelier</span>
     <span class="brand__rule" aria-hidden="true"></span>
   </a>
@@ -921,9 +928,9 @@ section{position:relative;padding-block:var(--sec)}
 
 <!-- ============================================================ THE FLOATING WAYS TO TALK ============================================================ -->
 <div class="wa" id="wa">
-  <a class="wa__btn" id="fabMail" href="index.html#talk" aria-label="Send the studio an enquiry">
-    <span class="wa__lbl" aria-hidden="true">Send an enquiry</span>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg>
+  <a class="wa__btn" id="fabMail" href="index.html#talk" aria-label="Open the studio helpdesk">
+    <span class="wa__lbl" aria-hidden="true">Helpdesk</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5V11a7 7 0 0 1 14 0v1.5"/><rect x="3" y="12.5" width="4" height="6" rx="1.6"/><rect x="17" y="12.5" width="4" height="6" rx="1.6"/><path d="M19 18.5v.4a2.6 2.6 0 0 1-2.6 2.6H14"/></svg>
   </a>
   <a class="wa__btn" id="fabCall" href="#" aria-label="Call the studio">
     <span class="wa__lbl" aria-hidden="true">Call now</span>
@@ -1158,5 +1165,6 @@ if (wa){
   });
 })();
 </script>
+<script src="helpdesk.js" defer></script>
 </body>
 </html>

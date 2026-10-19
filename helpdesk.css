@@ -1,0 +1,195 @@
+/* ============================================================
+   THE HELPDESK · the chat behind the headset in the corner.
+   dressed as the enquiry panel is, cream and maroon under an
+   emerald head, so the two read as one desk
+   ============================================================ */
+.hd{
+  position:fixed;inset:0;z-index:220;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:clamp(12px,2.4vw,30px);
+  background:rgba(14,26,22,0);
+  opacity:0;visibility:hidden;
+  transition:opacity .4s cubic-bezier(.4,0,.7,.2),background .4s cubic-bezier(.4,0,.7,.2),visibility 0s linear .4s;
+}
+.hd[hidden]{display:none}
+.hd.is-open{
+  opacity:1;visibility:visible;background:rgba(14,26,22,.45);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1),background .5s cubic-bezier(.16,1,.3,1),visibility 0s;
+}
+html.hd-locked,html.hd-locked body{overflow:hidden}
+
+.hd__card{
+  position:relative;width:min(420px,100%);height:min(660px,100%);
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--cream,#F5EFE4);color:var(--charcoal,#2B2620);
+  border:1px solid rgba(192,160,98,.4);
+  box-shadow:0 40px 90px -40px rgba(9,20,16,.85);
+  font-family:var(--sans,'Jost',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif);
+  font-weight:300;
+  transform:translateY(16px);transition:transform .55s cubic-bezier(.16,1,.3,1);
+}
+.hd.is-open .hd__card{transform:none}
+
+/* ---------- the head ---------- */
+.hd__head{
+  position:relative;flex:0 0 auto;
+  padding:1.2rem 4.2rem 1.1rem 1.4rem;
+  background:var(--emerald,#123B33);color:var(--cream,#F5EFE4);
+  border-bottom:1px solid rgba(223,199,145,.3);
+}
+.hd__eyebrow{
+  margin:0;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold-soft,#DFC791);
+}
+.hd__ttl{
+  margin:.35rem 0 0;font-family:var(--serif,'Cormorant Garamond',Georgia,serif);
+  font-weight:400;font-size:1.55rem;line-height:1.1;letter-spacing:.12em;text-transform:uppercase;
+}
+.hd__close{
+  position:absolute;top:50%;right:1.1rem;transform:translateY(-50%);
+  width:36px;aspect-ratio:1;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;font-size:1.15rem;line-height:1;
+  background:transparent;color:var(--cream,#F5EFE4);border:1px solid rgba(223,199,145,.4);
+  transition:transform .4s cubic-bezier(.19,1,.22,1),background .4s,color .4s;
+}
+.hd__close:hover{transform:translateY(-50%) rotate(90deg);background:var(--gold,#C0A062);color:var(--emerald-deep,#0B2721)}
+.hd__close:focus-visible{outline:2px solid var(--gold,#C0A062);outline-offset:3px}
+
+/* ---------- the conversation ---------- */
+.hd__log{
+  flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;
+  display:flex;flex-direction:column;gap:.7rem;
+  padding:1.2rem 1.2rem 1rem;
+}
+.hd__msg{
+  max-width:88%;padding:.75rem .95rem;
+  font-size:.9rem;line-height:1.6;overflow-wrap:anywhere;
+}
+.hd__msg p{margin:0}
+.hd__msg p+p,.hd__msg p+ul,.hd__msg ul+p{margin-top:.5rem}
+.hd__msg ul{margin:.3rem 0 0;padding-left:1.1rem}
+.hd__msg li+li{margin-top:.2rem}
+.hd__msg b{font-weight:500}
+.hd__msg--them{
+  align-self:flex-start;background:#FFFDF8;border:1px solid rgba(23,21,15,.12);
+}
+.hd__msg--me{
+  align-self:flex-end;white-space:pre-wrap;
+  background:var(--emerald,#123B33);color:var(--cream,#F5EFE4);
+}
+.hd__msg--err{border-color:rgba(74,34,37,.45);color:var(--maroon,#4A2225)}
+.hd__src{
+  margin-top:.55rem !important;padding-top:.5rem;border-top:1px solid rgba(23,21,15,.1);
+  font-size:.74rem;color:var(--muted,rgba(23,21,15,.62));
+}
+.hd__src a{color:var(--maroon,#4A2225);text-decoration:underline;text-underline-offset:2px}
+.hd__src a:hover{color:var(--accent,#8A6729)}
+
+/* the three dots while an answer is being written */
+.hd__typing{display:flex;gap:.3rem;padding:.95rem 1rem}
+.hd__typing span{
+  width:6px;height:6px;border-radius:50%;background:var(--accent,#8A6729);
+  animation:hd-dot 1.2s infinite ease-in-out;
+}
+.hd__typing span:nth-child(2){animation-delay:.15s}
+.hd__typing span:nth-child(3){animation-delay:.3s}
+@keyframes hd-dot{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+
+/* questions to begin with, before anything is asked */
+.hd__sugs{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.1rem}
+.hd__sug{
+  cursor:pointer;padding:.5rem .8rem;font:inherit;font-size:.8rem;line-height:1.3;text-align:left;
+  background:transparent;color:var(--maroon,#4A2225);border:1px solid rgba(74,34,37,.35);border-radius:0;
+  transition:background .35s,color .35s,border-color .35s;
+}
+.hd__sug:hover{background:var(--maroon,#4A2225);color:var(--cream,#F5EFE4);border-color:var(--maroon,#4A2225)}
+.hd__sug:focus-visible{outline:2px solid var(--maroon,#4A2225);outline-offset:2px}
+
+/* ---------- a person, whenever one is wanted ---------- */
+.hd__people{
+  flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .5rem;
+  padding:.7rem 1.2rem;border-top:1px solid rgba(23,21,15,.12);
+  transition:background .5s;
+}
+.hd__people-lbl{
+  margin-right:.2rem;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted,rgba(23,21,15,.62));
+}
+.hd__person{
+  cursor:pointer;padding:.38rem .7rem;font:inherit;font-size:.74rem;
+  background:transparent;color:var(--charcoal,#2B2620);text-decoration:none;
+  border:1px solid rgba(23,21,15,.22);border-radius:0;
+  transition:background .35s,color .35s,border-color .35s;
+}
+.hd__person:hover{background:var(--emerald,#123B33);color:var(--cream,#F5EFE4);border-color:var(--emerald,#123B33)}
+.hd__person:focus-visible{outline:2px solid var(--maroon,#4A2225);outline-offset:2px}
+/* when a person is the answer, the row says so */
+.hd__people--on{background:rgba(192,160,98,.14)}
+.hd__people--on .hd__person{border-color:var(--maroon,#4A2225);color:var(--maroon,#4A2225)}
+.hd__people--on [data-to="enq"]{background:var(--maroon,#4A2225);color:var(--cream,#F5EFE4)}
+.hd__people--on [data-to="enq"]:hover{background:var(--maroon-deep,#2F1416);border-color:var(--maroon-deep,#2F1416)}
+
+/* ---------- asking ---------- */
+.hd__form{
+  flex:0 0 auto;display:flex;align-items:flex-end;gap:.5rem;
+  padding:.8rem 1.2rem .5rem;border-top:1px solid rgba(23,21,15,.12);
+}
+.hd__form textarea{
+  flex:1 1 auto;min-width:0;resize:none;max-height:140px;
+  padding:.7rem .85rem;font:inherit;font-size:.9rem;line-height:1.5;color:var(--charcoal,#2B2620);
+  background:#FFFDF8;border:1px solid rgba(23,21,15,.2);border-radius:0;
+  transition:border-color .4s,background .4s;
+}
+.hd__form textarea:focus{outline:0;border-color:var(--maroon,#4A2225);background:#fff}
+.hd__form textarea::placeholder{color:rgba(23,21,15,.4)}
+.hd__send{
+  flex:0 0 auto;width:46px;height:46px;cursor:pointer;display:grid;place-items:center;
+  background:var(--maroon,#4A2225);color:var(--cream,#F5EFE4);border:1px solid var(--maroon,#4A2225);border-radius:0;
+  transition:background .4s,transform .4s;
+}
+.hd__send:hover{background:var(--maroon-deep,#2F1416);transform:translateY(-1px)}
+.hd__send:focus-visible{outline:2px solid var(--maroon,#4A2225);outline-offset:3px}
+.hd__send[disabled]{opacity:.5;cursor:default;transform:none}
+.hd__send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.hd__note{
+  flex:0 0 auto;margin:0;padding:0 1.2rem .9rem;
+  font-size:.68rem;line-height:1.5;color:var(--muted,rgba(23,21,15,.62));
+}
+.hd__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- a headset of its own, on pages without corner buttons ---------- */
+.hd-fab{
+  position:fixed;right:clamp(16px,2.6vw,36px);bottom:clamp(16px,2.6vw,36px);z-index:130;
+  width:52px;height:52px;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;
+  background:var(--emerald,#123B33);color:var(--gold-soft,#DFC791);
+  border:1px solid rgba(223,199,145,.3);
+  box-shadow:0 10px 24px -12px rgba(23,21,15,.55);
+  transition:background .45s,color .45s,transform .45s;
+}
+.hd-fab:hover{background:var(--gold,#C0A062);color:var(--emerald-deep,#0B2721);transform:translateY(-2px)}
+.hd-fab:focus-visible{outline:2px solid var(--gold,#C0A062);outline-offset:3px}
+.hd-fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.hd-fab__lbl{
+  position:absolute;right:calc(100% + .6rem);top:50%;transform:translateY(-50%) translateX(6px);
+  white-space:nowrap;pointer-events:none;opacity:0;
+  padding:.5rem .8rem;background:var(--ink,#17150F);color:var(--cream,#F5EFE4);
+  font-family:var(--sans,'Jost',sans-serif);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  transition:opacity .4s,transform .4s;
+}
+.hd-fab:hover .hd-fab__lbl,.hd-fab:focus-visible .hd-fab__lbl{opacity:1;transform:translateY(-50%)}
+
+/* ---------- a phone: the panel takes the whole screen ---------- */
+@media (max-width:560px){
+  .hd{padding:0}
+  .hd__card{width:100%;height:100%;height:100dvh;border:0}
+  .hd__msg{max-width:92%}
+  .hd-fab{width:46px;height:46px}
+  .hd-fab svg{width:19px;height:19px}
+  .hd-fab__lbl{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hd,.hd.is-open,.hd__card,.hd__close,.hd-fab{transition:none}
+  .hd__typing span{animation:none;opacity:.6}
+}
