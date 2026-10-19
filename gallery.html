@@ -395,6 +395,9 @@ section{position:relative;padding-block:var(--sec)}
   line-height:1.08;margin-top:.3rem;max-width:18ch;margin-inline:auto}
 .invite__lead{max-width:52ch;margin:.9rem auto 0;opacity:.8}
 .invite .btn{margin-top:clamp(1.3rem,2.4vw,1.9rem);border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
+/* Start a project fills with ink, not gold, when it is pointed at */
+.invite .btn::after{background:#17150F}
+.invite .btn:hover{color:var(--cream);border-color:#17150F}
 /* the room drawn in gold line, the way a plan is drawn before it is built:
    an arched mirror with a chair standing in it on one side, a niche and a
    vase of branches on the other, and a fleuron over the invitation */
