@@ -45,6 +45,10 @@ var gen = 0;
 /* ---------- the panel ---------- */
 var ICON_SEND = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
 var ICON_HEAD = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5V11a7 7 0 0 1 14 0v1.5"/><rect x="3" y="12.5" width="4" height="6" rx="1.6"/><rect x="17" y="12.5" width="4" height="6" rx="1.6"/><path d="M19 18.5v.4a2.6 2.6 0 0 1-2.6 2.6H14"/></svg>';
+/* the same marks the home page's corner buttons wear */
+var ICON_BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg>';
+var ICON_CALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5L16 12l4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 6.2 2 2 0 0 1 6 4z"/></svg>';
+var ICON_WA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48 1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35M12.04 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.42-9.4a9.35 9.35 0 0 1 6.65 2.76 9.32 9.32 0 0 1 2.75 6.65c0 5.18-4.22 9.41-9.41 9.41M20.5 3.49A11.75 11.75 0 0 0 12.04 0C5.5 0 .18 5.32.18 11.86c0 2.09.55 4.13 1.59 5.93L.08 24l6.35-1.66a11.83 11.83 0 0 0 5.6 1.43h.01c6.54 0 11.86-5.32 11.86-11.86 0-3.17-1.23-6.15-3.4-8.42"/></svg>';
 
 var box = document.createElement('div');
 box.className = 'hd';
@@ -313,7 +317,8 @@ card.addEventListener('keydown', function(e){
 /* ---------- the way in ----------
    the headset in the corner opens the helpdesk. it is caught before the
    page's own handler, which stays as the fallback if this file fails to load.
-   pages without corner buttons get a headset of their own */
+   pages without corner buttons get the home page's four of their own:
+   book, the helpdesk, call and WhatsApp */
 document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('#fabMail, [data-opens-helpdesk]');
   if (!b) return;
@@ -323,14 +328,21 @@ document.addEventListener('click', function(e){
 }, true);
 
 if (!document.getElementById('fabMail')){
-  var fab = document.createElement('button');
-  fab.type = 'button';
-  fab.className = 'hd-fab';
-  fab.setAttribute('aria-label', 'Open the studio helpdesk');
-  fab.setAttribute('aria-haspopup', 'dialog');
-  fab.setAttribute('data-opens-helpdesk', '');
-  fab.innerHTML = '<span class="hd-fab__lbl" aria-hidden="true">Helpdesk</span>' + ICON_HEAD;
-  document.body.appendChild(fab);
+  var dock = document.createElement('div');
+  dock.className = 'hd-dock';
+  var waText = 'Hi, I came across The Alchemy Atelier website and would like to discuss a project.';
+  /* booking lives in the home page's panel, which #book opens on arrival */
+  dock.innerHTML =
+    '<a class="hd-fab" href="index.html#book" aria-label="Book a consultation with The Alchemy Atelier">' +
+      '<span class="hd-fab__lbl" aria-hidden="true">Book a consultation</span>' + ICON_BOOK + '</a>' +
+    '<button class="hd-fab" type="button" aria-label="Open the studio helpdesk" aria-haspopup="dialog" data-opens-helpdesk>' +
+      '<span class="hd-fab__lbl" aria-hidden="true">Helpdesk</span>' + ICON_HEAD + '</button>' +
+    '<a class="hd-fab" href="tel:' + CONFIG.phone + '" aria-label="Call the studio">' +
+      '<span class="hd-fab__lbl" aria-hidden="true">Call now</span>' + ICON_CALL + '</a>' +
+    '<a class="hd-fab hd-fab--wa" target="_blank" rel="noopener" aria-label="Chat with The Alchemy Atelier on WhatsApp" href="https://wa.me/' +
+      CONFIG.whatsappNumber.replace(/\D/g,'') + '?text=' + encodeURIComponent(waText) + '">' +
+      '<span class="hd-fab__lbl" aria-hidden="true">WhatsApp</span>' + ICON_WA + '</a>';
+  document.body.appendChild(dock);
 }
 
 window.TAA_helpdesk = { open: open, close: close };

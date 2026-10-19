@@ -394,8 +394,21 @@ section{position:relative;padding-block:var(--sec)}
 .brand{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:clamp(.7rem,1.1vw,1rem)}
 .brand__mark{grid-row:1/3;display:block;width:auto;height:clamp(52px,4.4vw,66px);background:none}
 .brand__name,.brand__rule{grid-column:2}
-@media (max-width:420px){.brand__mark{height:44px}.brand{column-gap:.55rem}}
 @media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
+/* on a phone the lockup steps down a size, so the way back, the mark, the
+   name and the menu share one line without crowding */
+@media (max-width:600px){
+  .brand{column-gap:.5rem}
+  .brand__mark{height:38px}
+  .brand__name{font-size:.78rem;letter-spacing:.16em;text-indent:.16em}
+  .brand__rule{margin-top:.45rem}
+  .back{width:38px;height:38px}
+  .burger{width:40px;height:40px}
+}
+@media (max-width:360px){
+  .brand__mark{height:32px}
+  .brand__name{font-size:.68rem;letter-spacing:.12em;text-indent:.12em}
+}
 .nav{flex:1;justify-content:center}
 .hdr>.btn{border-radius:0;padding:.9rem 1.5rem;font-size:.68rem;
   border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
@@ -3131,12 +3144,16 @@ window.chatReady = false;
     open('enquiry', $('#fabMail'));
     if (text && msg.value.indexOf(text) === -1) msg.value += text;
   };
-  /* and from another page it arrives as #enquire, the words kept for the visit */
+  /* and from another page it arrives as #enquire, the words kept for the visit,
+     or as #book from the corner buttons the other pages carry */
   if (window.location.hash === '#enquire'){
     var handed = '';
     try{ handed = JSON.parse(sessionStorage.getItem('taa-handoff')) || ''; sessionStorage.removeItem('taa-handoff'); }catch(e){}
     history.replaceState(null, '', window.location.pathname + window.location.search);
     window.TAA_openEnquiry(handed);
+  } else if (window.location.hash === '#book'){
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    open('book', $('#fabBook'));
   }
 })();
 
