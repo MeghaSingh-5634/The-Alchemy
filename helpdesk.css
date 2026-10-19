@@ -161,7 +161,13 @@ html.hd-locked,html.hd-locked body{overflow:hidden}
 .hd-dock{
   position:fixed;right:clamp(16px,2.6vw,36px);bottom:clamp(16px,2.6vw,36px);z-index:130;
   display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;
-  transition:opacity .4s,visibility 0s;
+  /* held back until the end of the page, as the home page's are */
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(18px);
+  transition:opacity .8s cubic-bezier(.19,1,.22,1),transform .8s cubic-bezier(.19,1,.22,1),visibility 0s linear .8s;
+}
+.hd-dock.on{
+  opacity:1;visibility:visible;pointer-events:auto;transform:none;
+  transition:opacity .8s cubic-bezier(.19,1,.22,1),transform .8s cubic-bezier(.19,1,.22,1),visibility 0s;
 }
 /* the phone menu fills the screen: the buttons step aside rather than sit on it */
 body:has(.nav.open) .hd-dock,

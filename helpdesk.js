@@ -343,6 +343,19 @@ if (!document.getElementById('fabMail')){
       CONFIG.whatsappNumber.replace(/\D/g,'') + '?text=' + encodeURIComponent(waText) + '">' +
       '<span class="hd-fab__lbl" aria-hidden="true">WhatsApp</span>' + ICON_WA + '</a>';
   document.body.appendChild(dock);
+
+  /* as on the home page and the gallery, they wait until the reader is near
+     the end: the closing invitation has risen into the lower quarter */
+  var dockEnd = document.querySelector('.invite') || document.getElementById('contact');
+  var dockToggle = function(){
+    var atEnd = dockEnd
+      ? dockEnd.getBoundingClientRect().top <= window.innerHeight * 0.75
+      : window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 200;
+    dock.classList.toggle('on', atEnd);
+  };
+  window.addEventListener('scroll', dockToggle, {passive:true});
+  window.addEventListener('resize', dockToggle);
+  dockToggle();
 }
 
 window.TAA_helpdesk = { open: open, close: close };
