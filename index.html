@@ -395,20 +395,20 @@ section{position:relative;padding-block:var(--sec)}
 .brand__mark{grid-row:1/3;display:block;width:auto;height:clamp(52px,4.4vw,66px);background:none}
 .brand__name,.brand__rule{grid-column:2}
 @media (max-width:420px){.brand__name{letter-spacing:.2em;text-indent:.2em;font-size:.82rem}}
-/* on a phone the lockup steps down a size, so the way back, the mark, the
-   name and the menu share one line without crowding */
+/* on a phone the buttons step down, not the name: the way back, the mark,
+   the name at its full size and the menu share one line without crowding */
 @media (max-width:600px){
+  .hdr{gap:.6rem}
   .brand{column-gap:.5rem}
-  .brand__mark{height:38px}
-  .brand__name{font-size:.78rem;letter-spacing:.16em;text-indent:.16em}
-  .brand__rule{margin-top:.45rem}
-  .back{width:38px;height:38px}
-  .burger{width:40px;height:40px}
+  .brand__mark{height:36px}
+  .brand__rule{margin-top:.5rem}
+  .hdr .back{width:32px;height:32px;flex:none}
+  .back + .brand{margin-left:0}
+  .hdr .burger{width:34px;height:34px;flex:none}
 }
-@media (max-width:360px){
-  .brand__mark{height:32px}
-  .brand__name{font-size:.68rem;letter-spacing:.12em;text-indent:.12em}
-}
+/* on the very smallest phones the way back gives up its place to the name:
+   the mark and the name already lead home */
+@media (max-width:350px){.hdr .back{display:none}}
 .nav{flex:1;justify-content:center}
 .hdr>.btn{border-radius:0;padding:.9rem 1.5rem;font-size:.68rem;
   border-color:rgba(223,199,145,.55);color:var(--gold-soft)}
