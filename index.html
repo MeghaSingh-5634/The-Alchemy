@@ -1601,11 +1601,20 @@ section{position:relative;padding-block:var(--sec)}
   font-size:clamp(.64rem,.74vw,.71rem);line-height:1.6;
   letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);
 }
-/* the numbers are still climbing: said once, quietly, beneath them */
+/* the numbers are still climbing: they count up as they come into view,
+   and "And counting" follows them in, its dots still going */
+.vt__stat b[data-count]{cursor:default;font-variant-numeric:tabular-nums}
 .vt__more{
   margin-top:.8rem;font-family:var(--serif);font-style:italic;font-weight:400;
   font-size:clamp(1.05rem,1.3vw,1.2rem);line-height:1.3;color:var(--accent);
 }
+.js-count .vt__more{opacity:0;transform:translateY(8px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.js-count .vt__stats.is-counted + .vt__more{opacity:1;transform:none}
+.vt__ellip i{font-style:normal;display:inline-block;animation:vt-dot 1.6s infinite ease-in-out}
+.vt__ellip i:nth-child(2){animation-delay:.2s}
+.vt__ellip i:nth-child(3){animation-delay:.4s}
+@keyframes vt-dot{0%,70%,100%{opacity:.2;transform:none}35%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.vt__ellip i{animation:none;opacity:1}}
 
 /* the film cards */
 .vt__win{position:relative;overflow:hidden;padding-bottom:clamp(1.3rem,2.2vw,2rem)}
@@ -2466,10 +2475,10 @@ section{position:relative;padding-block:var(--sec)}
       <p class="vt__lead">Hear from homeowners and collaborators who trusted The Alchemy Atelier to bring their spaces to life.</p>
 
       <div class="vt__stats">
-        <p class="vt__stat"><b>10+</b><span>Homes</span></p>
-        <p class="vt__stat"><b>15+</b><span>Clients</span></p>
+        <p class="vt__stat"><b data-count="10">10+</b><span>Homes</span></p>
+        <p class="vt__stat"><b data-count="15">15+</b><span>Clients</span></p>
       </div>
-      <p class="vt__more">And counting</p>
+      <p class="vt__more">And counting<span class="vt__ellip" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span></p>
 
       <!-- small screens: the two arrows, as the written testimonials have -->
       <div class="vt__nav">
@@ -2938,6 +2947,53 @@ $$('img').forEach(function(img){
 
   if (call) call.href = 'tel:' + CONFIG.phone;
   sync();
+})();
+
+
+/* ============================================================
+   AND COUNTING · the client numbers count up from nothing when they
+   come into view, and again when a number is pointed at or tapped.
+   without motion, or without JS, they simply read 10+ and 15+
+   ============================================================ */
+(function(){
+  var stats = $('.vt__stats');
+  if (!stats) return;
+  var nums = $$('b[data-count]', stats);
+  if (reduced || !('IntersectionObserver' in window)){ stats.classList.add('is-counted'); return; }
+  document.documentElement.classList.add('js-count');
+
+  function count(b, delay){
+    var to = +b.getAttribute('data-count'), dur = 1500, t0 = null;
+    if (b._raf) cancelAnimationFrame(b._raf);
+    b.textContent = '0+';
+    setTimeout(function(){
+      function step(t){
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        /* quick at first, settling as it nears the number */
+        b.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + '+';
+        if (p < 1) b._raf = requestAnimationFrame(step);
+        else stats.classList.add('is-counted');
+      }
+      b._raf = requestAnimationFrame(step);
+    }, delay || 0);
+  }
+
+  nums.forEach(function(b){ b.textContent = '0+'; });
+  new IntersectionObserver(function(entries, io){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      nums.forEach(function(b, i){ count(b, i * 180); });
+    });
+  }, {threshold:.6}).observe(stats);
+
+  /* pointing at a number, or tapping it, counts it up again */
+  nums.forEach(function(b){
+    var stat = b.parentNode;
+    stat.addEventListener('mouseenter', function(){ if (stats.classList.contains('is-counted')) count(b); });
+    stat.addEventListener('click', function(){ if (stats.classList.contains('is-counted')) count(b); });
+  });
 })();
 
 
